@@ -32,11 +32,20 @@ class QuestionActivity : AppCompatActivity() {
         content.text = eCategory
 
         createRetrofit()
-        changeQuestion(eCategory!!)
 
         next.setOnClickListener {
+            playGame()
             changeQuestion(eCategory!!)
         }
+    }
+
+    fun playGame() {
+        val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
+        val range = (0..5)
+        val num = range.random()
+        val drawable = resources.getIdentifier("yut_$num", "drawable", packageName)
+        yut.setBackgroundResource(drawable)
+        yut.setText(yuts[num])
     }
 
     fun changeQuestion(category: String) {
