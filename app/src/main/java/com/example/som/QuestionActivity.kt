@@ -32,14 +32,14 @@ class QuestionActivity : AppCompatActivity() {
         content.text = eCategory
 
         createRetrofit()
-        changeCategory(eCategory!!)
+        changeQuestion(eCategory!!)
 
         next.setOnClickListener {
-            changeCategory(eCategory!!)
+            changeQuestion(eCategory!!)
         }
     }
 
-    fun changeCategory(category: String) {
+    fun changeQuestion(category: String) {
         service.getQuestion(
             category
         ).enqueue(object : Callback<Question> {
