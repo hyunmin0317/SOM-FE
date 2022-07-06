@@ -29,7 +29,6 @@ class QuestionActivity : AppCompatActivity() {
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
         category.text = "카테고리 - " + kCategory
-        content.text = eCategory
 
         createRetrofit()
 
