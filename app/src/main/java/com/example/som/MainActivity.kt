@@ -30,5 +30,7 @@ class MainActivity : AppCompatActivity() {
                     })
             builder.show()
         }
+
+        user_info.setOnClickListener { startActivity(Intent(this@MainActivity, UserInfoActivity::class.java)) }
     }
 }

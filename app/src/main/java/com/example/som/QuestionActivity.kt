@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_question.*
+import kotlinx.android.synthetic.main.activity_question.user_info
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -36,6 +38,7 @@ class QuestionActivity : AppCompatActivity() {
             playGame()
             changeQuestion(eCategory!!)
         }
+        user_info.setOnClickListener { startActivity(Intent(this@QuestionActivity, UserInfoActivity::class.java)) }
     }
 
     fun playGame() {
