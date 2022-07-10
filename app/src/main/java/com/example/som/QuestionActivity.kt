@@ -1,13 +1,13 @@
 package com.example.som
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_question.*
-import kotlinx.android.synthetic.main.activity_question.user_info
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -24,10 +24,6 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
-        home.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
         category.text = "카테고리 - " + kCategory
@@ -38,7 +34,6 @@ class QuestionActivity : AppCompatActivity() {
             playGame()
             changeQuestion(eCategory!!)
         }
-        user_info.setOnClickListener { startActivity(Intent(this@QuestionActivity, UserInfoActivity::class.java)) }
     }
 
     fun playGame() {
@@ -51,13 +46,17 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     fun changeQuestion(category: String) {
+        val builder = AlertDialog.Builder(this)
+
         service.getQuestion(
             category
         ).enqueue(object : Callback<Question> {
             override fun onResponse(call: Call<Question>, response: Response<Question>) {
                 if (response.isSuccessful) {
                     val question = response.body()
-                    content.text = question!!.content
+                    builder.setTitle("질문").setMessage(question!!.content)
+                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                    builder.show()
                 } else {
                     Toast.makeText(this@QuestionActivity, "잘못된 카테고리 입니다.", Toast.LENGTH_LONG).show()
                 }
