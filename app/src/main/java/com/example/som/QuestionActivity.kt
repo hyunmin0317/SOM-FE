@@ -1,9 +1,9 @@
 package com.example.som
 
 import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -24,25 +24,67 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
+        var arr = IntArray(20, { 0 } )
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
         category.text = "카테고리 - " + kCategory
 
         createRetrofit()
 
+
         next.setOnClickListener {
-            playGame()
+            val num = playGame()
+
+            if (checkBoard(arr)) {
+                for ((index, item) in arr.withIndex()) {
+                    if (item!=0) {
+                        val idx = (index+num) % 20
+                        arr[idx] = item
+                        arr[index] = 0
+                        break
+                    }
+                }
+            } else {
+                if (num != -1)
+                    arr[num] = 1
+            }
+
+            Toast.makeText(this@QuestionActivity, arr.toString(), Toast.LENGTH_LONG)
+
+            drawGame(arr)
             changeQuestion(eCategory!!)
         }
     }
 
-    fun playGame() {
+    fun playGame(): Int {
         val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
         val range = (0..5)
-        val num = range.random()
+        var num = range.random()
         val drawable = resources.getIdentifier("yut_$num", "drawable", packageName)
         yut.setBackgroundResource(drawable)
         yut.setText(yuts[num])
+        if (num == 0)
+            num = -1
+        return num
+    }
+
+    fun drawGame(array: IntArray) {
+        for ((index,item) in array.withIndex()) {
+            val player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", "com.example.som"))
+
+            if (item!=0)
+                player.setBackgroundResource(R.drawable.player)
+            else
+                player.setBackgroundResource(R.drawable.board)
+        }
+    }
+
+    fun checkBoard(array: IntArray): Boolean {
+        for (item in array) {
+            if (item!=0)
+                return true
+        }
+        return false
     }
 
     fun changeQuestion(category: String) {

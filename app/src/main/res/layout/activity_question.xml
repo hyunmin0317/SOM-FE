@@ -37,76 +37,42 @@
                 android:weightSum="6"
                 >
                 <TextView
+                    android:id="@+id/board10"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
                 <TextView
+                    android:id="@+id/board9"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
                 <TextView
+                    android:id="@+id/board8"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
                 <TextView
+                    android:id="@+id/board7"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
                 <TextView
+                    android:id="@+id/board6"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
                 <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/board" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:weightSum="6"
-                >
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/board" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
+                    android:id="@+id/board5"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -121,6 +87,7 @@
                 android:weightSum="6"
                 >
                 <TextView
+                    android:id="@+id/board11"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -147,46 +114,7 @@
                     android:layout_weight="1"
                     android:layout_margin="10dp" />
                 <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/board" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:weightSum="6"
-                >
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/board" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp" />
-                <TextView
+                    android:id="@+id/board4"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -201,6 +129,7 @@
                 android:weightSum="6"
                 >
                 <TextView
+                    android:id="@+id/board12"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -227,6 +156,7 @@
                     android:layout_weight="1"
                     android:layout_margin="10dp" />
                 <TextView
+                    android:id="@+id/board3"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -241,6 +171,7 @@
                 android:weightSum="6"
                 >
                 <TextView
+                    android:id="@+id/board13"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -250,9 +181,39 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/board2"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:weightSum="6"
+                >
                 <TextView
+                    android:id="@+id/board14"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -262,15 +223,74 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/board1"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:weightSum="6"
+                >
                 <TextView
+                    android:id="@+id/board15"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
                     android:background="@drawable/board" />
                 <TextView
+                    android:id="@+id/board16"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/board" />
+                <TextView
+                    android:id="@+id/board17"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/board" />
+                <TextView
+                    android:id="@+id/board18"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/board" />
+                <TextView
+                    android:id="@+id/board19"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/board" />
+                <TextView
+                    android:id="@+id/board0"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
