@@ -25,6 +25,7 @@ class QuestionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_question)
 
         var arr = IntArray(20, { 0 } )
+        var cnt = 4
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
         category.text = "카테고리 - " + kCategory
@@ -35,24 +36,29 @@ class QuestionActivity : AppCompatActivity() {
         next.setOnClickListener {
             val num = playGame()
 
-            if (checkBoard(arr)) {
-                for ((index, item) in arr.withIndex()) {
-                    if (item!=0) {
-                        val idx = (index+num) % 20
-                        arr[idx] = item
-                        arr[index] = 0
-                        break
-                    }
+//            if (checkBoard(arr)) {
+//                for ((index, item) in arr.withIndex()) {
+//                    if (item!=0) {
+//                        val idx = (index+num) % 20
+//                        arr[idx] = item
+//                        arr[index] = 0
+//                        break
+//                    }
+//                }
+//            } else {
+//                if (num != -1)
+//                    arr[num] += 1
+//            }
+
+            start.setOnClickListener {
+                if (cnt != 0 && num != -1) {
+                    arr[num] += 1
+                    drawGame(arr)
+                    cnt--
                 }
-            } else {
-                if (num != -1)
-                    arr[num] = 1
             }
 
-            Toast.makeText(this@QuestionActivity, arr.toString(), Toast.LENGTH_LONG)
-
-            drawGame(arr)
-            changeQuestion(eCategory!!)
+//            changeQuestion(eCategory!!)
         }
     }
 
@@ -70,10 +76,12 @@ class QuestionActivity : AppCompatActivity() {
 
     fun drawGame(array: IntArray) {
         for ((index,item) in array.withIndex()) {
-            val player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", "com.example.som"))
+            val player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
 
-            if (item!=0)
-                player.setBackgroundResource(R.drawable.player)
+            if (item!=0) {
+                val drawable = resources.getIdentifier("player_$item", "drawable", packageName)
+                player.setBackgroundResource(drawable)
+            }
             else
                 player.setBackgroundResource(R.drawable.board)
         }
