@@ -24,40 +24,38 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
-        var arr = IntArray(20, { 0 } )
-        var cnt = 4
+        val SIZE = 20
+        var arr = IntArray(SIZE, { 0 } )
+        var players: ArrayList<TextView> = ArrayList()
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
         category.text = "카테고리 - " + kCategory
-
         createRetrofit()
 
+        for (i in 0..SIZE) {
+            players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
+        }
 
         next.setOnClickListener {
             val num = playGame()
 
-//            if (checkBoard(arr)) {
-//                for ((index, item) in arr.withIndex()) {
-//                    if (item!=0) {
-//                        val idx = (index+num) % 20
-//                        arr[idx] = item
-//                        arr[index] = 0
-//                        break
-//                    }
-//                }
-//            } else {
-//                if (num != -1)
-//                    arr[num] += 1
-//            }
-
-            start.setOnClickListener {
-                if (cnt != 0 && num != -1) {
-                    arr[num] += 1
-                    drawGame(arr)
-                    cnt--
+            for ((index,item) in arr.withIndex()) {
+                if (item!=0) {
+                    players[index].setOnClickListener {
+                        val idx = (index+num) % 20
+                        arr[idx] += item
+                        arr[index] = 0
+                        drawGame(arr)
+                    }
                 }
             }
 
+            start.setOnClickListener {
+                if (checkBoard(arr) && num != -1) {
+                    arr[num] += 1
+                    drawGame(arr)
+                }
+            }
 //            changeQuestion(eCategory!!)
         }
     }
@@ -88,11 +86,12 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     fun checkBoard(array: IntArray): Boolean {
-        for (item in array) {
-            if (item!=0)
-                return true
-        }
-        return false
+        var cnt = 0
+        for (item in array)
+            cnt += item
+        if (cnt == 4)
+            return false
+        return true
     }
 
     fun changeQuestion(category: String) {
