@@ -24,7 +24,7 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
-        val SIZE = 20
+        val SIZE = 31
         var arr = IntArray(SIZE, { 0 } )
         var players: ArrayList<TextView> = ArrayList()
         val kCategory = intent.getStringExtra("kcategory")
@@ -41,10 +41,11 @@ class QuestionActivity : AppCompatActivity() {
 
             for ((index,item) in arr.withIndex()) {
                 if (item!=0) {
-                    players[index].setOnClickListener {
-                        val idx = (index+num) % 20
+                    val ind = if (index == 28) 23 else index
+                    players[ind].setOnClickListener {
+                        var idx = getIndex(ind, num)
                         arr[idx] += item
-                        arr[index] = 0
+                        arr[ind] = 0
                         drawGame(arr)
                     }
                 }
@@ -58,6 +59,39 @@ class QuestionActivity : AppCompatActivity() {
             }
 //            changeQuestion(eCategory!!)
         }
+    }
+
+    fun getIndex(index: Int, num: Int): Int {
+        var start = index
+        var idx: Int
+
+        if (num == -1) {
+            if (start == 1)
+                return 0
+            else if (start == 21)
+                return 5
+            else if (start == 26)
+                return 10
+            else
+                return index + num
+        } else {
+            if (start == 5)
+                start = 20
+            else if (start == 10)
+                start = 25
+            else if (start == 23)
+                start = 28
+            else if (start in 16..20) {
+                if (start + num > 20)
+                    start += 11
+            }
+            else if (start in 21..25) {
+                if (start + num > 25)
+                    start -= 11
+            }
+        }
+        idx = if (start + num > 30) 0 else start + num
+        return idx
     }
 
     fun playGame(): Int {
@@ -74,14 +108,21 @@ class QuestionActivity : AppCompatActivity() {
 
     fun drawGame(array: IntArray) {
         for ((index,item) in array.withIndex()) {
-            val player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
+            if (index!=0) {
+                var player: TextView
 
-            if (item!=0) {
-                val drawable = resources.getIdentifier("player_$item", "drawable", packageName)
-                player.setBackgroundResource(drawable)
+                if (index == 28)
+                    player = findViewById(getResources().getIdentifier("board23", "id", packageName))
+                else
+                    player = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
+
+                if (item!=0) {
+                    val drawable = resources.getIdentifier("player_$item", "drawable", packageName)
+                    player.setBackgroundResource(drawable)
+                }
+                else
+                    player.setBackgroundResource(R.drawable.board)
             }
-            else
-                player.setBackgroundResource(R.drawable.board)
         }
     }
 
