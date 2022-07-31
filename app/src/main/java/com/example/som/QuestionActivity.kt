@@ -24,7 +24,7 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
-        val SIZE = 31
+        val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
         var players: ArrayList<TextView> = ArrayList()
         val kCategory = intent.getStringExtra("kcategory")
@@ -40,7 +40,7 @@ class QuestionActivity : AppCompatActivity() {
             val num = playGame()
 
             for ((index,item) in arr.withIndex()) {
-                if (item!=0) {
+                if (item!=0 && index!=0) {
                     val ind = if (index == 28) 23 else index
                     players[ind].setOnClickListener {
                         var idx = getIndex(ind, num)
@@ -62,36 +62,53 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     fun getIndex(index: Int, num: Int): Int {
-        var start = index
-        var idx: Int
+        var idx = index
 
         if (num == -1) {
-            if (start == 1)
-                return 0
-            else if (start == 21)
+            if (idx == 1)
+                return 20
+            else if (idx == 21)
                 return 5
-            else if (start == 26)
+            else if (idx == 26)
                 return 10
+            else if (idx == 28)
+                return 23
             else
                 return index + num
         } else {
-            if (start == 5)
-                start = 20
-            else if (start == 10)
-                start = 25
-            else if (start == 23)
-                start = 28
-            else if (start in 16..20) {
-                if (start + num > 20)
-                    start += 11
+            if (idx == 5)
+                idx = 20
+            else if (idx == 10) {
+                if (num in 1..2)
+                    idx = 25
+                else if (num == 3)
+                    return 23
+                else
+                    idx = 24
             }
-            else if (start in 21..25) {
-                if (start + num > 25)
-                    start -= 11
+            else if (idx == 23)
+                idx = 27
+            else if (idx in 16..20) {
+                if (idx + num > 20)
+                    return 0
+            }
+            else if (idx in 21..25) {
+                if (idx + num > 25)
+                    idx -= 11
+            }
+            else if (idx in 26..27) {
+                if (idx + num == 28)
+                    return 23
+                if (idx + num > 28)
+                    idx--
             }
         }
-        idx = if (start + num > 30) 0 else start + num
-        return idx
+        if (idx+num == 30)
+            return 20
+        else if (idx+num > 30)
+            return 0
+        else
+            return idx + num
     }
 
     fun playGame(): Int {
@@ -109,12 +126,7 @@ class QuestionActivity : AppCompatActivity() {
     fun drawGame(array: IntArray) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
-                var player: TextView
-
-                if (index == 28)
-                    player = findViewById(getResources().getIdentifier("board23", "id", packageName))
-                else
-                    player = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
+                var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
 
                 if (item!=0) {
                     val drawable = resources.getIdentifier("player_$item", "drawable", packageName)
@@ -130,7 +142,7 @@ class QuestionActivity : AppCompatActivity() {
         var cnt = 0
         for (item in array)
             cnt += item
-        if (cnt == 4)
+        if (cnt >= 4)
             return false
         return true
     }
