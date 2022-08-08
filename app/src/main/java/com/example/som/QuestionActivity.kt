@@ -57,7 +57,7 @@ class QuestionActivity : AppCompatActivity() {
                     drawGame(arr)
                 }
             }
-//            changeQuestion(eCategory!!)
+            changeQuestion(eCategory!!)
         }
     }
 
@@ -150,7 +150,7 @@ class QuestionActivity : AppCompatActivity() {
     fun changeQuestion(category: String) {
         val builder = AlertDialog.Builder(this)
 
-        service.getQuestion(
+        (application as MasterApplication).service.getQuestion(
             category
         ).enqueue(object : Callback<Question> {
             override fun onResponse(call: Call<Question>, response: Response<Question>) {
