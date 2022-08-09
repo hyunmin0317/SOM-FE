@@ -40,32 +40,26 @@ class QuestionActivity : AppCompatActivity() {
                     players[index].setOnClickListener {
                         var idx = getIndex(index, num)
 
-                        if (turn && item > 0) {
-                            if (arr[idx] < 0)
+                        if (turn == item > 0) {
+                            if (turn == arr[idx] < 0)
                                 arr[idx] = item
                             else
                                 arr[idx] += item
                             arr[index] = 0
                             drawGame(arr)
-                            players[index].setOnClickListener(null)
                             turn = !turn
-                        }
-                        if (!turn && item < 0) {
-                            if (arr[idx] > 0)
-                                arr[idx] = item
-                            else
-                                arr[idx] -= item
-                            arr[index] = 0
-                            drawGame(arr)
-                            players[index].setOnClickListener(null)
-                            turn = !turn
+
+                            start.setOnClickListener(null)
+                            for ((index,item) in arr.withIndex())
+                                if (item!=0 && index!=0)
+                                    players[index]?.setOnClickListener(null)
                         }
                     }
                 }
             }
 
             start.setOnClickListener {
-                if (num != -1) {
+                if (num != -1 && checkBoard(arr, turn)) {
                     if (turn) {
                         if (arr[num] < 0)
                             arr[num] = 1
@@ -79,8 +73,12 @@ class QuestionActivity : AppCompatActivity() {
                             arr[num] -= 1
                     }
                     drawGame(arr)
-                    start.setOnClickListener(null)
                     turn = !turn
+
+                    start.setOnClickListener(null)
+                    for ((index,item) in arr.withIndex())
+                        if (item!=0 && index!=0)
+                            players[index]?.setOnClickListener(null)
                 }
             }
 //            changeQuestion(eCategory!!)
@@ -168,11 +166,13 @@ class QuestionActivity : AppCompatActivity() {
         }
     }
 
-    fun checkBoard(array: IntArray): Boolean {
+    fun checkBoard(array: IntArray, turn: Boolean): Boolean {
         var cnt = 0
-        for (item in array)
-            cnt += item
-        if (cnt >= 4)
+        for (item in array) {
+            if (turn && item > 0 || !turn && item < 0)
+                cnt += item
+        }
+        if (cnt >= 4 || cnt <= -4)
             return false
         return true
     }
