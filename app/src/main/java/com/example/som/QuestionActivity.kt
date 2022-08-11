@@ -38,16 +38,17 @@ class QuestionActivity : AppCompatActivity() {
             for ((index,item) in arr.withIndex()) {
                 if (item!=0 && index!=0) {
                     players[index].setOnClickListener {
-                        var idx = getIndex(index, num)
-
                         if (turn == item > 0) {
+                            var idx = getIndex(index, num)
+
                             if (turn == arr[idx] < 0)
                                 arr[idx] = item
-                            else
+                            else {
                                 arr[idx] += item
+                                turn = !turn
+                            }
                             arr[index] = 0
                             drawGame(arr)
-                            turn = !turn
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -63,17 +64,20 @@ class QuestionActivity : AppCompatActivity() {
                     if (turn) {
                         if (arr[num] < 0)
                             arr[num] = 1
-                        else
+                        else {
                             arr[num] += 1
+                            turn = !turn
+                        }
                     }
                     else {
                         if (arr[num] > 0)
                             arr[num] = -1
-                        else
+                        else {
                             arr[num] -= 1
+                            turn = !turn
+                        }
                     }
                     drawGame(arr)
-                    turn = !turn
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -81,7 +85,7 @@ class QuestionActivity : AppCompatActivity() {
                             players[index]?.setOnClickListener(null)
                 }
             }
-//            changeQuestion(eCategory!!)
+            changeQuestion(eCategory!!)
         }
     }
 
@@ -137,14 +141,26 @@ class QuestionActivity : AppCompatActivity() {
 
     fun playGame(): Int {
         val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
-        val range = (0..5)
-        var num = range.random()
+        var num = percentage()
         val drawable = resources.getIdentifier("yut_$num", "drawable", packageName)
         yut.setBackgroundResource(drawable)
         yut.setText(yuts[num])
         if (num == 0)
             num = -1
         return num
+    }
+
+    fun percentage(): Int {
+        val per = arrayOf(2, 17, 31, 34, 13, 3)
+        val range = (1..100)
+        var num = range.random()
+
+        for ((index,item) in per.withIndex()) {
+            if (num <= item)
+                return index
+            num -= item
+        }
+        return 5
     }
 
     fun drawGame(array: IntArray) {
