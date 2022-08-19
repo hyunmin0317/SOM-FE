@@ -735,15 +735,21 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="#FFF0C4">
+
         <TextView
             android:id="@+id/yut"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:background="@drawable/yut_5"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:text="윷놀이"
+            android:background="@drawable/yut_5"
             android:textSize="25dp" />
+        </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
