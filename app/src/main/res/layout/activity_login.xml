@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#1D3045"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:text="SOM"
-        android:textColor="#000000"
-        android:fontFamily="@font/billabong"
+        android:background="@drawable/logo"
         android:textSize="80dp" />
 
 
@@ -58,7 +57,7 @@
             android:layout_marginTop="50dp"
             android:padding="15dp"
             android:background="@drawable/rounded_button"
-            android:textColor="#ffffff"
+            android:textColor="#FFEC99"
             android:gravity="center"
             android:text="로그인"
             android:textSize="18dp"
@@ -72,7 +71,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="15dp"
             android:text="계정이 없으신가요?" />
 
