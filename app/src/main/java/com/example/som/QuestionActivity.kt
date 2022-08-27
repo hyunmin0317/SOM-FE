@@ -32,7 +32,7 @@ class QuestionActivity : AppCompatActivity() {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
         }
 
-        next.setOnClickListener {
+        yut.setOnClickListener {
             val num = playGame()
 
             for ((index,item) in arr.withIndex()) {
