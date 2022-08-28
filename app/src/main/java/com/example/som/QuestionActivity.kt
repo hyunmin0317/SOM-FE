@@ -1,7 +1,6 @@
 package com.example.som
 
 import android.content.DialogInterface
-import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -24,16 +23,19 @@ class QuestionActivity : AppCompatActivity() {
         var players: ArrayList<TextView> = ArrayList()
         var player1 = 4
         var player2 = 4
+        var score1 = 0
+        var score2 = 0
         var turn = true
 
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
 
-        category.text = "카테고리 - " + kCategory
-
         for (i in 0..SIZE) {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
         }
+
+        category.text = "카테고리 - " + kCategory
+        drawGame(arr, player1, player2, score1, score2)
 
         yut.setOnClickListener {
             val num = playGame()
@@ -45,27 +47,33 @@ class QuestionActivity : AppCompatActivity() {
                             var idx = getIndex(index, num)
 
                             if (turn) {
-                                if (arr[idx] < 0) {
+                                if (arr[idx] < 0 && idx != 0) {
                                     player2 -= arr[idx]
                                     arr[idx] = item
                                 }
                                 else {
-                                    arr[idx] += item
+                                    if (idx == 0)
+                                        score1 += item
+                                    else
+                                        arr[idx] += item
                                     turn = !turn
                                 }
                             }
                             else {
-                                if (arr[idx] > 0) {
+                                if (arr[idx] > 0 && idx != 0) {
                                     player1 += arr[idx]
                                     arr[idx] = item
                                 }
                                 else {
-                                    arr[idx] += item
+                                    if (idx == 0)
+                                        score2 -= item
+                                    else
+                                        arr[idx] += item
                                     turn = !turn
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2)
+                            drawGame(arr, player1, player2, score1, score2)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -77,7 +85,7 @@ class QuestionActivity : AppCompatActivity() {
             }
 
             start.setOnClickListener {
-                if (num != -1 && checkBoard(arr, turn)) {
+                if (num != -1 && checkBoard(turn, player1, player2)) {
                     if (turn) {
                         if (arr[num] < 0) {
                             player2 -= arr[num]
@@ -100,7 +108,7 @@ class QuestionActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2)
+                    drawGame(arr, player1, player2, score1, score2)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -186,7 +194,7 @@ class QuestionActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -203,19 +211,36 @@ class QuestionActivity : AppCompatActivity() {
                     player.setBackgroundResource(R.drawable.board)
             }
         }
-        player1.text = player01.toString()
-        player2.text = player02.toString()
+
+        for (num in 1..4) {
+            var player1: TextView = findViewById(getResources().getIdentifier("player1_" + num, "id", packageName))
+            var player2: TextView = findViewById(getResources().getIdentifier("player2_" + num, "id", packageName))
+
+            if (num <= player01)
+                player1.setBackgroundResource(R.drawable.player_1)
+            else
+                player1.setBackgroundResource(R.drawable.noplayer)
+
+            if (num <= player02)
+                player2.setBackgroundResource(R.drawable.player_01)
+            else
+                player2.setBackgroundResource(R.drawable.noplayer)
+        }
+
+        score1.text = score01.toString()
+        score2.text = score02.toString()
     }
 
-    fun checkBoard(array: IntArray, turn: Boolean): Boolean {
-        var cnt = 0
-        for (item in array) {
-            if (turn && item > 0 || !turn && item < 0)
-                cnt += item
+    fun checkBoard(turn: Boolean, player01: Int, player02: Int): Boolean {
+        if (turn) {
+            if (player01 != 0)
+                return true
         }
-        if (cnt >= 4 || cnt <= -4)
-            return false
-        return true
+        else {
+            if (player02 != 0)
+                return true
+        }
+        return false
     }
 
     fun changeQuestion(category: String) {
