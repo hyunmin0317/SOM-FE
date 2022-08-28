@@ -116,7 +116,7 @@ class QuestionActivity : AppCompatActivity() {
                             players[index]?.setOnClickListener(null)
                 }
             }
-//            changeQuestion(eCategory!!)
+            changeQuestion(eCategory!!)
         }
     }
 
