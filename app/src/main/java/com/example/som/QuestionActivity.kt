@@ -22,9 +22,12 @@ class QuestionActivity : AppCompatActivity() {
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
         var players: ArrayList<TextView> = ArrayList()
+        var player1 = 4
+        var player2 = 4
+        var turn = true
+
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
-        var turn = true
 
         category.text = "카테고리 - " + kCategory
 
@@ -41,14 +44,28 @@ class QuestionActivity : AppCompatActivity() {
                         if (turn == item > 0) {
                             var idx = getIndex(index, num)
 
-                            if (turn == arr[idx] < 0)
-                                arr[idx] = item
+                            if (turn) {
+                                if (arr[idx] < 0) {
+                                    player2 -= arr[idx]
+                                    arr[idx] = item
+                                }
+                                else {
+                                    arr[idx] += item
+                                    turn = !turn
+                                }
+                            }
                             else {
-                                arr[idx] += item
-                                turn = !turn
+                                if (arr[idx] > 0) {
+                                    player1 += arr[idx]
+                                    arr[idx] = item
+                                }
+                                else {
+                                    arr[idx] += item
+                                    turn = !turn
+                                }
                             }
                             arr[index] = 0
-                            drawGame(arr)
+                            drawGame(arr, player1, player2)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -62,22 +79,28 @@ class QuestionActivity : AppCompatActivity() {
             start.setOnClickListener {
                 if (num != -1 && checkBoard(arr, turn)) {
                     if (turn) {
-                        if (arr[num] < 0)
+                        if (arr[num] < 0) {
+                            player2 -= arr[num]
                             arr[num] = 1
+                        }
                         else {
                             arr[num] += 1
                             turn = !turn
                         }
+                        player1 -= 1
                     }
                     else {
-                        if (arr[num] > 0)
+                        if (arr[num] > 0) {
+                            player1 += arr[num]
                             arr[num] = -1
+                        }
                         else {
                             arr[num] -= 1
                             turn = !turn
                         }
+                        player2 -= 1
                     }
-                    drawGame(arr)
+                    drawGame(arr, player1, player2)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -85,7 +108,7 @@ class QuestionActivity : AppCompatActivity() {
                             players[index]?.setOnClickListener(null)
                 }
             }
-            changeQuestion(eCategory!!)
+//            changeQuestion(eCategory!!)
         }
     }
 
@@ -163,7 +186,7 @@ class QuestionActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -180,6 +203,8 @@ class QuestionActivity : AppCompatActivity() {
                     player.setBackgroundResource(R.drawable.board)
             }
         }
+        player1.text = player01.toString()
+        player2.text = player02.toString()
     }
 
     fun checkBoard(array: IntArray, turn: Boolean): Boolean {
