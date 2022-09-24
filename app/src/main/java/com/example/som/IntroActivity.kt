@@ -16,12 +16,12 @@ class IntroActivity : AppCompatActivity() {
             handler.postDelayed({
                 var intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-            }, 1000)
+            }, 3000)
         } else {
             handler.postDelayed({
                 var intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
-            }, 1000)
+            }, 3000)
         }
 
     }
