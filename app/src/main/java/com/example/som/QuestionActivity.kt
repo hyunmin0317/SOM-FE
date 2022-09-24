@@ -27,6 +27,7 @@ class QuestionActivity : AppCompatActivity() {
         var score2 = 0
         var turn = true
 
+        val builder = AlertDialog.Builder(this)
         val kCategory = intent.getStringExtra("kcategory")
         val eCategory = intent.getStringExtra("ecategory")
 
@@ -47,9 +48,12 @@ class QuestionActivity : AppCompatActivity() {
                             var idx = getIndex(index, num)
 
                             if (turn) {
-                                if (arr[idx] < 0 && idx != 0) {
+                                if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
                                     player2 -= arr[idx]
                                     arr[idx] = item
+
+                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                                    builder.show()
                                 }
                                 else {
                                     if (idx == 0)
@@ -60,9 +64,12 @@ class QuestionActivity : AppCompatActivity() {
                                 }
                             }
                             else {
-                                if (arr[idx] > 0 && idx != 0) {
+                                if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
                                     player1 += arr[idx]
                                     arr[idx] = item
+
+                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                                    builder.show()
                                 }
                                 else {
                                     if (idx == 0)
@@ -85,11 +92,15 @@ class QuestionActivity : AppCompatActivity() {
             }
 
             start.setOnClickListener {
+
                 if (num != -1 && checkBoard(turn, player1, player2)) {
                     if (turn) {
-                        if (arr[num] < 0) {
+                        if (arr[num] < 0) {     // 말을 잡을 경우
                             player2 -= arr[num]
                             arr[num] = 1
+
+                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                            builder.show()
                         }
                         else {
                             arr[num] += 1
@@ -98,9 +109,12 @@ class QuestionActivity : AppCompatActivity() {
                         player1 -= 1
                     }
                     else {
-                        if (arr[num] > 0) {
+                        if (arr[num] > 0) {     // 말을 잡을 경우
                             player1 += arr[num]
                             arr[num] = -1
+
+                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                            builder.show()
                         }
                         else {
                             arr[num] -= 1
