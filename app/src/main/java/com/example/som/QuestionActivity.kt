@@ -34,8 +34,8 @@ class QuestionActivity : AppCompatActivity() {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
         }
 
-        category.text = "카테고리 - " + kCategory
-        drawGame(arr, player1, player2, score1, score2)
+        category.text = kCategory
+        drawGame(arr, player1, player2, score1, score2, turn)
 
         yut.setOnClickListener {
             val num = playGame()
@@ -73,7 +73,7 @@ class QuestionActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2)
+                            drawGame(arr, player1, player2, score1, score2, turn)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -108,7 +108,7 @@ class QuestionActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2)
+                    drawGame(arr, player1, player2, score1, score2, turn)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -194,7 +194,7 @@ class QuestionActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -229,6 +229,8 @@ class QuestionActivity : AppCompatActivity() {
 
         score1.text = score01.toString()
         score2.text = score02.toString()
+
+        showTurn(turn)
     }
 
     fun checkBoard(turn: Boolean, player01: Int, player02: Int): Boolean {
@@ -264,5 +266,15 @@ class QuestionActivity : AppCompatActivity() {
                 Toast.makeText(this@QuestionActivity, "서버 오류", Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    fun showTurn(turn: Boolean) {
+        if (turn) {
+            player1.setBackgroundResource(R.drawable.check_box)
+            player2.setBackgroundResource(R.drawable.white_box)
+        } else {
+            player1.setBackgroundResource(R.drawable.white_box)
+            player2.setBackgroundResource(R.drawable.check_box)
+        }
     }
 }
