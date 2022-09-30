@@ -1,4 +1,4 @@
-package com.example.som
+package com.smu.som
 
 import android.app.Application
 import android.content.Context

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.som">
+    package="com.smu.som">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.som.MasterApplication"
+        android:name="com.smu.som.MasterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.SOM">
-        <activity android:name=".IntroActivity"
+        <activity android:name="com.smu.som.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".QuestionActivity" />
-        <activity android:name=".UserInfoActivity" />
+        <activity android:name="com.smu.som.LoginActivity" />
+        <activity android:name="com.smu.som.SignupActivity" />
+        <activity android:name="com.smu.som.MainActivity" />
+        <activity android:name="com.smu.som.QuestionActivity" />
+        <activity android:name="com.smu.som.UserInfoActivity" />
     </application>
 </manifest>

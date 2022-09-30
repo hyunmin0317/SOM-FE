@@ -1,4 +1,4 @@
-package com.example.som
+package com.smu.som
 
 import java.io.Serializable
 
