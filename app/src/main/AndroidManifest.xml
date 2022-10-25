@@ -16,17 +16,18 @@
         android:largeHeap="true"
         android:theme="@style/Theme.SOM">
         <activity android:name="com.smu.som.IntroActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.smu.som.LoginActivity" />
-        <activity android:name="com.smu.som.SignupActivity" />
-        <activity android:name="com.smu.som.MainActivity" />
-        <activity android:name="com.smu.som.QuestionActivity" />
-        <activity android:name="com.smu.som.UserInfoActivity" />
+        <activity android:name="com.smu.som.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.smu.som.SignupActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.smu.som.MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.smu.som.QuestionActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.smu.som.UserInfoActivity" android:screenOrientation="portrait"/>
     </application>
 </manifest>
