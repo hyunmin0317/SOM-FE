@@ -39,6 +39,7 @@ class QuestionActivity : AppCompatActivity() {
         drawGame(arr, player1, player2, score1, score2, turn)
 
         yut.setOnClickListener {
+            yut.isClickable = false
             val num = playGame()
 
             for ((index,item) in arr.withIndex()) {
@@ -86,14 +87,14 @@ class QuestionActivity : AppCompatActivity() {
                             for ((index,item) in arr.withIndex())
                                 if (item!=0 && index!=0)
                                     players[index]?.setOnClickListener(null)
+                            yut.isClickable = true
                         }
                     }
                 }
             }
 
             start.setOnClickListener {
-
-                if (num != -1 && checkBoard(turn, player1, player2)) {
+                if (num != -1 && checkBoard(turn, player1, player2) != 0) {
                     if (turn) {
                         if (arr[num] < 0) {     // 말을 잡을 경우
                             player2 -= arr[num]
@@ -128,9 +129,18 @@ class QuestionActivity : AppCompatActivity() {
                     for ((index,item) in arr.withIndex())
                         if (item!=0 && index!=0)
                             players[index]?.setOnClickListener(null)
+                    yut.isClickable = true
                 }
             }
-            changeQuestion(eCategory!!)
+
+            if (num == -1 && checkBoard(turn, player1, player2) == 4) {
+                yut.isClickable = true
+                builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                builder.show()
+            }
+            else {
+                changeQuestion(eCategory!!)
+            }
         }
     }
 
@@ -247,16 +257,11 @@ class QuestionActivity : AppCompatActivity() {
         showTurn(turn)
     }
 
-    fun checkBoard(turn: Boolean, player01: Int, player02: Int): Boolean {
+    fun checkBoard(turn: Boolean, player01: Int, player02: Int): Int {
         if (turn) {
-            if (player01 != 0)
-                return true
+            return player01
         }
-        else {
-            if (player02 != 0)
-                return true
-        }
-        return false
+        return player02
     }
 
     fun changeQuestion(category: String) {
