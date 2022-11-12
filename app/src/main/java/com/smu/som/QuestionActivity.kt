@@ -245,12 +245,12 @@ class QuestionActivity : AppCompatActivity() {
             if (num <= player01)
                 player1.setBackgroundResource(R.drawable.player_1)
             else
-                player1.setBackgroundResource(R.drawable.noplayer)
+                player1.setBackgroundResource(R.drawable.noplayer_1)
 
             if (num <= player02)
                 player2.setBackgroundResource(R.drawable.player_01)
             else
-                player2.setBackgroundResource(R.drawable.noplayer)
+                player2.setBackgroundResource(R.drawable.noplayer_01)
         }
 
         score1.text = score01.toString()
