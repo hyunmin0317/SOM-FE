@@ -3,6 +3,8 @@ package com.smu.som
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -199,9 +201,12 @@ class QuestionActivity : AppCompatActivity() {
     fun playGame(): Int {
         val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
         var num = percentage()
-        val drawable = resources.getIdentifier("yut_$num", "drawable", packageName)
-        yut.setBackgroundResource(drawable)
-        yut.setText(yuts[num])
+
+        yut.setBackgroundResource(resources.getIdentifier("result_$num", "drawable", packageName))
+        Handler(Looper.getMainLooper()).postDelayed({
+            yut.setBackgroundResource(resources.getIdentifier("yut_$num", "drawable", packageName))
+            yut.setText(yuts[num])
+        }, 2000)
         if (num == 0)
             num = -1
         return num
