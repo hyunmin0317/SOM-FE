@@ -52,32 +52,32 @@ class QuestionActivity : AppCompatActivity() {
                                 if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
                                     player2 -= arr[idx]
                                     arr[idx] = item
-
-                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                                    builder.show()
+                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                                 }
                                 else {
                                     if (idx == 0)
                                         score1 += item
                                     else
                                         arr[idx] += item
-                                    turn = !turn
+                                    if (num != 4 && num!= 5)
+                                        turn = !turn
+                                    else
+                                        builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                                 }
                             }
                             else {
                                 if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
                                     player1 += arr[idx]
                                     arr[idx] = item
-
-                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                                    builder.show()
+                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                                 }
                                 else {
                                     if (idx == 0)
                                         score2 -= item
                                     else
                                         arr[idx] += item
-                                    turn = !turn
+                                    if (num != 4 && num!= 5)
+                                        turn = !turn
                                 }
                             }
                             arr[index] = 0
@@ -99,13 +99,14 @@ class QuestionActivity : AppCompatActivity() {
                         if (arr[num] < 0) {     // 말을 잡을 경우
                             player2 -= arr[num]
                             arr[num] = 1
-
-                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                            builder.show()
+                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         else {
                             arr[num] += 1
-                            turn = !turn
+                            if (num != 4 && num!= 5)
+                                turn = !turn
+                            else
+                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         player1 -= 1
                     }
@@ -113,13 +114,14 @@ class QuestionActivity : AppCompatActivity() {
                         if (arr[num] > 0) {     // 말을 잡을 경우
                             player1 += arr[num]
                             arr[num] = -1
-
-                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                            builder.show()
+                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         else {
                             arr[num] -= 1
-                            turn = !turn
+                            if (num != 4 && num!= 5)
+                                turn = !turn
+                            else
+                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         player2 -= 1
                     }
@@ -135,11 +137,11 @@ class QuestionActivity : AppCompatActivity() {
 
             if (num == -1 && checkBoard(turn, player1, player2) == 4) {
                 yut.isClickable = true
-                builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                builder.show()
+                builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
             }
             else {
-                changeQuestion(eCategory!!)
+                if (num != 4 && num!= 5)
+                    changeQuestion(eCategory!!)
             }
         }
     }
@@ -274,8 +276,7 @@ class QuestionActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val question = response.body()
                     builder.setTitle("질문").setMessage(question!!.content)
-                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                    builder.show()
+                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                 } else {
                     Toast.makeText(this@QuestionActivity, "잘못된 카테고리 입니다.", Toast.LENGTH_LONG).show()
                 }
@@ -291,9 +292,11 @@ class QuestionActivity : AppCompatActivity() {
         if (turn) {
             player1.setBackgroundResource(R.drawable.check_box)
             player2.setBackgroundResource(R.drawable.white_box)
+            yut.setText("player1 차례")
         } else {
             player1.setBackgroundResource(R.drawable.white_box)
             player2.setBackgroundResource(R.drawable.check_box)
+            yut.setText("player2 차례")
         }
     }
 }
