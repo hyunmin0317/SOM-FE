@@ -4,31 +4,92 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
+
+import android.widget.ImageButton
+import android.widget.Toast
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.util.Utility
+import com.kakao.sdk.common.model.AuthErrorCause.*
+import com.kakao.sdk.user.UserApiClient
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
-        val categoryArray = arrayOf("연인", "부부", "부모자녀") // 리스트에 들어갈 Array
-        val categoryMap = hashMapOf("연인" to "married", "부부" to "married", "부모자녀" to "married")
-
-        start.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("카테고리 선택하기")
-                .setItems(categoryArray,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        val intent = Intent(this, QuestionActivity::class.java)
-                        val kcategory = categoryArray[which]
-                        val ecategory = categoryMap[kcategory]
-                        intent.putExtra("kcategory", kcategory)
-                        intent.putExtra("ecategory", ecategory)
-                        startActivity(intent)
-                    })
-            builder.show()
+        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+            if (error != null) {
+                //Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
+            }
+            else if (tokenInfo != null) {
+                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SecondActivity::class.java)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                finish()
+            }
         }
+
+
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if (error != null) {
+                when {
+                    error.toString() == AccessDenied.toString() -> {
+                        Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == InvalidClient.toString() -> {
+                        Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == InvalidGrant.toString() -> {
+                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == InvalidRequest.toString() -> {
+                        Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == InvalidScope.toString() -> {
+                        Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == Misconfigured.toString() -> {
+                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == ServerError.toString() -> {
+                        Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == Unauthorized.toString() -> {
+                        Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> { // Unknown
+                        Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            else if (token != null) {
+                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SecondActivity::class.java)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                finish()
+            }
+        }
+
+
+        val kakao_login_button = findViewById<ImageButton>(R.id.kakao_login_button3) // 로그인 버튼
+
+        kakao_login_button.setOnClickListener {
+            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+
+
+            }else{
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
+        }
+
+
+
+
     }
 }

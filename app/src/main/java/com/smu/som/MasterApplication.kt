@@ -4,22 +4,29 @@ import android.app.Application
 import android.content.Context
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.kakao.sdk.common.KakaoSdk
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+
 class MasterApplication : Application() {
+
 
     lateinit var service: RetrofitService
 
     override fun onCreate() {
         super.onCreate()
 
+        KakaoSdk.init(this, "175653fd218fc521750bb7d465424d14")
+
+
         Stetho.initializeWithDefaults(this)
         createRetrofit()
         //chrome://inspect/#devices
+
     }
 
 
@@ -66,5 +73,6 @@ class MasterApplication : Application() {
         if (token == "null") return null
         else return token
     }
+
 
 }

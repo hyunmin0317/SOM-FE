@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.smu.som">
 
+
+    <!-- 인터넷 사용 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +17,21 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true"
         android:theme="@style/Theme.SOM">
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao175653fd218fc521750bb7d465424d14" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="com.smu.som.IntroActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -24,7 +41,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity android:name="com.smu.som.SecondActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.smu.som.MainActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.smu.som.QuestionActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.smu.som.temp" android:screenOrientation="portrait" />
     </application>
 </manifest>
