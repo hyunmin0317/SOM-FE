@@ -287,7 +287,6 @@ class QuestionActivity : AppCompatActivity() {
 
             if (score01 == 4) {
                 content = "player1 이 승리했습니다!"
-                finish()
             } else {
                 content = "player2 가 승리했습니다!"
             }
@@ -296,7 +295,7 @@ class QuestionActivity : AppCompatActivity() {
                     startActivity(Intent(this, QuestionActivity::class.java))
                     finish()
                 })
-                .setPositiveButton("처음으로", DialogInterface.OnClickListener { dialog, id ->
+                .setNegativeButton("처음으로", DialogInterface.OnClickListener { dialog, id ->
                     startActivity(Intent(this, IntroActivity::class.java))
                     finish()
                 }).show()
@@ -305,7 +304,7 @@ class QuestionActivity : AppCompatActivity() {
             handler.postDelayed({
                 startActivity(Intent(this, IntroActivity::class.java))
                 finish()
-            }, 5000)
+            }, 6000)
         }
     }
 
