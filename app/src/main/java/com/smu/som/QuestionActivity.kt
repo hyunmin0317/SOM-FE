@@ -1,11 +1,14 @@
 package com.smu.som
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -205,11 +208,12 @@ class QuestionActivity : AppCompatActivity() {
     fun playGame(): Int {
         val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
         var num = percentage()
+        var value = num
 
-        yut.setBackgroundResource(resources.getIdentifier("result_$num", "drawable", packageName))
+        yut.setBackgroundResource(resources.getIdentifier("result_$value", "drawable", packageName))
         Handler(Looper.getMainLooper()).postDelayed({
-            yut.setBackgroundResource(resources.getIdentifier("yut_$num", "drawable", packageName))
-            yut.setText(yuts[num])
+            yut.setText(yuts[value])
+            yut.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
         }, 2000)
         if (num == 0)
             num = -1
@@ -217,7 +221,7 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     fun percentage(): Int {
-        val per = arrayOf(2, 17, 31, 34, 13, 3)
+        val per = arrayOf(50, 17, 31, 34, 13, 3)
         val range = (1..100)
         var num = range.random()
 
@@ -265,6 +269,7 @@ class QuestionActivity : AppCompatActivity() {
         score1.text = score01.toString()
         score2.text = score02.toString()
 
+        checkWin(score01, score02)
         showTurn(turn)
     }
 
@@ -274,6 +279,36 @@ class QuestionActivity : AppCompatActivity() {
         }
         return player02
     }
+
+    fun checkWin(score01: Int, score02: Int) {
+        if (score01 == 4 || score02 == 4) {
+            val builder = AlertDialog.Builder(this)
+            var content = ""
+
+            if (score01 == 4) {
+                content = "player1 이 승리했습니다!"
+                finish()
+            } else {
+                content = "player2 가 승리했습니다!"
+            }
+            builder.setTitle("질문").setMessage(content)
+                .setPositiveButton("다시하기", DialogInterface.OnClickListener { dialog, id ->
+                    startActivity(Intent(this, QuestionActivity::class.java))
+                    finish()
+                })
+                .setPositiveButton("처음으로", DialogInterface.OnClickListener { dialog, id ->
+                    startActivity(Intent(this, IntroActivity::class.java))
+                    finish()
+                }).show()
+
+            var handler = Handler()
+            handler.postDelayed({
+                startActivity(Intent(this, IntroActivity::class.java))
+                finish()
+            }, 5000)
+        }
+    }
+
 
     fun changeQuestion(category: String) {
         val builder = AlertDialog.Builder(this)

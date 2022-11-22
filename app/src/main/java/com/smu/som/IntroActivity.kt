@@ -17,29 +17,20 @@ class IntroActivity : AppCompatActivity() {
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+                handler.postDelayed({
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }, 3000)
             }
             else if (tokenInfo != null) {
-                val intent = Intent(this, MypageActivity::class.java)
-                startActivity(intent)
-                finish()
+                handler.postDelayed({
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }, 3000)
             }
         }
-
-//        if ((application as MasterApplication).checkIsLogin()) {
-//            handler.postDelayed({
-//                var intent = Intent(this, LoginActivity::class.java)
-//                startActivity(intent)
-//            }, 3000)
-//        } else {
-//            handler.postDelayed({
-//                var intent = Intent(this, LoginActivity::class.java)
-//                startActivity(intent)
-//            }, 3000)
-//        }
-
     }
 
     override fun onPause() {
