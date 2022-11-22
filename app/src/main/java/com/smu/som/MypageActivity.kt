@@ -1,15 +1,13 @@
 package com.smu.som
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
-import com.kakao.sdk.user.model.AgeRange
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_mypage.*
 
 class MypageActivity : AppCompatActivity() {
@@ -17,22 +15,31 @@ class MypageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
 
+        val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        val editor = sp.edit()
+
         UserApiClient.instance.me { user, error ->
             val nickname = user?.kakaoAccount?.profile?.nickname
-            val ageRange = user?.kakaoAccount?.ageRange
+            val profileImageUrl = user?.kakaoAccount?.profile?.profileImageUrl
 
-            Log.i(TAG, user?.kakaoAccount?.profile?.nickname.toString())
-            Log.i(TAG, user?.kakaoAccount?.profile?.profileImageUrl.toString())
-
-            if (ageRange == AgeRange.AGE_20_29 || ageRange == AgeRange.AGE_30_39 || ageRange == AgeRange.AGE_40_49 || ageRange == AgeRange.AGE_50_59
-                || ageRange == AgeRange.AGE_60_69 || ageRange == AgeRange.AGE_70_79 || ageRange == AgeRange.AGE_80_89 || ageRange == AgeRange.AGE_90_ABOVE) {
-                Log.e(TAG, "성인: ${ageRange}")
-            }
-            age.text = ageRange.toString()
             name.text = nickname.toString()
+            if (profileImageUrl == null)
+                setImage("https://github.com/hyunmin0317/Outstagram/blob/master/github/basic.jpg?raw=true")
+            else
+                setImage(profileImageUrl)
+
+            val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+            val isAdult = sp.getBoolean("isAdult", false)
+            if (isAdult) {
+                age.text = "성인 O"
+            } else {
+                age.text = "성인 X"
+            }
         }
 
         logout.setOnClickListener {
+            editor.putBoolean("isAdult", false)
+            editor.commit()
             UserApiClient.instance.logout { error ->
                 if (error != null) {
                     Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
@@ -46,6 +53,8 @@ class MypageActivity : AppCompatActivity() {
         }
 
         unlink.setOnClickListener {
+            editor.putBoolean("isAdult", false)
+            editor.commit()
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
                     Log.e(TAG, "탈퇴 실패. SDK에서 토큰 삭제됨", error)
@@ -63,5 +72,9 @@ class MypageActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    fun setImage(url: String?) {
+        Glide.with(this).load(url).into(findViewById(R.id.profile_img))
     }
 }

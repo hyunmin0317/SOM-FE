@@ -1,11 +1,17 @@
 package com.smu.som
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.model.AgeRange
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_mypage.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +21,24 @@ class MainActivity : AppCompatActivity() {
 
         val categoryArray = arrayOf("연인", "부부", "부모자녀") // 리스트에 들어갈 Array
         val categoryMap = hashMapOf("연인" to "married", "부부" to "married", "부모자녀" to "married")
+
+
+        UserApiClient.instance.me { user, error ->
+            val ageRange = user?.kakaoAccount?.ageRange
+            var isAdult = false
+
+
+            if (ageRange == AgeRange.AGE_20_29 || ageRange == AgeRange.AGE_30_39 || ageRange == AgeRange.AGE_40_49 || ageRange == AgeRange.AGE_50_59
+                || ageRange == AgeRange.AGE_60_69 || ageRange == AgeRange.AGE_70_79 || ageRange == AgeRange.AGE_80_89 || ageRange == AgeRange.AGE_90_ABOVE) {
+                isAdult = true
+            }
+
+            val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+            val editor = sp.edit()
+            editor.putBoolean("isAdult", isAdult)
+            editor.commit()
+        }
+
 
         start.setOnClickListener {
             val builder = AlertDialog.Builder(this)

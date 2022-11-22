@@ -1,5 +1,6 @@
 package com.smu.som
 
+import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,9 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+
+        val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        val isAdult = sp.getBoolean("isAdult", false)
 
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
