@@ -5,31 +5,39 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.smu.som.MasterApplication"
+        android:name=".MasterApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
-        android:theme="@style/Theme.SOM">
+        android:theme="@style/Theme.SOM"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MypageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakao0425052377c53747dafc8aa3bfb953df" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.smu.som.IntroActivity"
+        <activity
+            android:name=".IntroActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -38,7 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.smu.som.MainActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.smu.som.QuestionActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuestionActivity"
+            android:screenOrientation="portrait" />
     </application>
+
 </manifest>

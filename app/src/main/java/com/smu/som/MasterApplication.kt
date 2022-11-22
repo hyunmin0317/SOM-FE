@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.kakao.sdk.common.KakaoSdk
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -16,9 +17,11 @@ class MasterApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         Stetho.initializeWithDefaults(this)
         createRetrofit()
+
+        KakaoSdk.init(this, getString(R.string.kakao_native_key))
+
         //chrome://inspect/#devices
     }
 
