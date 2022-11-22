@@ -27,8 +27,15 @@ class MainActivity : AppCompatActivity() {
                         intent.putExtra("kcategory", kcategory)
                         intent.putExtra("ecategory", ecategory)
                         startActivity(intent)
+                        finish()
                     })
             builder.show()
+        }
+
+        mypage.setOnClickListener {
+            val intent = Intent(this, MypageActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
