@@ -15,6 +15,20 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true"
         android:theme="@style/Theme.SOM">
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao0425052377c53747dafc8aa3bfb953df" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="com.smu.som.IntroActivity"
             android:exported="true"
             android:screenOrientation="portrait">
