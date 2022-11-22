@@ -19,6 +19,9 @@ class MypageActivity : AppCompatActivity() {
         UserApiClient.instance.me { user, error ->
             val ageRange = user?.kakaoAccount?.ageRange
 
+            Log.i(TAG, user?.kakaoAccount?.profile?.nickname.toString())
+            Log.i(TAG, user?.kakaoAccount?.profile?.profileImageUrl.toString())
+
             if (ageRange == AgeRange.AGE_20_29 || ageRange == AgeRange.AGE_30_39 || ageRange == AgeRange.AGE_40_49 || ageRange == AgeRange.AGE_50_59
                 || ageRange == AgeRange.AGE_60_69 || ageRange == AgeRange.AGE_70_79 || ageRange == AgeRange.AGE_80_89 || ageRange == AgeRange.AGE_90_ABOVE) {
                 Log.e(TAG, "성인: ${ageRange}")
