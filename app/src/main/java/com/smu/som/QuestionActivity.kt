@@ -221,7 +221,7 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     fun percentage(): Int {
-        val per = arrayOf(50, 17, 31, 34, 13, 3)
+        val per = arrayOf(2, 17, 31, 34, 13, 3)
         val range = (1..100)
         var num = range.random()
 
