@@ -29,8 +29,8 @@ class MypageActivity : AppCompatActivity() {
                 setImage(profileImageUrl)
 
             val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-            val isAdult = sp.getBoolean("isAdult", false)
-            if (isAdult) {
+            val isAdult = sp.getString("isAdult", "n")
+            if (isAdult == "y") {
                 age.text = "성인 O"
             } else {
                 age.text = "성인 X"

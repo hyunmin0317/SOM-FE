@@ -10,7 +10,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_question.*
 import retrofit2.Call
@@ -25,7 +24,7 @@ class QuestionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_question)
 
         val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val isAdult = sp.getBoolean("isAdult", false)
+        val isAdult = sp.getString("isAdult", "n")
 
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
@@ -150,7 +149,7 @@ class QuestionActivity : AppCompatActivity() {
             }
             else {
                 if (num != 4 && num!= 5)
-                    changeQuestion(eCategory!!)
+                    changeQuestion(eCategory!!, isAdult!!)
             }
         }
     }
@@ -309,24 +308,24 @@ class QuestionActivity : AppCompatActivity() {
     }
 
 
-    fun changeQuestion(category: String) {
+    fun changeQuestion(category: String, isAdult: String) {
         val builder = AlertDialog.Builder(this)
 
         (application as MasterApplication).service.getQuestion(
-            category
-        ).enqueue(object : Callback<Question> {
-            override fun onResponse(call: Call<Question>, response: Response<Question>) {
+            category, isAdult
+        ).enqueue(object : Callback<ArrayList<String>> {
+            override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
                 if (response.isSuccessful) {
                     val question = response.body()
-                    builder.setTitle("질문").setMessage(question!!.content)
+                    builder.setTitle("질문").setMessage(question?.get(0).toString())
                         .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                 } else {
-                    Toast.makeText(this@QuestionActivity, "잘못된 카테고리 입니다.", Toast.LENGTH_LONG).show()
+                    Log.e(TAG, "잘못된 카테고리 입니다.")
                 }
             }
 
-            override fun onFailure(call: Call<Question>, t: Throwable) {
-                Toast.makeText(this@QuestionActivity, "서버 오류", Toast.LENGTH_LONG).show()
+            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+                Log.e(TAG, "서버 오류")
             }
         })
     }

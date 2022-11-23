@@ -20,22 +20,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val categoryArray = arrayOf("연인", "부부", "부모자녀") // 리스트에 들어갈 Array
-        val categoryMap = hashMapOf("연인" to "married", "부부" to "married", "부모자녀" to "married")
+        val categoryMap = hashMapOf("연인" to "AFFECTION", "부부" to "INDIVIDUAL", "부모자녀" to "RELATIONSHIP")
 
 
         UserApiClient.instance.me { user, error ->
             val ageRange = user?.kakaoAccount?.ageRange
-            var isAdult = false
+            var isAdult = "n"
 
 
             if (ageRange == AgeRange.AGE_20_29 || ageRange == AgeRange.AGE_30_39 || ageRange == AgeRange.AGE_40_49 || ageRange == AgeRange.AGE_50_59
                 || ageRange == AgeRange.AGE_60_69 || ageRange == AgeRange.AGE_70_79 || ageRange == AgeRange.AGE_80_89 || ageRange == AgeRange.AGE_90_ABOVE) {
-                isAdult = true
+                isAdult = "y"
             }
 
             val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
             val editor = sp.edit()
-            editor.putBoolean("isAdult", isAdult)
+            editor.putString("isAdult", isAdult)
             editor.commit()
         }
 

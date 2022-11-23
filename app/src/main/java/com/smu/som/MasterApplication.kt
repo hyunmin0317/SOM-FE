@@ -29,16 +29,7 @@ class MasterApplication : Application() {
     fun createRetrofit() {
         val header = Interceptor {
             val original = it.request()
-            if (checkIsLogin()) {
-                getUserToken()?.let { token ->
-                    val requeset = original.newBuilder()
-                        .header("Authorization", "token " + token)
-                        .build()
-                    it.proceed(requeset)
-                }
-            } else {
-                it.proceed(original)
-            }
+            it.proceed(original)
         }
 
         val client = OkHttpClient.Builder()
@@ -47,7 +38,7 @@ class MasterApplication : Application() {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://som.pythonanywhere.com/")
+            .baseUrl("http://52.78.92.194:8080/")
 //            .baseUrl("http://10.0.2.2:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
@@ -55,19 +46,4 @@ class MasterApplication : Application() {
 
         service = retrofit.create(RetrofitService::class.java)
     }
-
-    fun checkIsLogin(): Boolean {
-        val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        var token = sp.getString("token", "null")
-        if (token != "null") return true
-        else return false
-    }
-
-    fun getUserToken(): String? {
-        val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-        val token = sp.getString("token", "null")
-        if (token == "null") return null
-        else return token
-    }
-
 }
