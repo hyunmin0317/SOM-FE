@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val categoryArray = arrayOf("연인", "부부", "부모자녀") // 리스트에 들어갈 Array
-        val categoryMap = hashMapOf("연인" to "AFFECTION", "부부" to "INDIVIDUAL", "부모자녀" to "RELATIONSHIP")
+        val categoryMap = hashMapOf("연인" to "COUPLE", "부부" to "MARRIED", "부모자녀" to "PARENT")
 
 
         UserApiClient.instance.me { user, error ->

@@ -149,7 +149,7 @@ class QuestionActivity : AppCompatActivity() {
             }
             else {
                 if (num != 4 && num!= 5)
-                    changeQuestion(eCategory!!, isAdult!!)
+                    changeQuestion(eCategory!!, isAdult!!, num)
             }
         }
     }
@@ -308,11 +308,17 @@ class QuestionActivity : AppCompatActivity() {
     }
 
 
-    fun changeQuestion(category: String, isAdult: String) {
+    fun changeQuestion(category: String, isAdult: String, num: Int) {
         val builder = AlertDialog.Builder(this)
+        var Category = category
+
+        if (num==-1 || num==3) {
+            Category = "COMMON"
+            Log.i(TAG, "공통 카테고리로 변경")
+        }
 
         (application as MasterApplication).service.getQuestion(
-            category, isAdult
+            Category, isAdult
         ).enqueue(object : Callback<ArrayList<String>> {
             override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
                 if (response.isSuccessful) {
