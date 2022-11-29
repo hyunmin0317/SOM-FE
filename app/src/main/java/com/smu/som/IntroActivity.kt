@@ -14,7 +14,6 @@ class IntroActivity : AppCompatActivity() {
 
         var handler = Handler()
 
-
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 handler.postDelayed({
@@ -25,7 +24,7 @@ class IntroActivity : AppCompatActivity() {
             }
             else if (tokenInfo != null) {
                 handler.postDelayed({
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, StartActivity::class.java)
                     startActivity(intent)
                     finish()
                 }, 3000)

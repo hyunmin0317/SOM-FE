@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SOM"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".StartActivity"
+            android:exported="false" />
+        <activity
             android:name=".MypageActivity"
             android:exported="false" />
         <activity
