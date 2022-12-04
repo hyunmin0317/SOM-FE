@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#8C000000"
+        >
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/wordgamerule"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="500dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/word_game_rule" />
+
+            <ImageView
+                android:id="@+id/gameruleclosebutton"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="180dp"
+                android:layout_gravity="center"
+                android:src="@drawable/rule_close_button"
+                />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

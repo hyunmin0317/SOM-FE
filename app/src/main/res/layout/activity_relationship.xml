@@ -7,44 +7,49 @@
     android:background="@drawable/main2"
     android:orientation="vertical"
     tools:context=".MainActivity">
+<!--    -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/game">
+        android:background="@drawable/game"
+        >
+
         <ImageView
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginLeft="80dp"
-            android:layout_height="80dp"
-            android:layout_width="match_parent"
+            android:id="@+id/word_knowing"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             android:src="@drawable/word_knowing_each_other" />
 
         <ImageView
-            android:layout_marginTop="80dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_height="100dp"
-            android:layout_width="match_parent"
-            android:src="@drawable/explain" />
-
-        <ImageView
-            android:id="@+id/start"
+            android:id="@+id/marriagebutton"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:src="@drawable/startbutton" />
+            android:src="@drawable/marriage_button" />
 
         <ImageView
-            android:id="@+id/mypage"
-            android:layout_marginTop="30dp"
+            android:id="@+id/lovebutton"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:src="@drawable/mypage" />
+            android:src="@drawable/love_button" />
+
+        <ImageView
+            android:id="@+id/parentchildbutton"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:src="@drawable/parent_child_button" />
 
     </LinearLayout>
 </LinearLayout>
