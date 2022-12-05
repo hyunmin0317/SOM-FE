@@ -43,7 +43,7 @@ class QuestionActivity : AppCompatActivity() {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
         }
 
-        category.text = kCategory
+//        category.text = kCategory
         drawGame(arr, player1, player2, score1, score2, turn)
 
         yut.setOnClickListener {
@@ -265,8 +265,8 @@ class QuestionActivity : AppCompatActivity() {
                 player2.setBackgroundResource(R.drawable.noplayer_01)
         }
 
-        score1.text = score01.toString()
-        score2.text = score02.toString()
+//        score1.text = score01.toString()
+//        score2.text = score02.toString()
 
         checkWin(score01, score02)
         showTurn(turn)
