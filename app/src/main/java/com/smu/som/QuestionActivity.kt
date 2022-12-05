@@ -25,6 +25,7 @@ class QuestionActivity : AppCompatActivity() {
 
         val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val isAdult = sp.getString("isAdult", "n")
+        val categoryArray = arrayOf("홈으로", "다시하기") // 리스트에 들어갈 Array
 
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
@@ -43,7 +44,28 @@ class QuestionActivity : AppCompatActivity() {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
         }
 
-//        category.text = kCategory
+        stop.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("일시정지")
+                .setItems(categoryArray,
+                    DialogInterface.OnClickListener { dialog, which ->
+                        if (which == 0) {
+                            val intent = Intent(this, IntroActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(this, QuestionActivity::class.java)
+                            intent.putExtra("kcategory", kCategory)
+                            intent.putExtra("ecategory", eCategory)
+                            startActivity(intent)
+                            finish()
+                            startActivity(intent)
+                            finish()
+                        }
+                    })
+            builder.show()
+        }
+
         drawGame(arr, player1, player2, score1, score2, turn)
 
         yut.setOnClickListener {
