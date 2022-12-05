@@ -209,10 +209,10 @@ class QuestionActivity : AppCompatActivity() {
         var num = percentage()
         var value = num
 
-        yut.setBackgroundResource(resources.getIdentifier("result_$value", "drawable", packageName))
+        result.setBackgroundResource(resources.getIdentifier("result_$value", "drawable", packageName))
         Handler(Looper.getMainLooper()).postDelayed({
-            yut.setText(yuts[value])
-            yut.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
+            result_text.setText(yuts[value])
+            result.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
         }, 2000)
         if (num == 0)
             num = -1
@@ -340,11 +340,11 @@ class QuestionActivity : AppCompatActivity() {
         if (turn) {
             player1.setBackgroundResource(R.drawable.check_box)
             player2.setBackgroundResource(R.drawable.white_box)
-            yut.setText("player1 차례")
+            result_text.setText("player1 차례")
         } else {
             player1.setBackgroundResource(R.drawable.white_box)
             player2.setBackgroundResource(R.drawable.check_box)
-            yut.setText("player2 차례")
+            result_text.setText("player2 차례")
         }
     }
 }
