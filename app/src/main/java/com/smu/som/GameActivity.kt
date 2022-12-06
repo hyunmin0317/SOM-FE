@@ -11,17 +11,17 @@ import android.os.Looper
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_question.*
+import kotlinx.android.synthetic.main.activity_game.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Math.abs
 
-class QuestionActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_question)
+        setContentView(R.layout.activity_game)
 
         val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val isAdult = sp.getString("isAdult", "n")
@@ -37,8 +37,7 @@ class QuestionActivity : AppCompatActivity() {
         var turn = true
 
         val builder = AlertDialog.Builder(this)
-        val kCategory = intent.getStringExtra("kcategory")
-        val eCategory = intent.getStringExtra("ecategory")
+        val category = intent.getStringExtra("category")
 
         for (i in 0..SIZE) {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
@@ -46,27 +45,22 @@ class QuestionActivity : AppCompatActivity() {
 
         stop.setOnClickListener {
             val builder = AlertDialog.Builder(this)
-            builder.setTitle("일시정지")
-                .setItems(categoryArray,
-                    DialogInterface.OnClickListener { dialog, which ->
+            builder.setTitle("일시정지").setItems(categoryArray, DialogInterface.OnClickListener { dialog, which ->
                         if (which == 0) {
                             val intent = Intent(this, IntroActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
-                            val intent = Intent(this, QuestionActivity::class.java)
-                            intent.putExtra("kcategory", kCategory)
-                            intent.putExtra("ecategory", eCategory)
-                            startActivity(intent)
-                            finish()
+                            val intent = Intent(this, GameActivity::class.java)
+                            intent.putExtra("category", category)
                             startActivity(intent)
                             finish()
                         }
-                    })
+                    }).setNegativeButton("취소", DialogInterface.OnClickListener { dialog, id -> })
             builder.show()
         }
 
-        drawGame(arr, player1, player2, score1, score2, turn)
+        drawGame(arr, player1, player2, score1, score2, turn, category)
 
         yut.setOnClickListener {
             yut.isClickable = false
@@ -111,7 +105,7 @@ class QuestionActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, turn)
+                            drawGame(arr, player1, player2, score1, score2, turn, category)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -155,7 +149,7 @@ class QuestionActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, turn)
+                    drawGame(arr, player1, player2, score1, score2, turn, category)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -171,7 +165,7 @@ class QuestionActivity : AppCompatActivity() {
             }
             else {
                 if (num != 4 && num!= 5)
-                    changeQuestion(eCategory!!, isAdult!!, num)
+                    changeQuestion(category!!, isAdult!!, num)
             }
         }
     }
@@ -254,7 +248,7 @@ class QuestionActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, category: String?) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -290,7 +284,7 @@ class QuestionActivity : AppCompatActivity() {
 //        score1.text = score01.toString()
 //        score2.text = score02.toString()
 
-        checkWin(score01, score02)
+        checkWin(score01, score02, category)
         showTurn(turn)
     }
 
@@ -301,7 +295,9 @@ class QuestionActivity : AppCompatActivity() {
         return player02
     }
 
-    fun checkWin(score01: Int, score02: Int) {
+    fun checkWin(score01: Int, score02: Int, category: String?) {
+        val categoryArray = arrayOf("홈으로", "다시하기") // 리스트에 들어갈 Array
+
         if (score01 == 4 || score02 == 4) {
             val builder = AlertDialog.Builder(this)
             var content = ""
@@ -311,15 +307,18 @@ class QuestionActivity : AppCompatActivity() {
             } else {
                 content = "player2 가 승리했습니다!"
             }
-            builder.setTitle("질문").setMessage(content)
-                .setPositiveButton("다시하기", DialogInterface.OnClickListener { dialog, id ->
-                    startActivity(Intent(this, QuestionActivity::class.java))
+            builder.setTitle("일시정지").setItems(categoryArray, DialogInterface.OnClickListener { dialog, which ->
+                if (which == 0) {
+                    val intent = Intent(this, IntroActivity::class.java)
+                    startActivity(intent)
                     finish()
-                })
-                .setNegativeButton("처음으로", DialogInterface.OnClickListener { dialog, id ->
-                    startActivity(Intent(this, IntroActivity::class.java))
+                } else {
+                    val intent = Intent(this, GameActivity::class.java)
+                    intent.putExtra("category", category)
+                    startActivity(intent)
                     finish()
-                }).show()
+                }
+            }).show()
 
             var handler = Handler()
             handler.postDelayed({

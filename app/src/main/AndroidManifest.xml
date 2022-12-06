@@ -53,7 +53,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".QuestionActivity"
+            android:name=".GameActivity"
             android:screenOrientation="portrait" />
     </application>
 
