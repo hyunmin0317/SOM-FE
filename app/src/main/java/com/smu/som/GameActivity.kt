@@ -39,6 +39,11 @@ class GameActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         val category = intent.getStringExtra("category")
 
+
+        val range = (1..2)
+        val rand1 = range.random()
+        val rand2 = range.random()
+
         for (i in 0..SIZE) {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
         }
@@ -60,7 +65,7 @@ class GameActivity : AppCompatActivity() {
             builder.show()
         }
 
-        drawGame(arr, player1, player2, score1, score2, turn, category)
+        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
 
         yut.setOnClickListener {
             yut.isClickable = false
@@ -105,7 +110,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, turn, category)
+                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -149,7 +154,7 @@ class GameActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, turn, category)
+                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -248,7 +253,7 @@ class GameActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, category: String?) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -256,9 +261,9 @@ class GameActivity : AppCompatActivity() {
                 if (item!=0) {
                     var drawable: Int
                     if (item > 0)
-                        drawable = resources.getIdentifier("player_$item", "drawable", packageName)
+                        drawable = resources.getIdentifier(String.format("player_%d_%d", item, rand1), "drawable", packageName)
                     else
-                        drawable = resources.getIdentifier(String.format("player_%02d", abs(item)),"drawable", packageName)
+                        drawable = resources.getIdentifier(String.format("player_%02d_%d", abs(item), rand2),"drawable", packageName)
                     player.setBackgroundResource(drawable)
                 }
                 else
@@ -269,20 +274,21 @@ class GameActivity : AppCompatActivity() {
         for (num in 1..4) {
             var player1: TextView = findViewById(getResources().getIdentifier("player1_" + num, "id", packageName))
             var player2: TextView = findViewById(getResources().getIdentifier("player2_" + num, "id", packageName))
+            val drawable1 = resources.getIdentifier(String.format("player_1_%d", rand1), "drawable", packageName)
+            val drawable2 = resources.getIdentifier(String.format("player_01_%d", rand2), "drawable", packageName)
+            val nodrawable1 = resources.getIdentifier(String.format("noplayer_1_%d", rand1), "drawable", packageName)
+            val nodrawable2 = resources.getIdentifier(String.format("noplayer_01_%d", rand2), "drawable", packageName)
 
             if (num <= player01)
-                player1.setBackgroundResource(R.drawable.player_1)
+                player1.setBackgroundResource(drawable1)
             else
-                player1.setBackgroundResource(R.drawable.noplayer_1)
+                player1.setBackgroundResource(nodrawable1)
 
             if (num <= player02)
-                player2.setBackgroundResource(R.drawable.player_01)
+                player2.setBackgroundResource(drawable2)
             else
-                player2.setBackgroundResource(R.drawable.noplayer_01)
+                player2.setBackgroundResource(nodrawable2)
         }
-
-//        score1.text = score01.toString()
-//        score2.text = score02.toString()
 
         checkWin(score01, score02, category)
         showTurn(turn)
