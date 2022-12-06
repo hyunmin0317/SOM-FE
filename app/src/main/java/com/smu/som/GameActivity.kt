@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_game.*
@@ -64,6 +65,8 @@ class GameActivity : AppCompatActivity() {
                     }).setNegativeButton("취소", DialogInterface.OnClickListener { dialog, id -> })
             builder.show()
         }
+
+        game_rule.setOnClickListener { showPopup() }
 
         drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
 
@@ -373,5 +376,16 @@ class GameActivity : AppCompatActivity() {
             player2.setBackgroundResource(R.drawable.check_box)
             result_text.setText("player2 차례")
         }
+    }
+
+    fun showPopup() {
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.activity_gamerule, null)
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("게임 설명")
+            .setPositiveButton("확인") { dialog, which -> }
+            .create()
+        alertDialog.setView(view)
+        alertDialog.show()
     }
 }

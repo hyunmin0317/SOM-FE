@@ -849,6 +849,7 @@
                 android:orientation="horizontal"
                 android:weightSum="10">
                 <TextView
+                    android:id="@+id/game_rule"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2" />
