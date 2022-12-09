@@ -237,7 +237,7 @@ class GameActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             result_text.setText(yuts[value])
             result.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
-        }, 2000)
+        }, 1500)
         if (num == 0)
             num = -1
         return num
@@ -305,35 +305,19 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun checkWin(score01: Int, score02: Int, category: String?) {
-        val categoryArray = arrayOf("홈으로", "다시하기") // 리스트에 들어갈 Array
-
         if (score01 == 4 || score02 == 4) {
-            val builder = AlertDialog.Builder(this)
-            var content = ""
-
+            var result = ""
             if (score01 == 4) {
-                content = "player1 이 승리했습니다!"
+                result = "player 1  승리!"
             } else {
-                content = "player2 가 승리했습니다!"
+                result = "player 2  승리!"
             }
-            builder.setTitle("일시정지").setItems(categoryArray, DialogInterface.OnClickListener { dialog, which ->
-                if (which == 0) {
-                    val intent = Intent(this, IntroActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    val intent = Intent(this, GameActivity::class.java)
-                    intent.putExtra("category", category)
-                    startActivity(intent)
-                    finish()
-                }
-            }).show()
 
-            var handler = Handler()
-            handler.postDelayed({
-                startActivity(Intent(this, IntroActivity::class.java))
-                finish()
-            }, 6000)
+            val intent = Intent(this, GameResultActivity::class.java)
+            intent.putExtra("result", result)
+            intent.putExtra("category", category)
+            startActivity(intent)
+            finish()
         }
     }
 

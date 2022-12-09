@@ -20,14 +20,14 @@ class IntroActivity : AppCompatActivity() {
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
-                }, 3000)
+                }, 1000)
             }
             else if (tokenInfo != null) {
                 handler.postDelayed({
                     val intent = Intent(this, StartActivity::class.java)
                     startActivity(intent)
                     finish()
-                }, 3000)
+                }, 1000)
             }
         }
     }
