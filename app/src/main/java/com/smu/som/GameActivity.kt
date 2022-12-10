@@ -63,6 +63,8 @@ class GameActivity : AppCompatActivity() {
                         } else {
                             val intent = Intent(this, GameActivity::class.java)
                             intent.putExtra("category", category)
+                            intent.putExtra("name1", name_1p)
+                            intent.putExtra("name2", name_2p)
                             startActivity(intent)
                             finish()
                         }
