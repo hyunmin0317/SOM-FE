@@ -39,11 +39,15 @@ class GameActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         val category = intent.getStringExtra("category")
-
+        val name_1p = intent.getStringExtra("name1")
+        val name_2p = intent.getStringExtra("name2")
 
         val range = (1..2)
         val rand1 = range.random()
         val rand2 = range.random()
+
+        name1.text = name_1p
+        name2.text = name_2p
 
         for (i in 0..SIZE) {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
@@ -68,7 +72,7 @@ class GameActivity : AppCompatActivity() {
 
         game_rule.setOnClickListener { showPopup() }
 
-        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
+        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, name_1p, name_2p)
 
         yut.setOnClickListener {
             yut.isClickable = false
@@ -113,7 +117,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
+                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, name_1p, name_2p)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -157,7 +161,7 @@ class GameActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category)
+                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, name_1p, name_2p)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -256,7 +260,7 @@ class GameActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, name1: String?, name2: String?) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -293,7 +297,7 @@ class GameActivity : AppCompatActivity() {
                 player2.setBackgroundResource(nodrawable2)
         }
 
-        checkWin(score01, score02, category)
+        checkWin(score01, score02, category, name1, name2)
         showTurn(turn)
     }
 
@@ -304,13 +308,13 @@ class GameActivity : AppCompatActivity() {
         return player02
     }
 
-    fun checkWin(score01: Int, score02: Int, category: String?) {
+    fun checkWin(score01: Int, score02: Int, category: String?, name1: String?, name2: String?) {
         if (score01 == 4 || score02 == 4) {
             var result = ""
             if (score01 == 4) {
-                result = "player 1  승리!"
+                result = "$name1 승리!"
             } else {
-                result = "player 2  승리!"
+                result = "$name2 승리!"
             }
 
             val intent = Intent(this, GameResultActivity::class.java)

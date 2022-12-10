@@ -38,18 +38,8 @@ class MainActivity : AppCompatActivity() {
 
 
         start.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("카테고리 선택하기")
-                .setItems(categoryArray,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        val intent = Intent(this, GameActivity::class.java)
-                        val kcategory = categoryArray[which]
-                        val category = categoryMap[kcategory]
-                        intent.putExtra("category", category)
-                        startActivity(intent)
-                        finish()
-                    })
-            builder.show()
+            startActivity(Intent(this, GameSettingActivity::class.java))
+            finish()
         }
 
         mypage.setOnClickListener {
