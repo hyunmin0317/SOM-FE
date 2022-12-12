@@ -300,7 +300,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         checkWin(score01, score02, category, name1, name2)
-        showTurn(turn)
+        showTurn(turn, name1, name2)
     }
 
     fun checkBoard(turn: Boolean, player01: Int, player02: Int): Int {
@@ -356,15 +356,15 @@ class GameActivity : AppCompatActivity() {
         })
     }
 
-    fun showTurn(turn: Boolean) {
+    fun showTurn(turn: Boolean, name1: String?, name2: String?) {
         if (turn) {
             player1.setBackgroundResource(R.drawable.check_box)
             player2.setBackgroundResource(R.drawable.white_box)
-            result_text.setText("player1 차례")
+            result_text.setText("$name1 차례")
         } else {
             player1.setBackgroundResource(R.drawable.white_box)
             player2.setBackgroundResource(R.drawable.check_box)
-            result_text.setText("player2 차례")
+            result_text.setText("$name2 차례")
         }
     }
 
