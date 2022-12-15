@@ -24,7 +24,7 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val isAdult = sp.getString("isAdult", "n")
         val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
 

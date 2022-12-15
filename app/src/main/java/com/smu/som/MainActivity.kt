@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 isAdult = "y"
             }
 
-            val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+            val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
             val editor = sp.edit()
             editor.putString("isAdult", isAdult)
             editor.commit()

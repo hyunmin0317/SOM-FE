@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.android.synthetic.main.activity_game_setting.*
 import kotlinx.android.synthetic.main.activity_mypage.*
 
 class MypageActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class MypageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
 
-        val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+        val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val editor = sp.edit()
 
         UserApiClient.instance.me { user, error ->
@@ -38,8 +39,12 @@ class MypageActivity : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            editor.putBoolean("isAdult", false)
+            editor.putString("isAdult", "n")
+            editor.putString("name1", "1P")
+            editor.putString("name2", "2P")
+            editor.putInt("category", 0)
             editor.commit()
+
             UserApiClient.instance.logout { error ->
                 if (error != null) {
                     Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
