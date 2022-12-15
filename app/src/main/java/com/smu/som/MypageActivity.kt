@@ -18,6 +18,8 @@ class MypageActivity : AppCompatActivity() {
 
         val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val editor = sp.edit()
+        val adult = sp.getBoolean("adult", false)
+        val isAdult = sp.getString("isAdult", "n")
 
         UserApiClient.instance.me { user, error ->
             val nickname = user?.kakaoAccount?.profile?.nickname
@@ -29,16 +31,31 @@ class MypageActivity : AppCompatActivity() {
             else
                 setImage(profileImageUrl)
 
-            val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
-            val isAdult = sp.getString("isAdult", "n")
-            if (isAdult == "y") {
-                age.text = "성인 O"
+            if (adult) {
+                if (isAdult == "y") {
+                    age.isChecked = true
+                    age.text = "성인 질문 ON"
+                }
+                age.isEnabled = true
+                age.setOnCheckedChangeListener { p0, isChecked ->
+                    if (isChecked) {
+                        editor.putString("isAdult", "y")
+                        editor.commit()
+                        age.text = "성인 질문 ON"
+                    } else {
+                        editor.putString("isAdult", "n")
+                        editor.commit()
+                        age.text = "성인 질문 OFF"
+                    }
+                }
             } else {
-                age.text = "성인 X"
+                age.isEnabled = false
+                age.text = "성인 질문 OFF"
             }
         }
 
         logout.setOnClickListener {
+            editor.putBoolean("adult", false)
             editor.putString("isAdult", "n")
             editor.putString("name1", "1P")
             editor.putString("name2", "2P")
@@ -58,6 +75,7 @@ class MypageActivity : AppCompatActivity() {
         }
 
         unlink.setOnClickListener {
+            editor.putBoolean("adult", false)
             editor.putString("isAdult", "n")
             editor.putString("name1", "1P")
             editor.putString("name2", "2P")
