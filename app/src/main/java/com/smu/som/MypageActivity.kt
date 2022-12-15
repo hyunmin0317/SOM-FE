@@ -58,8 +58,12 @@ class MypageActivity : AppCompatActivity() {
         }
 
         unlink.setOnClickListener {
-            editor.putBoolean("isAdult", false)
+            editor.putString("isAdult", "n")
+            editor.putString("name1", "1P")
+            editor.putString("name2", "2P")
+            editor.putInt("category", 0)
             editor.commit()
+
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
                     Log.e(TAG, "탈퇴 실패. SDK에서 토큰 삭제됨", error)
