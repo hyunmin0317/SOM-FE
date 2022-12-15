@@ -26,7 +26,7 @@ class GameActivity : AppCompatActivity() {
 
         val sp = this.getSharedPreferences("login_sp", Context.MODE_PRIVATE)
         val isAdult = sp.getString("isAdult", "n")
-        val categoryArray = arrayOf("홈으로", "다시하기") // 리스트에 들어갈 Array
+        val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
 
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
@@ -58,6 +58,10 @@ class GameActivity : AppCompatActivity() {
             builder.setTitle("일시정지").setItems(categoryArray, DialogInterface.OnClickListener { dialog, which ->
                         if (which == 0) {
                             val intent = Intent(this, IntroActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else if (which == 1) {
+                            val intent = Intent(this, GameSettingActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
@@ -322,6 +326,8 @@ class GameActivity : AppCompatActivity() {
             val intent = Intent(this, GameResultActivity::class.java)
             intent.putExtra("result", result)
             intent.putExtra("category", category)
+            intent.putExtra("name1", name1)
+            intent.putExtra("name2", name2)
             startActivity(intent)
             finish()
         }

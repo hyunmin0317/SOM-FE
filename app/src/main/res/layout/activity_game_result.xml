@@ -4,18 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/main2"
+    android:orientation="vertical"
     tools:context=".GameResultActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="10"
         android:orientation="vertical"
-        android:background="@drawable/game_result">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5" />
+        android:background="@drawable/game">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,6 +22,7 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/result_text"
+                android:layout_marginTop="20dp"
                 android:layout_height="80dp"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -37,22 +35,79 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:orientation="vertical" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical" >
-            <TextView
+            android:layout_weight="1.8"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="100dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/home" />
+                android:src="@drawable/game_over" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:orientation="vertical" />
+            android:layout_weight="4"
+            android:weightSum="3"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/game"
+                android:gravity="center"
+                android:text="다시하기"
+                android:textSize="25dp"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/acube"
+                android:paddingBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="65dp"
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/red_button" />
+
+            <TextView
+                android:id="@+id/setting"
+                android:gravity="center"
+                android:text="관계 설정으로"
+                android:textSize="25dp"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/acube"
+                android:paddingBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="65dp"
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/red_button" />
+
+            <TextView
+                android:id="@+id/home"
+                android:gravity="center"
+                android:text="홈으로"
+                android:textSize="25dp"
+                android:textColor="#ffffff"
+                android:fontFamily="@font/acube"
+                android:paddingBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="65dp"
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/red_button" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.7"
+            android:orientation="vertical">
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
