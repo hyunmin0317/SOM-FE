@@ -247,7 +247,7 @@ class GameActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             result_text.setText(yuts[value])
             result.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
-        }, 1500)
+        }, 1000)
         if (num == 0)
             num = -1
         return num
