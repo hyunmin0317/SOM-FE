@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.model.Gender
 import kotlinx.android.synthetic.main.activity_game_setting.*
 import kotlinx.android.synthetic.main.activity_mypage.*
 
@@ -23,11 +24,14 @@ class MypageActivity : AppCompatActivity() {
 
         UserApiClient.instance.me { user, error ->
             val nickname = user?.kakaoAccount?.profile?.nickname
-            val profileImageUrl = user?.kakaoAccount?.profile?.profileImageUrl
             val genders = user?.kakaoAccount?.gender
+            val profileImageUrl = user?.kakaoAccount?.profile?.profileImageUrl
 
             name.text = nickname.toString()
-            gender.text = genders.toString()
+            if (genders == Gender.MALE)
+                gender.text = "남"
+            else if (genders == Gender.FEMALE)
+                gender.text = "여"
 
             if (profileImageUrl == null)
                 setImage("https://github.com/hyunmin0317/Outstagram/blob/master/github/basic.jpg?raw=true")
