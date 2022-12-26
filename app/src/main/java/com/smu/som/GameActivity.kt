@@ -302,7 +302,8 @@ class GameActivity : AppCompatActivity() {
             else
                 player2.setBackgroundResource(nodrawable2)
         }
-
+        score1.text = score01.toString()
+        score2.text = score02.toString()
         checkWin(score01, score02, category, name1, name2)
         showTurn(turn, name1, name2)
     }
