@@ -24,33 +24,48 @@ class MypageActivity : AppCompatActivity() {
         UserApiClient.instance.me { user, error ->
             val nickname = user?.kakaoAccount?.profile?.nickname
             val profileImageUrl = user?.kakaoAccount?.profile?.profileImageUrl
+            val genders = user?.kakaoAccount?.gender
 
             name.text = nickname.toString()
+            gender.text = genders.toString()
+
             if (profileImageUrl == null)
                 setImage("https://github.com/hyunmin0317/Outstagram/blob/master/github/basic.jpg?raw=true")
             else
                 setImage(profileImageUrl)
+        }
 
-            if (adult) {
-                if (isAdult == "y") {
-                    age.isChecked = true
+        if (adult) {
+            if (isAdult == "y") {
+                age.isChecked = true
+                age.text = "성인 질문 ON"
+            }
+            age.isEnabled = true
+            age.setOnCheckedChangeListener { p0, isChecked ->
+                if (isChecked) {
+                    editor.putString("isAdult", "y")
+                    editor.commit()
                     age.text = "성인 질문 ON"
+                } else {
+                    editor.putString("isAdult", "n")
+                    editor.commit()
+                    age.text = "성인 질문 OFF"
                 }
-                age.isEnabled = true
-                age.setOnCheckedChangeListener { p0, isChecked ->
-                    if (isChecked) {
-                        editor.putString("isAdult", "y")
-                        editor.commit()
-                        age.text = "성인 질문 ON"
-                    } else {
-                        editor.putString("isAdult", "n")
-                        editor.commit()
-                        age.text = "성인 질문 OFF"
-                    }
-                }
+            }
+        } else {
+            age.isEnabled = false
+            age.text = "성인 질문 OFF"
+        }
+
+        sound.setOnCheckedChangeListener { p0, isChecked ->
+            if (isChecked) {
+                editor.putBoolean("sound", true)
+                editor.commit()
+                sound.text = "소리 ON"
             } else {
-                age.isEnabled = false
-                age.text = "성인 질문 OFF"
+                editor.putBoolean("sound", false)
+                editor.commit()
+                sound.text = "소리 OFF"
             }
         }
 
