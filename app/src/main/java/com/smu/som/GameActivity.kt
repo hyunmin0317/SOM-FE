@@ -42,9 +42,10 @@ class GameActivity : AppCompatActivity() {
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
 
-        val range = (1..2)
-        val rand1 = range.random()
-        val rand2 = range.random()
+        var char1 = intent.getIntExtra("character1", 0)
+        var char2 = intent.getIntExtra("character2", 0)
+        var rand1 = char1 + 1
+        var rand2 = char2 + 1
 
         name1.text = name_1p
         name2.text = name_2p
@@ -69,6 +70,8 @@ class GameActivity : AppCompatActivity() {
                             intent.putExtra("category", category)
                             intent.putExtra("name1", name_1p)
                             intent.putExtra("name2", name_2p)
+                            intent.putExtra("character1", char1)
+                            intent.putExtra("character2", char2)
                             startActivity(intent)
                             finish()
                         }

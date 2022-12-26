@@ -24,12 +24,25 @@ class GameSettingActivity : AppCompatActivity() {
         var player1 = sp.getString("name1", "1P")
         var player2 = sp.getString("name2", "2P")
         var category = sp.getInt("category", 0)
-        val categoryArray = arrayOf("연인", "부부", "부모자녀") // 리스트에 들어갈 Array
+        var character1 = sp.getInt("character1", 0)
+        var character2 = sp.getInt("character2", 0)
+
+        val characterArray1 = arrayOf("토끼", "병아리")
+        val characterArray2 = arrayOf("고양이", "곰")
+        val categoryArray = arrayOf("연인", "부부", "부모자녀")
         val categoryMap = hashMapOf("연인" to "COUPLE", "부부" to "MARRIED", "부모자녀" to "PARENT")
 
         var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, categoryArray)
         spinner.adapter = adapter
         spinner.setSelection(category)
+
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, characterArray1)
+        spinner1.adapter = adapter
+        spinner1.setSelection(character1)
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, characterArray2)
+        spinner2.adapter = adapter
+        spinner2.setSelection(character2)
+
         name1.setText(player1)
         name2.setText(player2)
 
@@ -41,11 +54,15 @@ class GameSettingActivity : AppCompatActivity() {
             editor.putString("name1", name1.text.toString())
             editor.putString("name2", name2.text.toString())
             editor.putInt("category", spinner.selectedItemPosition)
+            editor.putInt("character1", spinner1.selectedItemPosition)
+            editor.putInt("character2", spinner2.selectedItemPosition)
             editor.commit()
 
             intent.putExtra("category", category)
             intent.putExtra("name1", name1.text.toString())
             intent.putExtra("name2", name2.text.toString())
+            intent.putExtra("character1", spinner1.selectedItemPosition)
+            intent.putExtra("character2", spinner2.selectedItemPosition)
             startActivity(intent)
             finish()
         }
