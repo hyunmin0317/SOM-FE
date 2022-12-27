@@ -101,14 +101,8 @@ class GameActivity : AppCompatActivity() {
         yut.setOnClickListener {
             yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
-            var num = playGame()
-            var s = num
-            Handler(Looper.getMainLooper()).postDelayed({
-                soundPool.play(gamesound[s], 1.0f, 1.0f, 0, 0, 1.0f)
-            }, 1000)
+            var num = playGame(soundPool, gamesound)
 
-            if (num == 0)
-                num = -1
             for ((index,item) in arr.withIndex()) {
                 if (item!=0 && index!=0) {
                     players[index].setOnClickListener {
@@ -321,16 +315,20 @@ class GameActivity : AppCompatActivity() {
             return idx + num
     }
 
-    fun playGame(): Int {
+    fun playGame(soundPool: SoundPool, gamesound: IntArray): Int {
         val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
         var num = percentage()
         var value = num
 
         result.setBackgroundResource(resources.getIdentifier("result_$value", "drawable", packageName))
         Handler(Looper.getMainLooper()).postDelayed({
+            soundPool.play(gamesound[value], 1.0f, 1.0f, 0, 0, 1.0f)
             result_text.setText(yuts[value])
             result.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
         }, 1000)
+
+        if (num == 0)
+            num = -1
         return num
     }
 
