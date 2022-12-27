@@ -41,6 +41,7 @@ class GameActivity : AppCompatActivity() {
 
         var builder = AlertDialog.Builder(this)
         var category = intent.getStringExtra("category")
+        var kcategory = intent.getStringExtra("kcategory")
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
 
@@ -51,6 +52,7 @@ class GameActivity : AppCompatActivity() {
 
         name1.text = name_1p
         name2.text = name_2p
+        Category.text = kcategory
 
         for (i in 0..SIZE) {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
@@ -70,6 +72,7 @@ class GameActivity : AppCompatActivity() {
                         } else {
                             val intent = Intent(this, GameActivity::class.java)
                             intent.putExtra("category", category)
+                            intent.putExtra("kcategory", kcategory)
                             intent.putExtra("name1", name_1p)
                             intent.putExtra("name2", name_2p)
                             intent.putExtra("character1", char1)
@@ -83,7 +86,7 @@ class GameActivity : AppCompatActivity() {
 
         game_rule.setOnClickListener { showPopup() }
 
-        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, name_1p, name_2p)
+        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
 
         yut.setOnClickListener {
             yut.isClickable = false
@@ -130,7 +133,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, name_1p, name_2p)
+                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -176,7 +179,7 @@ class GameActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, name_1p, name_2p)
+                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -325,7 +328,7 @@ class GameActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, wish01: Int, wish02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, name1: String?, name2: String?) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, wish01: Int, wish02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -365,7 +368,7 @@ class GameActivity : AppCompatActivity() {
         score2.text = score02.toString()
         wish1.text = wish01.toString()
         wish2.text = wish02.toString()
-        checkWin(score01, score02, category, name1, name2)
+        checkWin(score01, score02, category, kcategory, name1, name2)
         showTurn(turn, name1, name2)
     }
 
@@ -376,7 +379,7 @@ class GameActivity : AppCompatActivity() {
         return player02
     }
 
-    fun checkWin(score01: Int, score02: Int, category: String?, name1: String?, name2: String?) {
+    fun checkWin(score01: Int, score02: Int, category: String?, kcategory: String?, name1: String?, name2: String?) {
         if (score01 == 4 || score02 == 4) {
             var result = ""
             if (score01 == 4) {
@@ -387,6 +390,7 @@ class GameActivity : AppCompatActivity() {
 
             val intent = Intent(this, GameResultActivity::class.java)
             intent.putExtra("result", result)
+            intent.putExtra("kcategory", kcategory)
             intent.putExtra("category", category)
             intent.putExtra("name1", name1)
             intent.putExtra("name2", name2)
