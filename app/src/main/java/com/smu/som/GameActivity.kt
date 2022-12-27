@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.SoundPool
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +27,7 @@ class GameActivity : AppCompatActivity() {
 
         val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val isAdult = sp.getString("isAdult", "n")
+        val sound = sp.getBoolean("sound", false)
         val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
 
         val SIZE = 30
@@ -40,6 +42,8 @@ class GameActivity : AppCompatActivity() {
         var turn = true
 
         var builder = AlertDialog.Builder(this)
+        val soundPool = SoundPool.Builder().build()
+        val gamesound = IntArray(8, { 0 } )
         var category = intent.getStringExtra("category")
         var kcategory = intent.getStringExtra("kcategory")
         val name_1p = intent.getStringExtra("name1")
@@ -56,6 +60,12 @@ class GameActivity : AppCompatActivity() {
 
         for (i in 0..SIZE) {
             players.add(findViewById(getResources().getIdentifier("board" + i, "id", packageName)))
+        }
+
+        if (sound) {
+            for (i in 0..7) {
+                gamesound[i] = soundPool.load(this, resources.getIdentifier("sound_$i", "raw", packageName), 2)
+            }
         }
 
         stop.setOnClickListener {
@@ -90,8 +100,15 @@ class GameActivity : AppCompatActivity() {
 
         yut.setOnClickListener {
             yut.isClickable = false
-            val num = playGame()
+            soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
+            var num = playGame()
+            var s = num
+            Handler(Looper.getMainLooper()).postDelayed({
+                soundPool.play(gamesound[s], 1.0f, 1.0f, 0, 0, 1.0f)
+            }, 1000)
 
+            if (num == 0)
+                num = -1
             for ((index,item) in arr.withIndex()) {
                 if (item!=0 && index!=0) {
                     players[index].setOnClickListener {
@@ -103,6 +120,7 @@ class GameActivity : AppCompatActivity() {
                                     player2 -= arr[idx]
                                     arr[idx] = item
                                     wish1 += 1
+                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                                     showCatch()
                                 }
                                 else {
@@ -121,6 +139,7 @@ class GameActivity : AppCompatActivity() {
                                     player1 += arr[idx]
                                     arr[idx] = item
                                     wish2 += 1
+                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                                     showCatch()
                                 }
                                 else {
@@ -152,6 +171,7 @@ class GameActivity : AppCompatActivity() {
                             player2 -= arr[num]
                             arr[num] = 1
                             wish1 += 1
+                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                             showCatch()
                         }
                         else {
@@ -168,6 +188,7 @@ class GameActivity : AppCompatActivity() {
                             player1 += arr[num]
                             arr[num] = -1
                             wish2 += 1
+                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                             showCatch()
                         }
                         else {
@@ -310,8 +331,6 @@ class GameActivity : AppCompatActivity() {
             result_text.setText(yuts[value])
             result.setBackgroundResource(resources.getIdentifier("yut_$value", "drawable", packageName))
         }, 1000)
-        if (num == 0)
-            num = -1
         return num
     }
 

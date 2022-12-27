@@ -98,7 +98,7 @@
                 android:textStyle="bold" />
 
             <Switch
-                android:id="@+id/sound"
+                android:id="@+id/Sound"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="50dp"

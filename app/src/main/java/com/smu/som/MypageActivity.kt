@@ -20,6 +20,7 @@ class MypageActivity : AppCompatActivity() {
         val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val editor = sp.edit()
         val adult = sp.getBoolean("adult", false)
+        val sound = sp.getBoolean("sound", false)
         val isAdult = sp.getString("isAdult", "n")
 
         UserApiClient.instance.me { user, error ->
@@ -57,19 +58,25 @@ class MypageActivity : AppCompatActivity() {
                 }
             }
         } else {
+            editor.putString("isAdult", "n")
+            editor.commit()
             age.isEnabled = false
             age.text = "성인 질문 OFF"
         }
 
-        sound.setOnCheckedChangeListener { p0, isChecked ->
+        if (sound) {
+            Sound.isChecked = true
+            Sound.text = "소리 ON"
+        }
+        Sound.setOnCheckedChangeListener { p0, isChecked ->
             if (isChecked) {
                 editor.putBoolean("sound", true)
                 editor.commit()
-                sound.text = "소리 ON"
+                Sound.text = "소리 ON"
             } else {
                 editor.putBoolean("sound", false)
                 editor.commit()
-                sound.text = "소리 OFF"
+                Sound.text = "소리 OFF"
             }
         }
 
