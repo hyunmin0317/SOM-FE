@@ -47,22 +47,32 @@
             android:layout_weight="3"
             android:gravity="center"
             android:orientation="vertical">
-            <ImageView
+            <TextView
                 android:id="@+id/start"
+                android:text="윷놀이 시작하기"
+                android:fontFamily="@font/fontbasic"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="26dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
-                android:layout_height="100dp"
+                android:layout_height="70dp"
                 android:layout_width="match_parent"
-                android:src="@drawable/startbutton" />
+                android:background="@drawable/green_button" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/mypage"
-                android:layout_marginTop="10dp"
+                android:text="마이페이지"
+                android:fontFamily="@font/fontbasic"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="26dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
-                android:layout_height="100dp"
+                android:layout_height="70dp"
                 android:layout_width="match_parent"
-                android:src="@drawable/mypage" />
+                android:background="@drawable/green_button" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
