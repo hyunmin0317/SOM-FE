@@ -39,7 +39,7 @@ class GameActivity : AppCompatActivity() {
         var wish2 = 1
         var turn = true
 
-        val builder = AlertDialog.Builder(this)
+        var builder = AlertDialog.Builder(this)
         var category = intent.getStringExtra("category")
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
@@ -192,6 +192,7 @@ class GameActivity : AppCompatActivity() {
             }
             else {
                 if (num != 4 && num!= 5) {
+                    var builder = AlertDialog.Builder(this)
                     if (num==-1 || num==3) {
                         category = "COMMON"
                         Log.i(TAG, "공통 카테고리로 변경")
@@ -207,7 +208,9 @@ class GameActivity : AppCompatActivity() {
                                     if (wish1 > 0) {
                                         builder.setTitle("질문").setMessage(question?.get(0).toString())
                                             .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
-                                            .setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id -> })
+                                            .setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id ->
+                                                wish1 -= 1
+                                            })
                                             .show()
                                     }
                                     else {
@@ -219,7 +222,9 @@ class GameActivity : AppCompatActivity() {
                                     if (wish2 > 0) {
                                         builder.setTitle("질문").setMessage(question?.get(0).toString())
                                             .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
-                                            .setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id -> })
+                                            .setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id ->
+                                                wish2 -= 1
+                                            })
                                             .show()
                                     }
                                     else {
@@ -388,45 +393,6 @@ class GameActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-    }
-
-
-    fun changeQuestion(category: String, isAdult: String, num: Int, turn: Boolean, wish01: Int, wish02: Int) {
-        val builder = AlertDialog.Builder(this)
-        var Category = category
-
-        if (num==-1 || num==3) {
-            Category = "COMMON"
-            Log.i(TAG, "공통 카테고리로 변경")
-        }
-
-        (application as MasterApplication).service.getQuestion(
-            Category, isAdult
-        ).enqueue(object : Callback<ArrayList<String>> {
-            override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
-                if (response.isSuccessful) {
-                    val question = response.body()
-                    if (turn) {
-                        if (wish01 > 0) {
-                            builder.setTitle("질문").setMessage(question?.get(0).toString())
-                                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                                .setNegativeButton("확인", DialogInterface.OnClickListener { dialog, id -> })
-                                .show()
-                        }
-
-                    }
-
-
-
-                } else {
-                    Log.e(TAG, "잘못된 카테고리 입니다.")
-                }
-            }
-
-            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
-                Log.e(TAG, "서버 오류")
-            }
-        })
     }
 
     fun showTurn(turn: Boolean, name1: String?, name2: String?) {
