@@ -35,10 +35,12 @@ class GameActivity : AppCompatActivity() {
         var player2 = 4
         var score1 = 0
         var score2 = 0
+        var wish1 = 1
+        var wish2 = 1
         var turn = true
 
         val builder = AlertDialog.Builder(this)
-        val category = intent.getStringExtra("category")
+        var category = intent.getStringExtra("category")
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
 
@@ -81,7 +83,7 @@ class GameActivity : AppCompatActivity() {
 
         game_rule.setOnClickListener { showPopup() }
 
-        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, name_1p, name_2p)
+        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, name_1p, name_2p)
 
         yut.setOnClickListener {
             yut.isClickable = false
@@ -97,6 +99,7 @@ class GameActivity : AppCompatActivity() {
                                 if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
                                     player2 -= arr[idx]
                                     arr[idx] = item
+                                    wish1 += 1
                                     builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                                 }
                                 else {
@@ -114,6 +117,7 @@ class GameActivity : AppCompatActivity() {
                                 if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
                                     player1 += arr[idx]
                                     arr[idx] = item
+                                    wish2 += 1
                                     builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                                 }
                                 else {
@@ -126,7 +130,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, name_1p, name_2p)
+                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, name_1p, name_2p)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -144,6 +148,7 @@ class GameActivity : AppCompatActivity() {
                         if (arr[num] < 0) {     // 말을 잡을 경우
                             player2 -= arr[num]
                             arr[num] = 1
+                            wish1 += 1
                             builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         else {
@@ -159,6 +164,7 @@ class GameActivity : AppCompatActivity() {
                         if (arr[num] > 0) {     // 말을 잡을 경우
                             player1 += arr[num]
                             arr[num] = -1
+                            wish2 += 1
                             builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         else {
@@ -170,7 +176,7 @@ class GameActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, name_1p, name_2p)
+                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, name_1p, name_2p)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -185,8 +191,53 @@ class GameActivity : AppCompatActivity() {
                 builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
             }
             else {
-                if (num != 4 && num!= 5)
-                    changeQuestion(category!!, isAdult!!, num)
+                if (num != 4 && num!= 5) {
+                    if (num==-1 || num==3) {
+                        category = "COMMON"
+                        Log.i(TAG, "공통 카테고리로 변경")
+                    }
+
+                    (application as MasterApplication).service.getQuestion(
+                        category!!, isAdult!!
+                    ).enqueue(object : Callback<ArrayList<String>> {
+                        override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
+                            if (response.isSuccessful) {
+                                val question = response.body()
+                                if (turn) {
+                                    if (wish1 > 0) {
+                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
+                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
+                                            .setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id -> })
+                                            .show()
+                                    }
+                                    else {
+                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
+                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
+                                            .show()
+                                    }
+                                } else {
+                                    if (wish2 > 0) {
+                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
+                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
+                                            .setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id -> })
+                                            .show()
+                                    }
+                                    else {
+                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
+                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
+                                            .show()
+                                    }
+                                }
+                            } else {
+                                Log.e(TAG, "잘못된 카테고리 입니다.")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+                            Log.e(TAG, "서버 오류")
+                        }
+                    })
+                }
             }
         }
     }
@@ -269,7 +320,7 @@ class GameActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, name1: String?, name2: String?) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, wish01: Int, wish02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, name1: String?, name2: String?) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -307,6 +358,8 @@ class GameActivity : AppCompatActivity() {
         }
         score1.text = score01.toString()
         score2.text = score02.toString()
+        wish1.text = wish01.toString()
+        wish2.text = wish02.toString()
         checkWin(score01, score02, category, name1, name2)
         showTurn(turn, name1, name2)
     }
@@ -338,7 +391,7 @@ class GameActivity : AppCompatActivity() {
     }
 
 
-    fun changeQuestion(category: String, isAdult: String, num: Int) {
+    fun changeQuestion(category: String, isAdult: String, num: Int, turn: Boolean, wish01: Int, wish02: Int) {
         val builder = AlertDialog.Builder(this)
         var Category = category
 
@@ -353,8 +406,18 @@ class GameActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
                 if (response.isSuccessful) {
                     val question = response.body()
-                    builder.setTitle("질문").setMessage(question?.get(0).toString())
-                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                    if (turn) {
+                        if (wish01 > 0) {
+                            builder.setTitle("질문").setMessage(question?.get(0).toString())
+                                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                                .setNegativeButton("확인", DialogInterface.OnClickListener { dialog, id -> })
+                                .show()
+                        }
+
+                    }
+
+
+
                 } else {
                     Log.e(TAG, "잘못된 카테고리 입니다.")
                 }
