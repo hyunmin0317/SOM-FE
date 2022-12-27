@@ -103,7 +103,7 @@ class GameActivity : AppCompatActivity() {
                                     player2 -= arr[idx]
                                     arr[idx] = item
                                     wish1 += 1
-                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                    showCatch()
                                 }
                                 else {
                                     if (idx == 0)
@@ -121,7 +121,7 @@ class GameActivity : AppCompatActivity() {
                                     player1 += arr[idx]
                                     arr[idx] = item
                                     wish2 += 1
-                                    builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                    showCatch()
                                 }
                                 else {
                                     if (idx == 0)
@@ -152,7 +152,7 @@ class GameActivity : AppCompatActivity() {
                             player2 -= arr[num]
                             arr[num] = 1
                             wish1 += 1
-                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                            showCatch()
                         }
                         else {
                             arr[num] += 1
@@ -168,7 +168,7 @@ class GameActivity : AppCompatActivity() {
                             player1 += arr[num]
                             arr[num] = -1
                             wish2 += 1
-                            builder.setTitle("말을 잡았습니다!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                            showCatch()
                         }
                         else {
                             arr[num] -= 1
@@ -419,6 +419,15 @@ class GameActivity : AppCompatActivity() {
             .setPositiveButton("확인") { dialog, which -> }
             .create()
         alertDialog.setView(view)
+        alertDialog.show()
+    }
+
+    fun showCatch() {
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("말을 잡았습니다!")
+            .setIcon(R.drawable.ccatch)
+            .setPositiveButton("확인") { dialog, which -> }
+            .create()
         alertDialog.show()
     }
 }
