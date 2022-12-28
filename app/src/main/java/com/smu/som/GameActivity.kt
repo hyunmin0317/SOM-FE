@@ -32,6 +32,7 @@ class GameActivity : AppCompatActivity() {
 
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
+        var yuts = IntArray(6, { 0 } )
         var players: ArrayList<TextView> = ArrayList()
         var player1 = 4
         var player2 = 4
@@ -40,6 +41,7 @@ class GameActivity : AppCompatActivity() {
         var wish1 = 1
         var wish2 = 1
         var turn = true
+        var again = false
 
         var builder = AlertDialog.Builder(this)
         val soundPool = SoundPool.Builder().build()
@@ -99,9 +101,15 @@ class GameActivity : AppCompatActivity() {
         drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
 
         yut.setOnClickListener {
-            yut.isClickable = false
-            soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
             var num = playGame(soundPool, gamesound)
+            if (num == 4 || num== 5) {
+                again = true
+            } else {
+                yut.isClickable = false
+            }
+
+            if (again)
+                yuts[num] += 1
             if (num == 0)
                 num = -1
 
@@ -109,6 +117,34 @@ class GameActivity : AppCompatActivity() {
                 if (item!=0 && index!=0) {
                     players[index].setOnClickListener {
                         if (turn == item > 0) {
+                            if (checkEnd(yuts)) {
+                                var size = 0
+                                var yutArray = arrayOf("", "", "", "", "", "")
+                                var yutss: ArrayList<Int> = ArrayList()
+                                for ((index,item) in yuts.withIndex()) {
+                                    if (item > 0) {
+                                        yutss.add(index)
+                                        yutArray[size] = "$index * $item"
+                                        size += 1
+                                    }
+                                }
+                                yutArray = yutArray.sliceArray(0..size)
+                                builder = AlertDialog.Builder(this)
+                                builder.setTitle("윷 선택").setItems(yutArray, DialogInterface.OnClickListener { dialog, which ->
+                                    num = yutss[which]
+                                    yuts[num] -= 1
+                                }).setNegativeButton("취소", DialogInterface.OnClickListener { dialog, id -> })
+                                builder.show()
+                            } else {
+                                start.setOnClickListener(null)
+                                for ((index,item) in arr.withIndex())
+                                    if (item!=0 && index!=0)
+                                        players[index]?.setOnClickListener(null)
+                                yut.isClickable = true
+                                again = false
+                                yuts = IntArray(6, { 0 } )
+                            }
+
                             var idx = getIndex(index, num)
 
                             if (turn) {
@@ -124,10 +160,8 @@ class GameActivity : AppCompatActivity() {
                                         score1 += item
                                     else
                                         arr[idx] += item
-                                    if (num != 4 && num!= 5)
+                                    if (!again)
                                         turn = !turn
-                                    else
-                                        builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                                 }
                             }
                             else {
@@ -143,24 +177,31 @@ class GameActivity : AppCompatActivity() {
                                         score2 -= item
                                     else
                                         arr[idx] += item
-                                    if (num != 4 && num!= 5)
+                                    if (!again)
                                         turn = !turn
                                 }
                             }
                             arr[index] = 0
                             drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
-
-                            start.setOnClickListener(null)
-                            for ((index,item) in arr.withIndex())
-                                if (item!=0 && index!=0)
-                                    players[index]?.setOnClickListener(null)
-                            yut.isClickable = true
                         }
                     }
                 }
             }
 
             start.setOnClickListener {
+                if (checkEnd(yuts)) {
+                    num = chooseYut(yuts, num)
+                    yuts[num] -= 1
+                } else {
+                    start.setOnClickListener(null)
+                    for ((index,item) in arr.withIndex())
+                        if (item!=0 && index!=0)
+                            players[index]?.setOnClickListener(null)
+                    yut.isClickable = true
+                    again = false
+                    yuts = IntArray(6, { 0 } )
+                }
+
                 if (num != -1 && checkBoard(turn, player1, player2) != 0) {
                     if (turn) {
                         if (arr[num] < 0) {     // 말을 잡을 경우
@@ -172,10 +213,8 @@ class GameActivity : AppCompatActivity() {
                         }
                         else {
                             arr[num] += 1
-                            if (num != 4 && num!= 5)
+                            if (!again)
                                 turn = !turn
-                            else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                         }
                         player1 -= 1
                     }
@@ -197,12 +236,6 @@ class GameActivity : AppCompatActivity() {
                         player2 -= 1
                     }
                     drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
-
-                    start.setOnClickListener(null)
-                    for ((index,item) in arr.withIndex())
-                        if (item!=0 && index!=0)
-                            players[index]?.setOnClickListener(null)
-                    yut.isClickable = true
                 }
             }
 
@@ -320,6 +353,7 @@ class GameActivity : AppCompatActivity() {
     fun playGame(soundPool: SoundPool, gamesound: IntArray): Int {
         val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
         var num = percentage()
+        soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
         result.setBackgroundResource(resources.getIdentifier("result_$num", "drawable", packageName))
         Handler(Looper.getMainLooper()).postDelayed({
             soundPool.play(gamesound[num], 1.0f, 1.0f, 0, 0, 1.0f)
@@ -443,5 +477,37 @@ class GameActivity : AppCompatActivity() {
             .setPositiveButton("확인") { dialog, which -> }
             .create()
         alertDialog.show()
+    }
+
+    fun checkEnd(yuts: IntArray): Boolean {
+        var cnt = 0
+        for ((index,item) in yuts.withIndex())
+            if (item > 0)
+                cnt += 1
+        Log.i("cnt", cnt.toString())
+        if (cnt > 1)
+            return true
+        return false
+    }
+
+    fun chooseYut(yuts: IntArray, num: Int): Int {
+        var size = 0
+        var value = num
+        var yutArray = arrayOf("", "", "", "", "", "")
+        var yutss: ArrayList<Int> = ArrayList()
+        for ((index,item) in yuts.withIndex()) {
+            if (item > 0) {
+                yutss.add(index)
+                yutArray[size] = "$index * $item"
+                size += 1
+            }
+        }
+        yutArray = yutArray.sliceArray(0..size)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("윷 선택").setItems(yutArray, DialogInterface.OnClickListener { dialog, which ->
+            value = yutss[which]
+        }).setNegativeButton("취소", DialogInterface.OnClickListener { dialog, id -> })
+        builder.show()
+        return value
     }
 }
