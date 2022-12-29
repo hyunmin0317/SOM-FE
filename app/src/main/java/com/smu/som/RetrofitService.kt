@@ -9,4 +9,15 @@ interface RetrofitService {
         @Path("category") category: String,
         @Query("isAdult") isAdult: String
     ): Call<ArrayList<Question>>
+
+    @GET("api/question/{kakaoID}/used")
+    fun usedQuestion(
+        @Path("kakaoID") kakaoID: String,
+    ): Call<ArrayList<Question>>
+
+
+    @GET("api/question/{kakaoID}/pass")
+    fun passQuestion(
+        @Path("kakaoID") kakaoID: String,
+    ): Call<ArrayList<Question>>
 }
