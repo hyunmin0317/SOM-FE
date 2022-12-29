@@ -8,5 +8,5 @@ interface RetrofitService {
     fun getQuestion(
         @Path("category") category: String,
         @Query("isAdult") isAdult: String
-    ): Call<ArrayList<String>>
+    ): Call<ArrayList<Question>>
 }

@@ -220,45 +220,35 @@ class GameActivity : AppCompatActivity() {
 
                     (application as MasterApplication).service.getQuestion(
                         category!!, isAdult!!
-                    ).enqueue(object : Callback<ArrayList<String>> {
-                        override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
+                    ).enqueue(object : Callback<ArrayList<Question>> {
+                        override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                             if (response.isSuccessful) {
                                 val question = response.body()
+
+                                builder.setTitle("질문").setMessage(question?.get(0)?.question.toString())
+                                    .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
+
                                 if (turn) {
                                     if (wish1 > 0) {
-                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
-                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
-                                            .setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id ->
-                                                wish1 -= 1
-                                            })
-                                            .show()
-                                    }
-                                    else {
-                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
-                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
-                                            .show()
-                                    }
-                                } else {
-                                    if (wish2 > 0) {
-                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
-                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
-                                            .setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id ->
-                                                wish2 -= 1
-                                            })
-                                            .show()
-                                    }
-                                    else {
-                                        builder.setTitle("질문").setMessage(question?.get(0).toString())
-                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
-                                            .show()
+                                        builder.setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id ->
+                                            wish1 -= 1
+                                        })
                                     }
                                 }
+                                else {
+                                    if (wish2 > 0) {
+                                        builder.setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id ->
+                                            wish2 -= 1
+                                        })
+                                    }
+                                }
+                                builder.show()
                             } else {
                                 Log.e(TAG, "잘못된 카테고리 입니다.")
                             }
                         }
 
-                        override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+                        override fun onFailure(call: Call<ArrayList<Question>>, t: Throwable) {
                             Log.e(TAG, "서버 오류")
                         }
                     })
