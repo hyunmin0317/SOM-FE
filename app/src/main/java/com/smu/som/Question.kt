@@ -3,7 +3,7 @@ package com.smu.som
 import java.io.Serializable
 
 class Question(
-    var id : Int? = null,
+    var id : Int,
     var target : String? = null,
     var question : String? = null,
     var isAdult: String? = null,

@@ -30,7 +30,6 @@ class GameActivity : AppCompatActivity() {
         val email = sp.getString("email", null)
         val sound = sp.getBoolean("sound", false)
         val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
-
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
         var players: ArrayList<TextView> = ArrayList()
@@ -43,6 +42,8 @@ class GameActivity : AppCompatActivity() {
         var change1 = 1
         var change2 = 1
         var turn = true
+        var used = arrayOf<Int>()
+        var pass = arrayOf<Int>()
 
         var builder = AlertDialog.Builder(this)
         val soundPool = SoundPool.Builder().build()
@@ -99,7 +100,7 @@ class GameActivity : AppCompatActivity() {
 
         game_rule.setOnClickListener { showPopup() }
 
-        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
         yut.setOnClickListener {
             yut.isClickable = false
@@ -151,7 +152,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -199,7 +200,7 @@ class GameActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -227,14 +228,18 @@ class GameActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                             if (response.isSuccessful) {
                                 val question = response.body()
+                                val questionId = question?.get(0)!!.id
 
                                 builder.setTitle("질문").setMessage(question?.get(0)?.question.toString())
-                                    .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id -> })
+                                    .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                        used = used.plus(questionId)
+                                    })
 
                                 if (turn) {
                                     if (wish1 > 0) {
                                         builder.setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id ->
                                             wish1 -= 1
+                                            pass = pass.plus(questionId)
                                         })
                                     }
                                     if (change1 > 0) {
@@ -243,7 +248,7 @@ class GameActivity : AppCompatActivity() {
                                             if (change1 == 0) {
                                                 builder.setMessage(question?.get(1)?.question.toString()).setNeutralButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
                                                 turn = !turn
-                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
                                                 start.setOnClickListener(null)
                                                 for ((index,item) in arr.withIndex())
                                                     if (item!=0 && index!=0)
@@ -257,6 +262,7 @@ class GameActivity : AppCompatActivity() {
                                     if (wish2 > 0) {
                                         builder.setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id ->
                                             wish2 -= 1
+                                            pass = pass.plus(questionId)
                                         })
                                     }
                                     if (change2 > 0) {
@@ -265,7 +271,7 @@ class GameActivity : AppCompatActivity() {
                                             if (change2 == 0) {
                                                 builder.setMessage(question?.get(1)?.question.toString()).setNeutralButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
                                                 turn = !turn
-                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
                                                 start.setOnClickListener(null)
                                                 for ((index,item) in arr.withIndex())
                                                     if (item!=0 && index!=0)
@@ -365,7 +371,7 @@ class GameActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, wish01: Int, wish02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, wish01: Int, wish02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -405,7 +411,7 @@ class GameActivity : AppCompatActivity() {
         score2.text = score02.toString()
 //        wish1.text = wish01.toString()
 //        wish2.text = wish02.toString()
-        checkWin(score01, score02, category, kcategory, name1, name2)
+        checkWin(score01, score02, category, kcategory, name1, name2, email, used, pass)
         showTurn(turn, name1, name2)
     }
 
@@ -416,7 +422,7 @@ class GameActivity : AppCompatActivity() {
         return player02
     }
 
-    fun checkWin(score01: Int, score02: Int, category: String?, kcategory: String?, name1: String?, name2: String?) {
+    fun checkWin(score01: Int, score02: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
         if (score01 == 4 || score02 == 4) {
             var result = ""
             if (score01 == 4) {
@@ -424,6 +430,7 @@ class GameActivity : AppCompatActivity() {
             } else {
                 result = "$name2 승리!"
             }
+            email?.let { saveResult(it, used, pass) }
 
             val intent = Intent(this, GameResultActivity::class.java)
             intent.putExtra("result", result)
@@ -466,5 +473,26 @@ class GameActivity : AppCompatActivity() {
             .setPositiveButton("확인") { dialog, which -> }
             .create()
         alertDialog.show()
+    }
+
+    fun saveResult(email:String, used: Array<Int>, pass: Array<Int>) {
+        val result = GameResult(used, pass)
+        (application as MasterApplication).service.saveResult(
+            email, result
+        ).enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if (response.isSuccessful) {
+                    Log.e(TAG, "저장 완료")
+                } else {
+                    Log.e(TAG, "저장 오류")
+                    Log.e(TAG, response.body().toString())
+                    Log.e(TAG, response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Log.e(TAG, "서버 오류")
+            }
+        })
     }
 }

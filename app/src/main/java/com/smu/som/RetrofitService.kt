@@ -1,5 +1,7 @@
 package com.smu.som
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -20,4 +22,10 @@ interface RetrofitService {
     fun passQuestion(
         @Path("kakaoID") kakaoID: String,
     ): Call<ArrayList<Question>>
+
+    @POST("api/question/{kakaoID}")
+    fun saveResult(
+        @Path("kakaoID") kakaoID: String,
+        @Body result: GameResult
+    ): Call<Boolean>
 }
