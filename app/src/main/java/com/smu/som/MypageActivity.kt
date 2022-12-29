@@ -27,8 +27,10 @@ class MypageActivity : AppCompatActivity() {
             val nickname = user?.kakaoAccount?.profile?.nickname
             val genders = user?.kakaoAccount?.gender
             val profileImageUrl = user?.kakaoAccount?.profile?.profileImageUrl
+            var ageRange = user?.kakaoAccount?.ageRange
 
             name.text = nickname.toString()
+            age_range.text = changeFormat(ageRange.toString())
             if (genders == Gender.MALE)
                 gender.text = "남"
             else if (genders == Gender.FEMALE)
@@ -129,5 +131,13 @@ class MypageActivity : AppCompatActivity() {
 
     fun setImage(url: String?) {
         Glide.with(this).load(url).into(findViewById(R.id.profile_img))
+    }
+
+    fun changeFormat(ageRange: String?): String {
+        val string = ageRange?.split("_")
+        if (string?.size!! > 1) {
+            return string[1] + "~" + string[2]
+        }
+        return ageRange
     }
 }

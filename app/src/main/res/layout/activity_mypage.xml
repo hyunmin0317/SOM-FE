@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text=" - "
+                    android:text="  "
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -78,6 +78,23 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="성별"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="  "
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/age_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="연령대"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     android:textStyle="bold" />
