@@ -342,7 +342,7 @@ class GameActivity : AppCompatActivity() {
                     if (item > 0)
                         drawable = resources.getIdentifier(String.format("player_%d_%d", item, rand1), "drawable", packageName)
                     else
-                        drawable = resources.getIdentifier(String.format("player_%02d_%d", abs(item), rand2),"drawable", packageName)
+                        drawable = resources.getIdentifier(String.format("player_%d_%d", abs(item), rand2),"drawable", packageName)
                     player.setBackgroundResource(drawable)
                 }
                 else
@@ -354,9 +354,9 @@ class GameActivity : AppCompatActivity() {
             var player1: TextView = findViewById(getResources().getIdentifier("player1_" + num, "id", packageName))
             var player2: TextView = findViewById(getResources().getIdentifier("player2_" + num, "id", packageName))
             val drawable1 = resources.getIdentifier(String.format("player_1_%d", rand1), "drawable", packageName)
-            val drawable2 = resources.getIdentifier(String.format("player_01_%d", rand2), "drawable", packageName)
-            val nodrawable1 = resources.getIdentifier(String.format("noplayer_1_%d", rand1), "drawable", packageName)
-            val nodrawable2 = resources.getIdentifier(String.format("noplayer_01_%d", rand2), "drawable", packageName)
+            val drawable2 = resources.getIdentifier(String.format("player_1_%d", rand2), "drawable", packageName)
+            val nodrawable1 = resources.getIdentifier(String.format("noplayer_%d", rand1), "drawable", packageName)
+            val nodrawable2 = resources.getIdentifier(String.format("noplayer_%d", rand2), "drawable", packageName)
 
             if (num <= player01)
                 player1.setBackgroundResource(drawable1)
