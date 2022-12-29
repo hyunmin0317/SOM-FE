@@ -54,22 +54,22 @@
                         android:fontFamily="@font/acube"
                         />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" - "
-                        android:textColor="#ffffff"
-                        android:fontFamily="@font/acube"
-                        />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text=" - "-->
+<!--                        android:textColor="#ffffff"-->
+<!--                        android:fontFamily="@font/acube"-->
+<!--                        />-->
 
-                    <TextView
-                        android:id="@+id/wish1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="#ffffff"
-                        android:fontFamily="@font/acube"
-                        />
+<!--                    <TextView-->
+<!--                        android:id="@+id/wish1"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="0"-->
+<!--                        android:textColor="#ffffff"-->
+<!--                        android:fontFamily="@font/acube"-->
+<!--                        />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -181,22 +181,22 @@
                         android:fontFamily="@font/acube"
                         />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" - "
-                        android:textColor="#ffffff"
-                        android:fontFamily="@font/acube"
-                        />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text=" - "-->
+<!--                        android:textColor="#ffffff"-->
+<!--                        android:fontFamily="@font/acube"-->
+<!--                        />-->
 
-                    <TextView
-                        android:id="@+id/wish2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="#ffffff"
-                        android:fontFamily="@font/acube"
-                        />
+<!--                    <TextView-->
+<!--                        android:id="@+id/wish2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="0"-->
+<!--                        android:textColor="#ffffff"-->
+<!--                        android:fontFamily="@font/acube"-->
+<!--                        />-->
 
                 </LinearLayout>
 

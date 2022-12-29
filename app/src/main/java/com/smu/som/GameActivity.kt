@@ -380,8 +380,8 @@ class GameActivity : AppCompatActivity() {
         }
         score1.text = score01.toString()
         score2.text = score02.toString()
-        wish1.text = wish01.toString()
-        wish2.text = wish02.toString()
+//        wish1.text = wish01.toString()
+//        wish2.text = wish02.toString()
         checkWin(score01, score02, category, kcategory, name1, name2)
         showTurn(turn, name1, name2)
     }
