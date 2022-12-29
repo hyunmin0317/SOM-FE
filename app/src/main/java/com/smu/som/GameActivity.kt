@@ -37,8 +37,10 @@ class GameActivity : AppCompatActivity() {
         var player2 = 4
         var score1 = 0
         var score2 = 0
-        var wish1 = 1
-        var wish2 = 1
+        var wish1 = 0
+        var wish2 = 0
+        var change1 = 1
+        var change2 = 1
         var turn = true
 
         var builder = AlertDialog.Builder(this)
@@ -234,11 +236,41 @@ class GameActivity : AppCompatActivity() {
                                             wish1 -= 1
                                         })
                                     }
+                                    if (change1 > 0) {
+                                        builder.setNeutralButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                            change1 -= 1
+                                            if (change1 == 0) {
+                                                builder.setMessage(question?.get(1)?.question.toString()).setNeutralButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
+                                                turn = !turn
+                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+                                                start.setOnClickListener(null)
+                                                for ((index,item) in arr.withIndex())
+                                                    if (item!=0 && index!=0)
+                                                        players[index]?.setOnClickListener(null)
+                                                yut.isClickable = true
+                                            }
+                                        })
+                                    }
                                 }
                                 else {
                                     if (wish2 > 0) {
                                         builder.setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id ->
                                             wish2 -= 1
+                                        })
+                                    }
+                                    if (change2 > 0) {
+                                        builder.setNeutralButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                            change2 -= 1
+                                            if (change2 == 0) {
+                                                builder.setMessage(question?.get(1)?.question.toString()).setNeutralButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
+                                                turn = !turn
+                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p)
+                                                start.setOnClickListener(null)
+                                                for ((index,item) in arr.withIndex())
+                                                    if (item!=0 && index!=0)
+                                                        players[index]?.setOnClickListener(null)
+                                                yut.isClickable = true
+                                            }
                                         })
                                     }
                                 }
