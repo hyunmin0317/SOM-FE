@@ -123,8 +123,12 @@ class MypageActivity : AppCompatActivity() {
         }
 
         home.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
+        question.setOnClickListener{
+            startActivity(Intent(this, QuestionListActivity::class.java))
             finish()
         }
     }
