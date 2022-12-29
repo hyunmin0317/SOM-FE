@@ -88,6 +88,7 @@ class MypageActivity : AppCompatActivity() {
             editor.putString("name1", "1P")
             editor.putString("name2", "2P")
             editor.putInt("category", 0)
+            editor.putString("email", null)
             editor.commit()
 
             UserApiClient.instance.logout { error ->
@@ -108,6 +109,7 @@ class MypageActivity : AppCompatActivity() {
             editor.putString("name1", "1P")
             editor.putString("name2", "2P")
             editor.putInt("category", 0)
+            editor.putString("email", null)
             editor.commit()
 
             UserApiClient.instance.unlink { error ->

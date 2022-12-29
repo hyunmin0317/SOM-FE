@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         UserApiClient.instance.me { user, error ->
             val ageRange = user?.kakaoAccount?.ageRange
+            val email = user?.kakaoAccount?.email
             var adult = false
 
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
             val editor = sp.edit()
             editor.putBoolean("adult", adult)
+            editor.putString("email", email)
             editor.commit()
         }
 

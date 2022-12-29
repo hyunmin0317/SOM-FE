@@ -27,6 +27,7 @@ class GameActivity : AppCompatActivity() {
 
         val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val isAdult = sp.getString("isAdult", "n")
+        val email = sp.getString("email", null)
         val sound = sp.getBoolean("sound", false)
         val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
 
