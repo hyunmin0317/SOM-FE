@@ -58,6 +58,8 @@ class GameActivity : AppCompatActivity() {
         var rand1 = char1 + 1
         var rand2 = char2 + 1
 
+        var yuts = IntArray(6, { 0 } )
+
         name1.text = name_1p
         name2.text = name_2p
         Category.text = kcategory
@@ -103,119 +105,126 @@ class GameActivity : AppCompatActivity() {
         drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
         yut.setOnClickListener {
-            yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
             var num = playGame(soundPool, gamesound)
+            yuts[num] += 1
             if (num == 0)
                 num = -1
 
-            for ((index,item) in arr.withIndex()) {
-                if (item!=0 && index!=0) {
-                    players[index].setOnClickListener {
-                        if (turn == item > 0) {
-                            var idx = getIndex(index, num)
+            for (i in 0..5) {
+                Log.i("yut_$i", yuts[i].toString())
+            }
 
-                            if (turn) {
-                                if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
-                                    player2 -= arr[idx]
-                                    arr[idx] = item
-                                    wish1 += 1
-                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                                    showCatch()
+            if (num != 4 && num!= 5) {
+                yut.isClickable = false
+                for ((index,item) in arr.withIndex()) {
+                    if (item!=0 && index!=0) {
+                        players[index].setOnClickListener {
+
+
+                            if (turn == item > 0) {
+                                var idx = getIndex(index, num)
+
+                                if (turn) {
+                                    if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
+                                        player2 -= arr[idx]
+                                        arr[idx] = item
+                                        wish1 += 1
+                                        soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                        showCatch()
+                                    }
+                                    else {
+                                        if (idx == 0)
+                                            score1 += item
+                                        else
+                                            arr[idx] += item
+                                        if (num != 4 && num!= 5)
+                                            turn = !turn
+                                        else
+                                            builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                    }
                                 }
                                 else {
-                                    if (idx == 0)
-                                        score1 += item
-                                    else
-                                        arr[idx] += item
-                                    if (num != 4 && num!= 5)
-                                        turn = !turn
-                                    else
-                                        builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                    if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
+                                        player1 += arr[idx]
+                                        arr[idx] = item
+                                        wish2 += 1
+                                        soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                        showCatch()
+                                    }
+                                    else {
+                                        if (idx == 0)
+                                            score2 -= item
+                                        else
+                                            arr[idx] += item
+                                        if (num != 4 && num!= 5)
+                                            turn = !turn
+                                    }
                                 }
+                                arr[index] = 0
+                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                start.setOnClickListener(null)
+                                for ((index,item) in arr.withIndex())
+                                    if (item!=0 && index!=0)
+                                        players[index]?.setOnClickListener(null)
+                                yut.isClickable = true
+                            }
+                        }
+                    }
+                }
+
+                start.setOnClickListener {
+                    if (num != -1 && checkBoard(turn, player1, player2) != 0) {
+                        if (turn) {
+                            if (arr[num] < 0) {     // 말을 잡을 경우
+                                player2 -= arr[num]
+                                arr[num] = 1
+                                wish1 += 1
+                                soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                showCatch()
                             }
                             else {
-                                if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
-                                    player1 += arr[idx]
-                                    arr[idx] = item
-                                    wish2 += 1
-                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                                    showCatch()
-                                }
-                                else {
-                                    if (idx == 0)
-                                        score2 -= item
-                                    else
-                                        arr[idx] += item
-                                    if (num != 4 && num!= 5)
-                                        turn = !turn
-                                }
+                                arr[num] += 1
+                                if (num != 4 && num!= 5)
+                                    turn = !turn
+                                else
+                                    builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                             }
-                            arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-
-                            start.setOnClickListener(null)
-                            for ((index,item) in arr.withIndex())
-                                if (item!=0 && index!=0)
-                                    players[index]?.setOnClickListener(null)
-                            yut.isClickable = true
+                            player1 -= 1
                         }
+                        else {
+                            if (arr[num] > 0) {     // 말을 잡을 경우
+                                player1 += arr[num]
+                                arr[num] = -1
+                                wish2 += 1
+                                soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                showCatch()
+                            }
+                            else {
+                                arr[num] -= 1
+                                if (num != 4 && num!= 5)
+                                    turn = !turn
+                                else
+                                    builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                            }
+                            player2 -= 1
+                        }
+                        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                        start.setOnClickListener(null)
+                        for ((index,item) in arr.withIndex())
+                            if (item!=0 && index!=0)
+                                players[index]?.setOnClickListener(null)
+                        yut.isClickable = true
                     }
                 }
-            }
 
-            start.setOnClickListener {
-                if (num != -1 && checkBoard(turn, player1, player2) != 0) {
-                    if (turn) {
-                        if (arr[num] < 0) {     // 말을 잡을 경우
-                            player2 -= arr[num]
-                            arr[num] = 1
-                            wish1 += 1
-                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                            showCatch()
-                        }
-                        else {
-                            arr[num] += 1
-                            if (num != 4 && num!= 5)
-                                turn = !turn
-                            else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
-                        }
-                        player1 -= 1
-                    }
-                    else {
-                        if (arr[num] > 0) {     // 말을 잡을 경우
-                            player1 += arr[num]
-                            arr[num] = -1
-                            wish2 += 1
-                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                            showCatch()
-                        }
-                        else {
-                            arr[num] -= 1
-                            if (num != 4 && num!= 5)
-                                turn = !turn
-                            else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
-                        }
-                        player2 -= 1
-                    }
-                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-
-                    start.setOnClickListener(null)
-                    for ((index,item) in arr.withIndex())
-                        if (item!=0 && index!=0)
-                            players[index]?.setOnClickListener(null)
+                if (num == -1 && checkBoard(turn, player1, player2) == 4) {
                     yut.isClickable = true
+                    builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                 }
-            }
-
-            if (num == -1 && checkBoard(turn, player1, player2) == 4) {
-                yut.isClickable = true
-                builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
-            }
-            else {
-                if (num != 4 && num!= 5) {
+                else {
                     var builder = AlertDialog.Builder(this)
                     if (num==-1 || num==3) {
                         category = "COMMON"
@@ -292,6 +301,8 @@ class GameActivity : AppCompatActivity() {
                         }
                     })
                 }
+            } else {
+                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
             }
         }
     }
