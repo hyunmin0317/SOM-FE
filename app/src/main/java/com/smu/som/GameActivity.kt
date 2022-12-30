@@ -68,7 +68,7 @@ class GameActivity : AppCompatActivity() {
 
         if (sound) {
             for (i in 0..7) {
-                gamesound[i] = soundPool.load(this, resources.getIdentifier("sound_$i", "raw", packageName), 2)
+                gamesound[i] = soundPool.load(this, resources.getIdentifier("sound_$i", "raw", packageName), 1)
             }
         }
 

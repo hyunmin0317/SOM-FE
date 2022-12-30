@@ -21,14 +21,13 @@
             android:gravity="center"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/result_text"
                 android:layout_marginTop="20dp"
                 android:layout_height="80dp"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:text="Player 승리!"
-                android:textSize="25dp"
-                android:fontFamily="@font/acube"
+                android:text="GAME OVER"
+                android:textSize="45dp"
+                android:fontFamily="@font/fontbasic"
                 android:textColor="#ffffff"
                 />
         </LinearLayout>
@@ -38,12 +37,17 @@
             android:layout_weight="1.8"
             android:gravity="center"
             android:orientation="vertical">
-            <ImageView
+            <TextView
+                android:id="@+id/result_text"
+                android:text="Player 승리!"
+                android:gravity="center"
+                android:textSize="35dp"
+                android:fontFamily="@font/acube"
+                android:textColor="#ffffff"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_height="100dp"
-                android:layout_width="match_parent"
-                android:src="@drawable/game_over" />
+                android:layout_width="match_parent" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

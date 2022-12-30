@@ -1,8 +1,12 @@
 package com.smu.som
 
 import android.content.Intent
+import android.media.SoundPool
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_game_result.*
 
 class GameResultActivity : AppCompatActivity() {
@@ -14,7 +18,12 @@ class GameResultActivity : AppCompatActivity() {
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
         val result = intent.getStringExtra("result")
+        val soundPool = SoundPool.Builder().build()
+        val gamesound = soundPool.load(this, resources.getIdentifier("gameover", "raw", packageName), 1)
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            soundPool.play(gamesound, 1.0f, 1.0f, 0, 0, 1.0f)
+        }, 500)
         result_text.text = result
 
         game.setOnClickListener {
