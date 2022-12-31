@@ -108,8 +108,8 @@ class GameActivity : AppCompatActivity() {
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
             var num = playGame(soundPool, gamesound)
             yuts[num] += 1
-            if (num == 0)
-                num = -1
+//            if (num == 0)
+//                num = -1
 
             for (i in 0..5) {
                 Log.i("yut_$i", yuts[i].toString())
@@ -121,6 +121,8 @@ class GameActivity : AppCompatActivity() {
                     if (item!=0 && index!=0) {
                         players[index].setOnClickListener {
 
+                            num = chooseYut(yuts)
+                            yuts[num] -= 1
 
                             if (turn == item > 0) {
                                 var idx = getIndex(index, num)
@@ -175,6 +177,9 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 start.setOnClickListener {
+                    num = chooseYut(yuts)
+                    yuts[num] -= 1
+
                     if (num != -1 && checkBoard(turn, player1, player2) != 0) {
                         if (turn) {
                             if (arr[num] < 0) {     // 말을 잡을 경우
@@ -505,5 +510,31 @@ class GameActivity : AppCompatActivity() {
                 Log.e(TAG, "서버 오류")
             }
         })
+    }
+
+    fun cntYut(yuts: IntArray): Int {
+        var cnt = 0
+        for (i in 0..5)
+            cnt += yuts[i]
+        return cnt
+    }
+
+    fun chooseYut(yuts: IntArray): Int {
+        val cnt = cntYut(yuts)
+        if (cnt > 1) {
+            return 4
+        } else
+            return oneYut(yuts)
+    }
+
+    fun oneYut(yuts: IntArray): Int {
+        for (i in 0..5) {
+            if (yuts[i] == 1) {
+                if (i == 0)
+                    return -1
+                return i
+            }
+        }
+        return -1
     }
 }
