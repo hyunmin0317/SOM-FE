@@ -37,10 +37,10 @@ class GameActivity : AppCompatActivity() {
         var player2 = 4
         var score1 = 0
         var score2 = 0
-        var wish1 = 0
-        var wish2 = 0
-        var change1 = 1
-        var change2 = 1
+        var catch1 = false
+        var catch2 = false
+        var change1 = true
+        var change2 = true
         var turn = true
         var used = arrayOf<Int>()
         var pass = arrayOf<Int>()
@@ -98,11 +98,14 @@ class GameActivity : AppCompatActivity() {
 
         game_rule.setOnClickListener { showPopup() }
 
-        drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
         yut.setOnClickListener {
             yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
+            change1 = true
+            change2 = true
+
             var num = playGame(soundPool, gamesound)
             if (num == 0)
                 num = -1
@@ -117,7 +120,7 @@ class GameActivity : AppCompatActivity() {
                                 if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
                                     player2 -= arr[idx]
                                     arr[idx] = item
-                                    wish1 += 1
+                                    catch1 = true
                                     soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                                     showCatch()
                                 }
@@ -136,7 +139,7 @@ class GameActivity : AppCompatActivity() {
                                 if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
                                     player1 += arr[idx]
                                     arr[idx] = item
-                                    wish2 += 1
+                                    catch2 = true
                                     soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                                     showCatch()
                                 }
@@ -150,7 +153,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                             }
                             arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
                             start.setOnClickListener(null)
                             for ((index,item) in arr.withIndex())
@@ -168,7 +171,7 @@ class GameActivity : AppCompatActivity() {
                         if (arr[num] < 0) {     // 말을 잡을 경우
                             player2 -= arr[num]
                             arr[num] = 1
-                            wish1 += 1
+                            catch1 = true
                             soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                             showCatch()
                         }
@@ -185,7 +188,7 @@ class GameActivity : AppCompatActivity() {
                         if (arr[num] > 0) {     // 말을 잡을 경우
                             player1 += arr[num]
                             arr[num] = -1
-                            wish2 += 1
+                            catch2 = true
                             soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                             showCatch()
                         }
@@ -198,7 +201,7 @@ class GameActivity : AppCompatActivity() {
                         }
                         player2 -= 1
                     }
-                    drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
                     start.setOnClickListener(null)
                     for ((index,item) in arr.withIndex())
@@ -234,48 +237,46 @@ class GameActivity : AppCompatActivity() {
                                     })
 
                                 if (turn) {
-                                    if (wish1 > 0) {
-                                        builder.setNegativeButton("패스 X " + wish1.toString(), DialogInterface.OnClickListener { dialog, id ->
-                                            wish1 -= 1
+                                    if (catch1) {
+                                        catch1 = false
+                                        builder.setNeutralButton("패스", DialogInterface.OnClickListener { dialog, id ->
                                             pass = pass.plus(questionId)
                                         })
                                     }
-                                    if (change1 > 0) {
-                                        builder.setNeutralButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                            change1 -= 1
-                                            if (change1 == 0) {
-                                                builder.setMessage(question?.get(1)?.question.toString()).setNeutralButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
-                                                turn = !turn
-                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-                                                start.setOnClickListener(null)
-                                                for ((index,item) in arr.withIndex())
-                                                    if (item!=0 && index!=0)
-                                                        players[index]?.setOnClickListener(null)
-                                                yut.isClickable = true
-                                            }
+                                    if (change1) {
+                                        builder.setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                            builder.setMessage(question?.get(1)?.question.toString()).setNegativeButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
+                                            turn = !turn
+                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                            start.setOnClickListener(null)
+                                            for ((index,item) in arr.withIndex())
+                                                if (item!=0 && index!=0)
+                                                    players[index]?.setOnClickListener(null)
+                                            yut.isClickable = true
+                                            change1 = false
+                                            pass = pass.plus(questionId)
                                         })
                                     }
                                 }
                                 else {
-                                    if (wish2 > 0) {
-                                        builder.setNegativeButton("패스 X " + wish2.toString(), DialogInterface.OnClickListener { dialog, id ->
-                                            wish2 -= 1
+                                    if (catch2) {
+                                        catch2 = false
+                                        builder.setNeutralButton("패스", DialogInterface.OnClickListener { dialog, id ->
                                             pass = pass.plus(questionId)
                                         })
                                     }
-                                    if (change2 > 0) {
-                                        builder.setNeutralButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                            change2 -= 1
-                                            if (change2 == 0) {
-                                                builder.setMessage(question?.get(1)?.question.toString()).setNeutralButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
-                                                turn = !turn
-                                                drawGame(arr, player1, player2, score1, score2, wish1, wish2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-                                                start.setOnClickListener(null)
-                                                for ((index,item) in arr.withIndex())
-                                                    if (item!=0 && index!=0)
-                                                        players[index]?.setOnClickListener(null)
-                                                yut.isClickable = true
-                                            }
+                                    if (change2) {
+                                        builder.setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                            builder.setMessage(question?.get(1)?.question.toString()).setNegativeButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
+                                            turn = !turn
+                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                            start.setOnClickListener(null)
+                                            for ((index,item) in arr.withIndex())
+                                                if (item!=0 && index!=0)
+                                                    players[index]?.setOnClickListener(null)
+                                            yut.isClickable = true
+                                            change2 = false
+                                            pass = pass.plus(questionId)
                                         })
                                     }
                                 }
@@ -369,7 +370,7 @@ class GameActivity : AppCompatActivity() {
         return 5
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, wish01: Int, wish02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -407,8 +408,6 @@ class GameActivity : AppCompatActivity() {
         }
         score1.text = score01.toString()
         score2.text = score02.toString()
-//        wish1.text = wish01.toString()
-//        wish2.text = wish02.toString()
         checkWin(score01, score02, category, kcategory, name1, name2, email, used, pass)
         showTurn(turn, name1, name2)
     }
