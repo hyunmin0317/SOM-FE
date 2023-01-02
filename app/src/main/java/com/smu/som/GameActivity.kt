@@ -53,8 +53,8 @@ class GameActivity : AppCompatActivity() {
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
 
-        var char1 = intent.getIntExtra("character1", 0)
-        var char2 = intent.getIntExtra("character2", 0)
+        var char1 = sp.getInt("character1", 0)
+        var char2 = sp.getInt("character2", 11)
         var rand1 = char1 + 1
         var rand2 = char2 + 1
 
@@ -89,8 +89,6 @@ class GameActivity : AppCompatActivity() {
                             intent.putExtra("kcategory", kcategory)
                             intent.putExtra("name1", name_1p)
                             intent.putExtra("name2", name_2p)
-                            intent.putExtra("character1", char1)
-                            intent.putExtra("character2", char2)
                             startActivity(intent)
                             finish()
                         }

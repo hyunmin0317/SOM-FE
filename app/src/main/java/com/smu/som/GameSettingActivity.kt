@@ -85,8 +85,6 @@ class GameSettingActivity : AppCompatActivity() {
             intent.putExtra("kcategory", kcategory)
             intent.putExtra("name1", name1.text.toString())
             intent.putExtra("name2", name2.text.toString())
-            intent.putExtra("character1", spinner1.selectedItemPosition)
-            intent.putExtra("character2", spinner2.selectedItemPosition)
             startActivity(intent)
             finish()
         }
