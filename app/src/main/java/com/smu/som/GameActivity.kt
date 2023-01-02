@@ -357,8 +357,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun percentage(): Int {
-        val per = arrayOf(625, 1875, 3750, 2500, 625, 625)
-        val range = (1..10000)
+        val per = arrayOf(1, 3, 6, 4, 1, 1)
+        val range = (1..16)
         var num = range.random()
 
         for ((index,item) in per.withIndex()) {
