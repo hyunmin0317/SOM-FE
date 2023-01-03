@@ -257,78 +257,113 @@
                     android:orientation="horizontal"
                     android:weightSum="10">
 
-                    <TextView
-                        android:id="@+id/board10"
+                    <LinearLayout
+                        android:id="@+id/pick10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board10"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board9"
+                    <LinearLayout
+                        android:id="@+id/pick9"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board9"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board8"
+                    <LinearLayout
+                        android:id="@+id/pick8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board8"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board7"
+                    <LinearLayout
+                        android:id="@+id/pick7"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board7"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board6"
+                    <LinearLayout
+                        android:id="@+id/pick6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board5"
+                    <LinearLayout
+                        android:id="@+id/pick5"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
-
 
                 </LinearLayout>
 
@@ -352,12 +387,19 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.8" />
 
-                        <TextView
-                            android:id="@+id/board11"
+                        <LinearLayout
+                            android:id="@+id/pick11"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board11"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <TextView
@@ -377,12 +419,18 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.6" />
 
-                        <TextView
-                            android:id="@+id/board26"
+                        <LinearLayout
+                            android:id="@+id/pick26"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick" >
+                            <TextView
+                                android:id="@+id/board26"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -418,12 +466,18 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.6" />
 
-                        <TextView
-                            android:id="@+id/board21"
+                        <LinearLayout
+                            android:id="@+id/pick21"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board21"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -448,12 +502,19 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.8" />
 
-                        <TextView
-                            android:id="@+id/board4"
+                        <LinearLayout
+                            android:id="@+id/pick4"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -478,12 +539,19 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.8" />
 
-                        <TextView
-                            android:id="@+id/board12"
+                        <LinearLayout
+                            android:id="@+id/pick12"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board12"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <TextView
@@ -503,12 +571,18 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.25" />
 
-                        <TextView
-                            android:id="@+id/board27"
+                        <LinearLayout
+                            android:id="@+id/pick27"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick" >
+                            <TextView
+                                android:id="@+id/board27"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -533,12 +607,18 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.25" />
 
-                        <TextView
-                            android:id="@+id/board22"
+                        <LinearLayout
+                            android:id="@+id/pick22"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board22"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -563,12 +643,19 @@
                             android:layout_height="0dp"
                             android:layout_weight="1" />
 
-                        <TextView
-                            android:id="@+id/board3"
+                        <LinearLayout
+                            android:id="@+id/pick3"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -585,12 +672,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="4.6" />
 
-                    <TextView
-                        android:id="@+id/board23"
+                    <LinearLayout
+                        android:id="@+id/pick23"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board23"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
@@ -613,12 +706,18 @@
                         android:orientation="vertical"
                         android:weightSum="1.8">
 
-                        <TextView
-                            android:id="@+id/board13"
+                        <LinearLayout
+                            android:id="@+id/pick13"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board13"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -643,12 +742,19 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.3" />
 
-                        <TextView
-                            android:id="@+id/board24"
+
+                        <LinearLayout
+                            android:id="@+id/pick24"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick" >
+                            <TextView
+                                android:id="@+id/board24"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -673,12 +779,18 @@
                             android:layout_height="0dp"
                             android:layout_weight="0.3" />
 
-                        <TextView
-                            android:id="@+id/board28"
+                        <LinearLayout
+                            android:id="@+id/pick28"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick" >
+                            <TextView
+                                android:id="@+id/board28"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -698,12 +810,18 @@
                         android:orientation="vertical"
                         android:weightSum="1.8">
 
-                        <TextView
-                            android:id="@+id/board2"
+                        <LinearLayout
+                            android:id="@+id/pick2"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -728,12 +846,18 @@
                         android:orientation="vertical"
                         android:weightSum="1.8">
 
-                        <TextView
-                            android:id="@+id/board14"
+                        <LinearLayout
+                            android:id="@+id/pick14"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board14"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -753,12 +877,18 @@
                         android:orientation="vertical"
                         android:weightSum="1.8">
 
-                        <TextView
-                            android:id="@+id/board25"
+                        <LinearLayout
+                            android:id="@+id/pick25"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick" >
+                            <TextView
+                                android:id="@+id/board25"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -789,12 +919,18 @@
                         android:orientation="vertical"
                         android:weightSum="1.8">
 
-                        <TextView
-                            android:id="@+id/board29"
+                        <LinearLayout
+                            android:id="@+id/pick29"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick" >
+                            <TextView
+                                android:id="@+id/board29"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -814,12 +950,18 @@
                         android:orientation="vertical"
                         android:weightSum="2">
 
-                        <TextView
-                            android:id="@+id/board1"
+                        <LinearLayout
+                            android:id="@+id/pick1"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/board" />
+                            android:background="@drawable/nopick">
+                            <TextView
+                                android:id="@+id/board1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/board" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -835,72 +977,107 @@
                     android:orientation="horizontal"
                     android:weightSum="10">
 
-                    <TextView
-                        android:id="@+id/board15"
+                    <LinearLayout
+                        android:id="@+id/pick15"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board15"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board16"
+                    <LinearLayout
+                        android:id="@+id/pick16"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board16"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board17"
+                    <LinearLayout
+                        android:id="@+id/pick17"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board17"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board18"
+                    <LinearLayout
+                        android:id="@+id/pick18"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board18"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
 
-                    <TextView
-                        android:id="@+id/board19"
+                    <LinearLayout
+                        android:id="@+id/pick19"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board19"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.8" />
-
-                    <TextView
-                        android:id="@+id/board20"
+                    <LinearLayout
+                        android:id="@+id/pick20"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/board" />
+                        android:background="@drawable/nopick">
+                        <TextView
+                            android:id="@+id/board20"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/board" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -919,11 +1096,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
-            <TextView
-                android:id="@+id/start"
+            <LinearLayout
+                android:id="@+id/start_pick"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/nopick">
+                <TextView
+                    android:id="@+id/start"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/yut"
                 android:layout_width="0dp"

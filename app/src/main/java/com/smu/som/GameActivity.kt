@@ -11,6 +11,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_game.*
@@ -109,8 +110,20 @@ class GameActivity : AppCompatActivity() {
             var num = playGame(soundPool, gamesound)
             if (num == 0)
                 num = -1
+            else {
+                if (checkBoard(turn, player1, player2) != 0) {
+                    start_pick.setBackgroundResource(R.drawable.pick)
+                }
+            }
 
             for ((index,item) in arr.withIndex()) {
+                if (item!=0 && index!=0) {
+                    if (turn == item > 0) {
+                        var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
+                        pick.setBackgroundResource(R.drawable.pick)
+                    }
+                }
+
                 if (item!=0 && index!=0) {
                     players[index].setOnClickListener {
                         if (turn == item > 0) {
@@ -374,6 +387,8 @@ class GameActivity : AppCompatActivity() {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
+                var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
+                pick.setBackgroundResource(R.drawable.nopick)
 
                 if (item!=0) {
                     var drawable: Int
@@ -406,6 +421,7 @@ class GameActivity : AppCompatActivity() {
             else
                 player2.setBackgroundResource(nodrawable2)
         }
+        start_pick.setBackgroundResource(R.drawable.nopick)
         score1.text = score01.toString()
         score2.text = score02.toString()
         checkWin(score01, score02, category, kcategory, name1, name2, email, used, pass)
