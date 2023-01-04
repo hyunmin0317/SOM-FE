@@ -130,7 +130,7 @@ class MypageActivity : AppCompatActivity() {
         }
 
         question.setOnClickListener{
-            startActivity(Intent(this, QuestionListActivity::class.java))
+            startActivity(Intent(this, GameDataActivity::class.java))
             finish()
         }
     }
