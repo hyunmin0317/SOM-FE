@@ -50,8 +50,9 @@ class GameDataActivity : AppCompatActivity() {
 
         couple.setOnClickListener {
             if (cnt_couple > 0) {
+                intent = Intent(this, QuestionListActivity::class.java)
                 intent.putExtra("category", "couple")
-                startActivity(Intent(this, QuestionListActivity::class.java))
+                startActivity(intent)
                 finish()
             } else {
                 Toast.makeText(this@GameDataActivity, "커플 카테고리의 게임 내역이 없습니다.", Toast.LENGTH_LONG).show()
@@ -60,8 +61,9 @@ class GameDataActivity : AppCompatActivity() {
 
         married.setOnClickListener{
             if (cnt_married > 0) {
+                intent = Intent(this, QuestionListActivity::class.java)
                 intent.putExtra("category", "married")
-                startActivity(Intent(this, QuestionListActivity::class.java))
+                startActivity(intent)
                 finish()
             } else {
                 Toast.makeText(this@GameDataActivity, "부부 카테고리의 게임 내역이 없습니다.", Toast.LENGTH_LONG).show()
@@ -70,8 +72,9 @@ class GameDataActivity : AppCompatActivity() {
 
         family.setOnClickListener {
             if (cnt_family > 0) {
+                intent = Intent(this, QuestionListActivity::class.java)
                 intent.putExtra("category", "family")
-                startActivity(Intent(this, QuestionListActivity::class.java))
+                startActivity(intent)
                 finish()
             } else {
                 Toast.makeText(this@GameDataActivity, "부모자녀 카테고리의 게임 내역이 없습니다.", Toast.LENGTH_LONG).show()
