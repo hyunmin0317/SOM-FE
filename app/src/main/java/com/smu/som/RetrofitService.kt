@@ -12,15 +12,17 @@ interface RetrofitService {
         @Query("isAdult") isAdult: String
     ): Call<ArrayList<Question>>
 
-    @GET("api/question/{kakaoID}/used")
+    @GET("api/question/{kakaoID}/{category}/used")
     fun usedQuestion(
         @Path("kakaoID") kakaoID: String,
+        @Path("category") category: String
     ): Call<ArrayList<Question>>
 
 
-    @GET("api/question/{kakaoID}/pass")
+    @GET("api/question/{kakaoID}/{category}/pass")
     fun passQuestion(
         @Path("kakaoID") kakaoID: String,
+        @Path("category") category: String
     ): Call<ArrayList<Question>>
 
     @POST("api/question/{kakaoID}")

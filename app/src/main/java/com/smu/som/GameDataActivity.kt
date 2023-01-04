@@ -1,7 +1,7 @@
 package com.smu.som
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,34 +17,40 @@ class GameDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_data)
 
+        val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
+        val email = sp.getString("email", null)
+
         var cnt_couple = 0
         var cnt_married = 0
         var cnt_family = 0
 
-        (application as MasterApplication).service.getData(
-            "choihm9903@gmail.com"
-        ).enqueue(object : Callback<Data> {
-            override fun onResponse(call: Call<Data>, response: Response<Data>) {
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    cnt_couple = data?.couple!!
-                    cnt_married = data?.married!!
-                    cnt_family = data?.family!!
-                    couple_cnt.text = cnt_couple.toString()
-                    married_cnt.text = cnt_married.toString()
-                    family_cnt.text = cnt_family.toString()
-                } else {
-                    Log.e(TAG, "불러오기 오류")
+        email?.let {
+            (application as MasterApplication).service.getData(
+                it
+            ).enqueue(object : Callback<Data> {
+                override fun onResponse(call: Call<Data>, response: Response<Data>) {
+                    if (response.isSuccessful) {
+                        val data = response.body()
+                        cnt_couple = data?.couple!!
+                        cnt_married = data?.married!!
+                        cnt_family = data?.family!!
+                        couple_cnt.text = cnt_couple.toString()
+                        married_cnt.text = cnt_married.toString()
+                        family_cnt.text = cnt_family.toString()
+                    } else {
+                        Log.e(TAG, "불러오기 오류")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<Data>, t: Throwable) {
-                Log.e(TAG, "서버 오류")
-            }
-        })
+                override fun onFailure(call: Call<Data>, t: Throwable) {
+                    Log.e(TAG, "서버 오류")
+                }
+            })
+        }
 
         couple.setOnClickListener {
             if (cnt_couple > 0) {
+                intent.putExtra("category", "couple")
                 startActivity(Intent(this, QuestionListActivity::class.java))
                 finish()
             } else {
@@ -54,6 +60,7 @@ class GameDataActivity : AppCompatActivity() {
 
         married.setOnClickListener{
             if (cnt_married > 0) {
+                intent.putExtra("category", "married")
                 startActivity(Intent(this, QuestionListActivity::class.java))
                 finish()
             } else {
@@ -63,6 +70,7 @@ class GameDataActivity : AppCompatActivity() {
 
         family.setOnClickListener {
             if (cnt_family > 0) {
+                intent.putExtra("category", "family")
                 startActivity(Intent(this, QuestionListActivity::class.java))
                 finish()
             } else {

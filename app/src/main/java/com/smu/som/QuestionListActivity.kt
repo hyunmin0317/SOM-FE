@@ -24,10 +24,11 @@ class QuestionListActivity : AppCompatActivity() {
 
         val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val email = sp.getString("email", null)
+        var category = intent.getStringExtra("category")
 
         email?.let {
             (application as MasterApplication).service.usedQuestion(
-                it
+                it, category!!
             ).enqueue(object : Callback<ArrayList<Question>> {
                 override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                     if (response.isSuccessful) {
@@ -51,7 +52,7 @@ class QuestionListActivity : AppCompatActivity() {
 
         email?.let {
             (application as MasterApplication).service.passQuestion(
-                it
+                it, category!!
             ).enqueue(object : Callback<ArrayList<Question>> {
                 override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                     if (response.isSuccessful) {
