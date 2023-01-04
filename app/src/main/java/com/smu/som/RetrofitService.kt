@@ -28,4 +28,9 @@ interface RetrofitService {
         @Path("kakaoID") kakaoID: String,
         @Body result: GameResult
     ): Call<Boolean>
+
+    @GET("api/question/playcount/{kakaoID}")
+    fun getData(
+        @Path("kakaoID") kakaoID: String,
+    ): Call<Data>
 }
