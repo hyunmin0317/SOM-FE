@@ -58,6 +58,7 @@ class GameActivity : AppCompatActivity() {
         var char2 = sp.getInt("character2", 11)
         var rand1 = char1 + 1
         var rand2 = char2 + 1
+        var yuts = IntArray(6, { 0 } )
 
         name1.text = name_1p
         name2.text = name_2p
@@ -102,12 +103,15 @@ class GameActivity : AppCompatActivity() {
         drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
         yut.setOnClickListener {
-            yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
             change1 = true
             change2 = true
 
             var num = playGame(soundPool, gamesound)
+            yuts[num] += 1
+            if (num != 4 && num != 5)
+                yut.isClickable = false
+
             if (num == 0)
                 num = -1
             else {
@@ -128,6 +132,9 @@ class GameActivity : AppCompatActivity() {
                     players[index].setOnClickListener {
                         if (turn == item > 0) {
                             var idx = getIndex(index, num)
+
+                            val select = chooseYut(yuts)
+                            Log.d("select", select.toString())
 
                             if (turn) {
                                 if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
@@ -512,5 +519,26 @@ class GameActivity : AppCompatActivity() {
                 Log.e(TAG, "서버 오류")
             }
         })
+    }
+
+    fun chooseYut(yuts: IntArray): Int {
+        val builder = AlertDialog.Builder(this)
+        var yutArray = arrayOf<String>()
+        var data = arrayOf<Int>()
+        val yut = arrayOf("백도", "도", "개", "걸", "윷", "모")
+        var select = -1
+
+        for ((index,item) in yuts.withIndex()) {
+            if (item != 0) {
+                val yutname = yut[index]
+                val yutcnt = item
+                yutArray = yutArray.plus("$yutname * $yutcnt")
+                data = data.plus(index)
+            }
+        }
+        builder.setTitle("윷 선택").setItems(yutArray, DialogInterface.OnClickListener { dialog, which ->
+            select = data[which]
+        }).setNegativeButton("취소", null).setCancelable(false).show()
+        return select
     }
 }
