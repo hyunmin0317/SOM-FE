@@ -8,11 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kakao.sdk.user.UserApiClient
-import com.kakao.sdk.user.model.Gender
-import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.activity_question_list.*
-import kotlinx.android.synthetic.main.activity_question_list.home
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +21,8 @@ class QuestionListActivity : AppCompatActivity() {
         val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
         val email = sp.getString("email", null)
         var category = intent.getStringExtra("category")
+        var title = intent.getStringExtra("title")
+        Title.text = title
 
         email?.let {
             (application as MasterApplication).service.usedQuestion(
@@ -80,7 +78,7 @@ class QuestionListActivity : AppCompatActivity() {
         }
 
         back.setOnClickListener {
-            startActivity(Intent(this, MypageActivity::class.java))
+            startActivity(Intent(this, GameDataActivity::class.java))
             finish()
         }
     }

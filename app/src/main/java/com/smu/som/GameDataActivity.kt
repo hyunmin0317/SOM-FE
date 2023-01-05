@@ -52,6 +52,7 @@ class GameDataActivity : AppCompatActivity() {
             if (cnt_couple > 0) {
                 intent = Intent(this, QuestionListActivity::class.java)
                 intent.putExtra("category", "couple")
+                intent.putExtra("title", "연인 질문 기록")
                 startActivity(intent)
                 finish()
             } else {
@@ -63,6 +64,7 @@ class GameDataActivity : AppCompatActivity() {
             if (cnt_married > 0) {
                 intent = Intent(this, QuestionListActivity::class.java)
                 intent.putExtra("category", "married")
+                intent.putExtra("title", "부부 질문 기록")
                 startActivity(intent)
                 finish()
             } else {
@@ -74,11 +76,22 @@ class GameDataActivity : AppCompatActivity() {
             if (cnt_family > 0) {
                 intent = Intent(this, QuestionListActivity::class.java)
                 intent.putExtra("category", "family")
+                intent.putExtra("title", "부모자녀 질문 기록")
                 startActivity(intent)
                 finish()
             } else {
                 Toast.makeText(this@GameDataActivity, "부모자녀 카테고리의 게임 내역이 없습니다.", Toast.LENGTH_LONG).show()
             }
+        }
+
+        home.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
+        back.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
+            finish()
         }
     }
 }
