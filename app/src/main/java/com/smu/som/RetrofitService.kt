@@ -25,9 +25,10 @@ interface RetrofitService {
         @Path("category") category: String
     ): Call<ArrayList<Question>>
 
-    @POST("api/question/{kakaoID}")
+    @POST("api/question/{kakaoID}/{category}")
     fun saveResult(
         @Path("kakaoID") kakaoID: String,
+        @Path("category") category: String,
         @Body result: GameResult
     ): Call<Boolean>
 

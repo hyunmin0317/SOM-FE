@@ -49,7 +49,7 @@ class GameActivity : AppCompatActivity() {
         var builder = AlertDialog.Builder(this)
         val soundPool = SoundPool.Builder().build()
         val gamesound = IntArray(8, { 0 } )
-        var category = intent.getStringExtra("category")
+        val category = intent.getStringExtra("category")
         var kcategory = intent.getStringExtra("kcategory")
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
@@ -231,13 +231,14 @@ class GameActivity : AppCompatActivity() {
             else {
                 if (num != 4 && num!= 5) {
                     var builder = AlertDialog.Builder(this)
+                    var ecategory = category
                     if (num==-1 || num==3) {
-                        category = "COMMON"
+                        ecategory = "COMMON"
                         Log.i(TAG, "공통 카테고리로 변경")
                     }
 
                     (application as MasterApplication).service.getQuestion(
-                        category!!, isAdult!!
+                        ecategory!!, isAdult!!
                     ).enqueue(object : Callback<ArrayList<Question>> {
                         override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                             if (response.isSuccessful) {
@@ -443,7 +444,7 @@ class GameActivity : AppCompatActivity() {
             } else {
                 result = "$name2 승리!"
             }
-            email?.let { saveResult(it, used, pass) }
+            email?.let { category?.let { it1 -> saveResult(it, it1, used, pass) } }
 
             val intent = Intent(this, GameResultActivity::class.java)
             intent.putExtra("result", result)
@@ -488,10 +489,14 @@ class GameActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    fun saveResult(email:String, used: Array<Int>, pass: Array<Int>) {
+    fun saveResult(email: String, category: String, used: Array<Int>, pass: Array<Int>) {
         val result = GameResult(used, pass)
+        var ecategory = category
+        if (category == "PARENT") {
+            ecategory = "FAMILY"
+        }
         (application as MasterApplication).service.saveResult(
-            email, result
+            email, ecategory, result
         ).enqueue(object : Callback<Boolean> {
             override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                 if (response.isSuccessful) {
