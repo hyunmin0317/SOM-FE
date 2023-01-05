@@ -13,8 +13,8 @@ android {
         applicationId "com.smu.som"
         minSdk 21
         targetSdk 32
-        versionCode 15
-        versionName "2.8"
+        versionCode 16
+        versionName "2.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
