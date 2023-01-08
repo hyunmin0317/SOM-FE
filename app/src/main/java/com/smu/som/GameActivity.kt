@@ -225,7 +225,7 @@ class GameActivity : AppCompatActivity() {
                 }
             }
 
-            if (num == -1 && checkBoard(turn, player1, player2) == 4) {
+            if (num == -1 && checkGo(arr, turn)) {
                 yut.isClickable = true
                 builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
                 yut.setBackgroundResource(R.drawable.pick)
@@ -457,6 +457,17 @@ class GameActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    fun checkGo(array: IntArray, turn: Boolean): Boolean {
+        for ((index, item) in array.withIndex()) {
+            if (index != 0 && item != 0) {
+                if (turn == item > 0) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     fun showTurn(turn: Boolean, name1: String?, name2: String?) {
