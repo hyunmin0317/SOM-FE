@@ -102,6 +102,7 @@ class GameActivity : AppCompatActivity() {
         drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
 
         yut.setOnClickListener {
+            yut.setBackgroundResource(R.drawable.nopick)
             yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
             change1 = true
@@ -112,7 +113,7 @@ class GameActivity : AppCompatActivity() {
                 num = -1
             else {
                 if (checkBoard(turn, player1, player2) != 0) {
-                    start_pick.setBackgroundResource(R.drawable.pick)
+                    start.setBackgroundResource(R.drawable.pick)
                 }
             }
 
@@ -227,6 +228,7 @@ class GameActivity : AppCompatActivity() {
             if (num == -1 && checkBoard(turn, player1, player2) == 4) {
                 yut.isClickable = true
                 builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                yut.setBackgroundResource(R.drawable.pick)
             }
             else {
                 if (num != 4 && num!= 5) {
@@ -422,7 +424,7 @@ class GameActivity : AppCompatActivity() {
             else
                 player2.setBackgroundResource(nodrawable2)
         }
-        start_pick.setBackgroundResource(R.drawable.nopick)
+        start.setBackgroundResource(R.drawable.nopick)
         score1.text = score01.toString()
         score2.text = score02.toString()
         checkWin(score01, score02, category, kcategory, name1, name2, email, used, pass)
@@ -458,6 +460,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun showTurn(turn: Boolean, name1: String?, name2: String?) {
+        yut.setBackgroundResource(R.drawable.pick)
         if (turn) {
             player1.setBackgroundResource(R.drawable.check_box)
             player2.setBackgroundResource(R.drawable.white_box)

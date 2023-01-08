@@ -1,5 +1,6 @@
 package com.smu.som
 
+import android.content.Context
 import android.content.Intent
 import android.media.SoundPool
 import androidx.appcompat.app.AppCompatActivity
@@ -18,12 +19,17 @@ class GameResultActivity : AppCompatActivity() {
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
         val result = intent.getStringExtra("result")
-        val soundPool = SoundPool.Builder().build()
-        val gamesound = soundPool.load(this, resources.getIdentifier("gameover", "raw", packageName), 1)
+        val sp = this.getSharedPreferences("game_sp", Context.MODE_PRIVATE)
+        val sound = sp.getBoolean("sound", false)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            soundPool.play(gamesound, 1.0f, 1.0f, 0, 0, 1.0f)
-        }, 500)
+        if (sound) {
+            val soundPool = SoundPool.Builder().build()
+            val gamesound = soundPool.load(this, resources.getIdentifier("gameover", "raw", packageName), 1)
+            Handler(Looper.getMainLooper()).postDelayed({
+                soundPool.play(gamesound, 1.0f, 1.0f, 0, 0, 1.0f)
+            }, 500)
+        }
+
         result_text.text = result
 
         game.setOnClickListener {

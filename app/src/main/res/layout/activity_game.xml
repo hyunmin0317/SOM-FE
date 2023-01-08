@@ -1087,6 +1087,8 @@
             android:layout_height="0dp"
             android:layout_weight="1.5"
             android:weightSum="4"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -1096,17 +1098,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
-            <LinearLayout
-                android:id="@+id/start_pick"
+            <TextView
+                android:id="@+id/start"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/nopick">
-                <TextView
-                    android:id="@+id/start"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                android:layout_weight="1" />
             <TextView
                 android:id="@+id/yut"
                 android:layout_width="0dp"
