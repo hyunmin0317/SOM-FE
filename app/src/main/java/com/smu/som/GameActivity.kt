@@ -146,7 +146,7 @@ class GameActivity : AppCompatActivity() {
                                     if (num != 4 && num!= 5)
                                         turn = !turn
                                     else
-                                        builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                        builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
                                 }
                             }
                             else {
@@ -164,6 +164,8 @@ class GameActivity : AppCompatActivity() {
                                         arr[idx] += item
                                     if (num != 4 && num!= 5)
                                         turn = !turn
+                                    else
+                                        builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
                                 }
                             }
                             arr[index] = 0
@@ -194,7 +196,7 @@ class GameActivity : AppCompatActivity() {
                             if (num != 4 && num!= 5)
                                 turn = !turn
                             else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
                         }
                         player1 -= 1
                     }
@@ -211,7 +213,7 @@ class GameActivity : AppCompatActivity() {
                             if (num != 4 && num!= 5)
                                 turn = !turn
                             else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                                builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
                         }
                         player2 -= 1
                     }
@@ -227,7 +229,7 @@ class GameActivity : AppCompatActivity() {
 
             if (num == -1 && checkGo(arr, turn)) {
                 yut.isClickable = true
-                builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id -> }).show()
+                builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", null).show()
                 yut.setBackgroundResource(R.drawable.pick)
             }
             else {
@@ -261,16 +263,20 @@ class GameActivity : AppCompatActivity() {
                                     }
                                     if (change1) {
                                         builder.setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                            builder.setMessage(question?.get(1)?.question.toString()).setNegativeButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
-                                            turn = !turn
-                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-                                            start.setOnClickListener(null)
-                                            for ((index,item) in arr.withIndex())
-                                                if (item!=0 && index!=0)
-                                                    players[index]?.setOnClickListener(null)
-                                            yut.isClickable = true
-                                            change1 = false
-                                            pass = pass.plus(questionId)
+                                            builder.setMessage(question?.get(1)?.question.toString())
+                                                .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                                    used = used.plus(questionId)
+                                                    turn = !turn
+                                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                                    start.setOnClickListener(null)
+                                                    for ((index,item) in arr.withIndex())
+                                                        if (item!=0 && index!=0)
+                                                            players[index]?.setOnClickListener(null)
+                                                    yut.isClickable = true
+                                                    change1 = false
+                                                    pass = pass.plus(questionId)
+                                                })
+                                                .setNegativeButton("", null).show()
                                         })
                                     }
                                 }
@@ -283,20 +289,23 @@ class GameActivity : AppCompatActivity() {
                                     }
                                     if (change2) {
                                         builder.setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                            builder.setMessage(question?.get(1)?.question.toString()).setNegativeButton("", DialogInterface.OnClickListener { dialog, id ->}).show()
-                                            turn = !turn
-                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-                                            start.setOnClickListener(null)
-                                            for ((index,item) in arr.withIndex())
-                                                if (item!=0 && index!=0)
-                                                    players[index]?.setOnClickListener(null)
-                                            yut.isClickable = true
-                                            change2 = false
-                                            pass = pass.plus(questionId)
+                                            builder.setMessage(question?.get(1)?.question.toString())
+                                                .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                                turn = !turn
+                                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                                start.setOnClickListener(null)
+                                                for ((index,item) in arr.withIndex())
+                                                    if (item!=0 && index!=0)
+                                                        players[index]?.setOnClickListener(null)
+                                                yut.isClickable = true
+                                                change2 = false
+                                                pass = pass.plus(questionId)
+                                            })
+                                            .setNegativeButton("", null).show()
                                         })
                                     }
                                 }
-                                builder.show()
+                                builder.setCancelable(false).show()
                             } else {
                                 Log.e(TAG, "잘못된 카테고리 입니다.")
                             }
@@ -494,12 +503,11 @@ class GameActivity : AppCompatActivity() {
                     .setPositiveButton("확인", null)
                     .setNegativeButton("취소", null)
                 alertDialog2.setView(view2)
-                alertDialog2.show()
+                alertDialog2.setCancelable(false).show()
             }
             .setNegativeButton("취소", null)
-            .create()
         alertDialog1.setView(view1)
-        alertDialog1.show()
+        alertDialog1.setCancelable(false).show()
     }
 
     fun showCatch() {
