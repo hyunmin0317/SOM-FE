@@ -474,13 +474,21 @@ class GameActivity : AppCompatActivity() {
 
     fun showPopup() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.activity_gamerule, null)
-        val alertDialog = AlertDialog.Builder(this)
-            .setTitle("게임 설명")
-            .setPositiveButton("확인") { dialog, which -> }
+        val view1 = inflater.inflate(R.layout.activity_gamerule1, null)
+        val alertDialog1 = AlertDialog.Builder(this)
+            .setTitle("게임 방법")
+            .setPositiveButton("다음") { dialog, which ->
+                val view2 = inflater.inflate(R.layout.activity_gamerule2, null)
+                val alertDialog2 = AlertDialog.Builder(this).setTitle("게임 방법")
+                    .setPositiveButton("확인", null)
+                    .setNegativeButton("취소", null)
+                alertDialog2.setView(view2)
+                alertDialog2.show()
+            }
+            .setNegativeButton("취소", null)
             .create()
-        alertDialog.setView(view)
-        alertDialog.show()
+        alertDialog1.setView(view1)
+        alertDialog1.show()
     }
 
     fun showCatch() {
