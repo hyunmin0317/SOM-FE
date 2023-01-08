@@ -9,7 +9,6 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.user.model.Gender
-import kotlinx.android.synthetic.main.activity_game_setting.*
 import kotlinx.android.synthetic.main.activity_mypage.*
 
 class MypageActivity : AppCompatActivity() {

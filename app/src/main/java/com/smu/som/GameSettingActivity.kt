@@ -1,21 +1,13 @@
 package com.smu.som
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_game_result.view.*
 import kotlinx.android.synthetic.main.activity_game_setting.*
-import kotlinx.android.synthetic.main.activity_game_setting.start
-import kotlinx.android.synthetic.main.activity_main.*
-
 
 class GameSettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,6 +78,16 @@ class GameSettingActivity : AppCompatActivity() {
             intent.putExtra("name1", name1.text.toString())
             intent.putExtra("name2", name2.text.toString())
             startActivity(intent)
+            finish()
+        }
+
+        home.setOnClickListener {
+            startActivity(Intent(this, IntroActivity::class.java))
+            finish()
+        }
+
+        back.setOnClickListener{
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

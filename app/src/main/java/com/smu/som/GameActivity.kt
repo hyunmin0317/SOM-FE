@@ -77,7 +77,7 @@ class GameActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("일시정지").setItems(categoryArray, DialogInterface.OnClickListener { dialog, which ->
                         if (which == 0) {
-                            val intent = Intent(this, IntroActivity::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else if (which == 1) {
