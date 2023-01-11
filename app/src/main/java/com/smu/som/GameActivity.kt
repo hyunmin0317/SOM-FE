@@ -463,8 +463,10 @@ class GameActivity : AppCompatActivity() {
             intent.putExtra("category", category)
             intent.putExtra("name1", name1)
             intent.putExtra("name2", name2)
-            startActivity(intent)
-            finish()
+            Handler(Looper.getMainLooper()).postDelayed({
+                startActivity(intent)
+                finish()
+            }, 1000)
         }
     }
 

@@ -16,6 +16,7 @@ class GameResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_result)
 
         val category = intent.getStringExtra("category")
+        val kcategory = intent.getStringExtra("kcategory")
         val name_1p = intent.getStringExtra("name1")
         val name_2p = intent.getStringExtra("name2")
         val result = intent.getStringExtra("result")
@@ -35,6 +36,7 @@ class GameResultActivity : AppCompatActivity() {
         game.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
             intent.putExtra("category", category)
+            intent.putExtra("kcategory", kcategory)
             intent.putExtra("name1", name_1p)
             intent.putExtra("name2", name_2p)
             startActivity(intent)
