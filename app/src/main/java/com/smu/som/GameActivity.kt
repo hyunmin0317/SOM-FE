@@ -40,8 +40,6 @@ class GameActivity : AppCompatActivity() {
         var score2 = 0
         var catch1 = false
         var catch2 = false
-        var change1 = true
-        var change2 = true
         var turn = true
         var used = arrayOf<Int>()
         var pass = arrayOf<Int>()
@@ -105,8 +103,6 @@ class GameActivity : AppCompatActivity() {
             yut.setBackgroundResource(R.drawable.nopick)
             yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
-            change1 = true
-            change2 = true
 
             var num = playGame(soundPool, gamesound)
             if (num == 0)
@@ -252,45 +248,10 @@ class GameActivity : AppCompatActivity() {
                                 builder.setTitle("질문").setMessage(question?.get(0)?.question.toString())
                                     .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
                                         used = used.plus(questionId)
-                                    })
-
-                                if (turn) {
-                                    if (catch1) {
-                                        catch1 = false
-                                        builder.setNeutralButton("패스", DialogInterface.OnClickListener { dialog, id ->
-                                            pass = pass.plus(questionId)
-                                        })
-                                    }
-                                    if (change1) {
-                                        builder.setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                            builder.setMessage(question?.get(1)?.question.toString())
-                                                .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
-                                                    used = used.plus(questionId)
-                                                    turn = !turn
-                                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-                                                    start.setOnClickListener(null)
-                                                    for ((index,item) in arr.withIndex())
-                                                        if (item!=0 && index!=0)
-                                                            players[index]?.setOnClickListener(null)
-                                                    yut.isClickable = true
-                                                    change1 = false
-                                                    pass = pass.plus(questionId)
-                                                })
-                                                .setNegativeButton("", null).show()
-                                        })
-                                    }
-                                }
-                                else {
-                                    if (catch2) {
-                                        catch2 = false
-                                        builder.setNeutralButton("패스", DialogInterface.OnClickListener { dialog, id ->
-                                            pass = pass.plus(questionId)
-                                        })
-                                    }
-                                    if (change2) {
-                                        builder.setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                            builder.setMessage(question?.get(1)?.question.toString())
-                                                .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                    }).setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                        builder.setMessage(question?.get(1)?.question.toString())
+                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                                used = used.plus(questionId)
                                                 turn = !turn
                                                 drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
                                                 start.setOnClickListener(null)
@@ -298,10 +259,28 @@ class GameActivity : AppCompatActivity() {
                                                     if (item!=0 && index!=0)
                                                         players[index]?.setOnClickListener(null)
                                                 yut.isClickable = true
-                                                change2 = false
                                                 pass = pass.plus(questionId)
                                             })
                                             .setNegativeButton("", null).show()
+                                    })
+
+                                if (turn) {
+                                    if (catch1) {
+                                        catch1 = false
+                                        builder.setPositiveButton("답변과 추가질문", DialogInterface.OnClickListener { dialog, id ->
+                                                used = used.plus(questionId)
+                                            }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
+                                            pass = pass.plus(questionId)
+                                        })
+                                    }
+                                }
+                                else {
+                                    if (catch2) {
+                                        catch2 = false
+                                        builder.setPositiveButton("답변과 추가질문", DialogInterface.OnClickListener { dialog, id ->
+                                            used = used.plus(questionId)
+                                        }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
+                                            pass = pass.plus(questionId)
                                         })
                                     }
                                 }
