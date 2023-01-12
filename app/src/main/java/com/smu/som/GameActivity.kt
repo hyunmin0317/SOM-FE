@@ -267,7 +267,7 @@ class GameActivity : AppCompatActivity() {
                                 if (turn) {
                                     if (catch1) {
                                         catch1 = false
-                                        builder.setPositiveButton("답변과 추가질문", DialogInterface.OnClickListener { dialog, id ->
+                                        builder.setPositiveButton("추가질문권", DialogInterface.OnClickListener { dialog, id ->
                                                 used = used.plus(questionId)
                                             }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
                                             pass = pass.plus(questionId)
@@ -277,7 +277,7 @@ class GameActivity : AppCompatActivity() {
                                 else {
                                     if (catch2) {
                                         catch2 = false
-                                        builder.setPositiveButton("답변과 추가질문", DialogInterface.OnClickListener { dialog, id ->
+                                        builder.setPositiveButton("추가질문권", DialogInterface.OnClickListener { dialog, id ->
                                             used = used.plus(questionId)
                                         }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
                                             pass = pass.plus(questionId)
@@ -350,7 +350,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun playGame(soundPool: SoundPool, gamesound: IntArray): Int {
-        val yuts = arrayOf("백도", "도", "개", "걸", "윷", "모")
+        val yuts = arrayOf("빽도", "도", "개", "걸", "윷", "모")
         var num = percentage()
         result.setBackgroundResource(resources.getIdentifier("result_$num", "drawable", packageName))
         Handler(Looper.getMainLooper()).postDelayed({
