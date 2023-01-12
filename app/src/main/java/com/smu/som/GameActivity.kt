@@ -105,6 +105,7 @@ class GameActivity : AppCompatActivity() {
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
 
             var num = playGame(soundPool, gamesound)
+            showResult(turn, num)
             if (num == 0)
                 num = -1
             else {
@@ -412,6 +413,12 @@ class GameActivity : AppCompatActivity() {
             else
                 player2.setBackgroundResource(nodrawable2)
         }
+        for (num in 0..5) {
+            var result1: TextView = findViewById(getResources().getIdentifier(true.toString()+num.toString(), "id", packageName))
+            var result2: TextView = findViewById(getResources().getIdentifier(false.toString()+num.toString(), "id", packageName))
+            result1.setBackgroundResource(R.drawable.nopick)
+            result2.setBackgroundResource(R.drawable.nopick)
+        }
         start.setBackgroundResource(R.drawable.nopick)
         score1.text = score01.toString()
         score2.text = score02.toString()
@@ -471,6 +478,11 @@ class GameActivity : AppCompatActivity() {
             player2.setBackgroundResource(R.drawable.check_box)
             result_text.setText("$name2 차례")
         }
+    }
+
+    fun showResult(turn: Boolean, num: Int) {
+        var result: TextView = findViewById(getResources().getIdentifier(turn.toString()+num.toString(), "id", packageName))
+        result.setBackgroundResource(resources.getIdentifier("result$num", "drawable", packageName))
     }
 
     fun showPopup() {

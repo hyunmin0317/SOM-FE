@@ -32,7 +32,7 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
                 android:weightSum="10"
@@ -59,7 +59,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="6.5"
+                    android:layout_weight="6"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/player1_1"
@@ -89,10 +89,39 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="2"
                     android:orientation="horizontal"
                     android:weightSum="6">
-
+                    <TextView
+                        android:id="@+id/true0"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/true1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/true2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/true3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/true4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/true5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -146,29 +175,29 @@
                     android:textColor="#ffffff"
                     android:textSize="12dp" />
             </LinearLayout>
-
             <LinearLayout
+                android:id="@+id/player2"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:id="@+id/player2"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="15dp"
-                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:weightSum="10"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:layout_marginTop="5dp">
                     <TextView
                         android:id="@+id/name2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="2P"
                         android:textColor="#ffffff"
                         android:fontFamily="@font/acube"
@@ -177,16 +206,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="6"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/player2_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp" />
-                    <TextView
-                        android:id="@+id/player2_3"
+                        android:id="@+id/player2_1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -198,15 +222,57 @@
                         android:layout_weight="1"
                         android:layout_margin="5dp" />
                     <TextView
-                        android:id="@+id/player2_1"
+                        android:id="@+id/player2_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_margin="5dp" />
+                    <TextView
+                        android:id="@+id/player2_4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_margin="5dp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="6">
+                    <TextView
+                        android:id="@+id/false0"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/false1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/false2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/false3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/false4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/false5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
