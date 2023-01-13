@@ -307,6 +307,80 @@ class GameActivity : AppCompatActivity() {
                     })
                 }
             }
+            else {
+                showResult(turn, num)
+                if (num != 0) {
+                    if (checkBoard(turn, player1, player2) != 0) {
+                        start.setBackgroundResource(R.drawable.pick)
+                    }
+                }
+
+
+                start.setOnClickListener {
+                    var size = 0
+                    var yutArray = arrayOf("", "", "", "", "", "")
+                    var yutss: ArrayList<Int> = ArrayList()
+                    for ((index,item) in yuts.withIndex()) {
+                        if (item > 0) {
+                            yutss.add(index)
+                            yutArray[size] = "$index * $item"
+                            size += 1
+                        }
+                    }
+                    yutArray = yutArray.sliceArray(0..size)
+                    builder.setTitle("윷 선택").setItems(yutArray, DialogInterface.OnClickListener { dialog, which ->
+                        num = yutss[which]
+                        Log.d("yuts", num.toString())
+                        if (num != -1 && checkBoard(turn, player1, player2) != 0) {
+                            yuts[num] -= 1
+                            if (num == 0)
+                                num = -1
+                            if (turn) {
+                                if (arr[num] < 0) {     // 말을 잡을 경우
+                                    player2 -= arr[num]
+                                    arr[num] = 1
+                                    catch1 = true
+                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                    showCatch()
+                                }
+                                else {
+                                    arr[num] += 1
+                                    if (yuts.sum() == 0) {
+                                        turn = !turn
+                                        yuts = IntArray(6, { 0 } )
+                                    }
+                                }
+                                player1 -= 1
+                            }
+                            else {
+                                if (arr[num] > 0) {     // 말을 잡을 경우
+                                    player1 += arr[num]
+                                    arr[num] = -1
+                                    catch2 = true
+                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                    showCatch()
+                                }
+                                else {
+                                    arr[num] -= 1
+                                    if (yuts.sum() == 0) {
+                                        turn = !turn
+                                        yuts = IntArray(6, { 0 })
+                                    }
+                                }
+                                player2 -= 1
+                            }
+                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                            start.setOnClickListener(null)
+                            for ((index,item) in arr.withIndex())
+                                if (item!=0 && index!=0)
+                                    players[index]?.setOnClickListener(null)
+                            yut.isClickable = true
+                        }
+
+                    }).setNegativeButton("취소", null).show()
+                }
+            }
         }
     }
 
