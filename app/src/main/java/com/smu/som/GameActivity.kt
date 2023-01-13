@@ -99,6 +99,7 @@ class GameActivity : AppCompatActivity() {
         game_rule.setOnClickListener { showPopup() }
 
         drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+        yut.setBackgroundResource(R.drawable.pick)
 
         yut.setOnClickListener {
             yut.setBackgroundResource(R.drawable.nopick)
@@ -162,6 +163,7 @@ class GameActivity : AppCompatActivity() {
                                             arr[idx] += item
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
+                                        yut.setBackgroundResource(R.drawable.pick)
                                     }
                                 }
                                 else {
@@ -179,6 +181,7 @@ class GameActivity : AppCompatActivity() {
                                             arr[idx] += item
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
+                                        yut.setBackgroundResource(R.drawable.pick)
                                     }
                                 }
                                 arr[index] = 0
@@ -211,6 +214,7 @@ class GameActivity : AppCompatActivity() {
                                 arr[num] += 1
                                 turn = !turn
                                 yuts = IntArray(6, { 0 } )
+                                yut.setBackgroundResource(R.drawable.pick)
                             }
                             player1 -= 1
                         }
@@ -226,6 +230,7 @@ class GameActivity : AppCompatActivity() {
                                 arr[num] -= 1
                                 turn = !turn
                                 yuts = IntArray(6, { 0 } )
+                                yut.setBackgroundResource(R.drawable.pick)
                             }
                             player2 -= 1
                         }
@@ -264,6 +269,7 @@ class GameActivity : AppCompatActivity() {
                                                 used = used.plus(questionId)
                                                 turn = !turn
                                                 yuts = IntArray(6, { 0 } )
+                                                yut.setBackgroundResource(R.drawable.pick)
                                                 drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
                                                 start.setOnClickListener(null)
                                                 for ((index,item) in arr.withIndex())
@@ -351,6 +357,7 @@ class GameActivity : AppCompatActivity() {
                                     if (yuts.sum() == 0) {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
+                                        yut.setBackgroundResource(R.drawable.pick)
                                         start.setOnClickListener(null)
                                         for ((index,item) in arr.withIndex())
                                             if (item!=0 && index!=0)
@@ -373,6 +380,7 @@ class GameActivity : AppCompatActivity() {
                                     if (yuts.sum() == 0) {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 })
+                                        yut.setBackgroundResource(R.drawable.pick)
                                         start.setOnClickListener(null)
                                         for ((index,item) in arr.withIndex())
                                             if (item!=0 && index!=0)
@@ -454,8 +462,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun percentage(): Int {
-//        val per = arrayOf(1, 3, 6, 4, 1, 1)
-        val per = arrayOf(1, 1, 1, 1, 6, 6)
+        val per = arrayOf(1, 3, 6, 4, 1, 1)
+//        val per = arrayOf(1, 1, 1, 1, 6, 6)
         val range = (1..16)
         var num = range.random()
 
@@ -560,7 +568,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun showTurn(turn: Boolean, name1: String?, name2: String?) {
-        yut.setBackgroundResource(R.drawable.pick)
         if (turn) {
             player1.setBackgroundResource(R.drawable.check_box)
             player2.setBackgroundResource(R.drawable.white_box)
@@ -602,6 +609,7 @@ class GameActivity : AppCompatActivity() {
             .setPositiveButton("확인") { dialog, which -> }
             .create()
         alertDialog.show()
+        yut.setBackgroundResource(R.drawable.pick)
     }
 
     fun saveResult(email: String, category: String, used: Array<Int>, pass: Array<Int>) {
