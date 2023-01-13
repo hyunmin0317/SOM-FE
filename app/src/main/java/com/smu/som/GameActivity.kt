@@ -317,6 +317,7 @@ class GameActivity : AppCompatActivity() {
 
 
                 start.setOnClickListener {
+                    var builder2 = AlertDialog.Builder(this)
                     var size = 0
                     var yutArray = arrayOf("", "", "", "", "", "")
                     var yutss: ArrayList<Int> = ArrayList()
@@ -328,7 +329,7 @@ class GameActivity : AppCompatActivity() {
                         }
                     }
                     yutArray = yutArray.sliceArray(0..size)
-                    builder.setTitle("윷 선택").setItems(yutArray, DialogInterface.OnClickListener { dialog, which ->
+                    builder2.setTitle("윷 선택").setItems(yutArray, DialogInterface.OnClickListener { dialog, which ->
                         num = yutss[which]
                         Log.d("yuts", num.toString())
                         if (num != -1 && checkBoard(turn, player1, player2) != 0) {
@@ -348,6 +349,11 @@ class GameActivity : AppCompatActivity() {
                                     if (yuts.sum() == 0) {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
+                                        start.setOnClickListener(null)
+                                        for ((index,item) in arr.withIndex())
+                                            if (item!=0 && index!=0)
+                                                players[index]?.setOnClickListener(null)
+                                        yut.isClickable = true
                                     }
                                 }
                                 player1 -= 1
@@ -365,17 +371,16 @@ class GameActivity : AppCompatActivity() {
                                     if (yuts.sum() == 0) {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 })
+                                        start.setOnClickListener(null)
+                                        for ((index,item) in arr.withIndex())
+                                            if (item!=0 && index!=0)
+                                                players[index]?.setOnClickListener(null)
+                                        yut.isClickable = true
                                     }
                                 }
                                 player2 -= 1
                             }
                             drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-
-                            start.setOnClickListener(null)
-                            for ((index,item) in arr.withIndex())
-                                if (item!=0 && index!=0)
-                                    players[index]?.setOnClickListener(null)
-                            yut.isClickable = true
                         }
 
                     }).setNegativeButton("취소", null).show()
