@@ -33,6 +33,7 @@ class GameActivity : AppCompatActivity() {
         val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
+        var yuts = IntArray(6, { 0 } )
         var players: ArrayList<TextView> = ArrayList()
         var player1 = 4
         var player2 = 4
@@ -105,196 +106,204 @@ class GameActivity : AppCompatActivity() {
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
 
             var num = playGame(soundPool, gamesound)
-            showResult(turn, num)
-            if (num == 0)
-                num = -1
-            else {
-                if (checkBoard(turn, player1, player2) != 0) {
-                    start.setBackgroundResource(R.drawable.pick)
-                }
-            }
-
-            for ((index,item) in arr.withIndex()) {
-                if (item!=0 && index!=0) {
-                    if (turn == item > 0) {
-                        var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
-                        pick.setBackgroundResource(R.drawable.pick)
-                    }
-                }
-
-                if (item!=0 && index!=0) {
-                    players[index].setOnClickListener {
-                        if (turn == item > 0) {
-                            var idx = getIndex(index, num)
-
-                            if (turn) {
-                                if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
-                                    player2 -= arr[idx]
-                                    arr[idx] = item
-                                    catch1 = true
-                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                                    showCatch()
-                                }
-                                else {
-                                    if (idx == 0)
-                                        score1 += item
-                                    else
-                                        arr[idx] += item
-                                    if (num != 4 && num!= 5)
-                                        turn = !turn
-                                    else
-                                        builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
-                                }
-                            }
-                            else {
-                                if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
-                                    player1 += arr[idx]
-                                    arr[idx] = item
-                                    catch2 = true
-                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                                    showCatch()
-                                }
-                                else {
-                                    if (idx == 0)
-                                        score2 -= item
-                                    else
-                                        arr[idx] += item
-                                    if (num != 4 && num!= 5)
-                                        turn = !turn
-                                    else
-                                        builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
-                                }
-                            }
-                            arr[index] = 0
-                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-
-                            start.setOnClickListener(null)
-                            for ((index,item) in arr.withIndex())
-                                if (item!=0 && index!=0)
-                                    players[index]?.setOnClickListener(null)
-                            yut.isClickable = true
-                        }
-                    }
-                }
-            }
-
-            start.setOnClickListener {
-                if (num != -1 && checkBoard(turn, player1, player2) != 0) {
-                    if (turn) {
-                        if (arr[num] < 0) {     // 말을 잡을 경우
-                            player2 -= arr[num]
-                            arr[num] = 1
-                            catch1 = true
-                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                            showCatch()
-                        }
-                        else {
-                            arr[num] += 1
-                            if (num != 4 && num!= 5)
-                                turn = !turn
-                            else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
-                        }
-                        player1 -= 1
-                    }
-                    else {
-                        if (arr[num] > 0) {     // 말을 잡을 경우
-                            player1 += arr[num]
-                            arr[num] = -1
-                            catch2 = true
-                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
-                            showCatch()
-                        }
-                        else {
-                            arr[num] -= 1
-                            if (num != 4 && num!= 5)
-                                turn = !turn
-                            else
-                                builder.setTitle("한 번 더!").setPositiveButton("확인", null).show()
-                        }
-                        player2 -= 1
-                    }
-                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-
-                    start.setOnClickListener(null)
-                    for ((index,item) in arr.withIndex())
-                        if (item!=0 && index!=0)
-                            players[index]?.setOnClickListener(null)
-                    yut.isClickable = true
-                }
-            }
-
             if (num == -1 && checkGo(arr, turn)) {
                 yut.isClickable = true
                 builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", null).show()
                 yut.setBackgroundResource(R.drawable.pick)
+            } else {
+                yuts[num] += 1
             }
-            else {
-                if (num != 4 && num!= 5) {
-                    var builder = AlertDialog.Builder(this)
-                    var ecategory = category
-                    if (num==-1 || num==3) {
-                        ecategory = "COMMON"
-                        Log.i(TAG, "공통 카테고리로 변경")
+            Log.d("yuts", yuts.sum().toString())
+
+            if (yuts.sum() == 1) {
+                showResult(turn, num)
+                if (num != 0) {
+                    if (checkBoard(turn, player1, player2) != 0) {
+                        start.setBackgroundResource(R.drawable.pick)
+                    }
+                }
+
+                for ((index,item) in arr.withIndex()) {
+                    if (item!=0 && index!=0) {
+                        if (turn == item > 0) {
+                            var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
+                            pick.setBackgroundResource(R.drawable.pick)
+                        }
                     }
 
-                    (application as MasterApplication).service.getQuestion(
-                        ecategory!!, isAdult!!
-                    ).enqueue(object : Callback<ArrayList<Question>> {
-                        override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
-                            if (response.isSuccessful) {
-                                val question = response.body()
-                                val questionId = question?.get(0)!!.id
-
-                                builder.setTitle("질문").setMessage(question?.get(0)?.question.toString())
-                                    .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
-                                        used = used.plus(questionId)
-                                    }).setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
-                                        builder.setMessage(question?.get(1)?.question.toString())
-                                            .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
-                                                used = used.plus(questionId)
-                                                turn = !turn
-                                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
-                                                start.setOnClickListener(null)
-                                                for ((index,item) in arr.withIndex())
-                                                    if (item!=0 && index!=0)
-                                                        players[index]?.setOnClickListener(null)
-                                                yut.isClickable = true
-                                                pass = pass.plus(questionId)
-                                            })
-                                            .setNegativeButton("", null).show()
-                                    })
+                    if (item!=0 && index!=0) {
+                        players[index].setOnClickListener {
+                            if (turn == item > 0) {
+                                yuts[num] -= 1
+                                if (num == 0)
+                                    num = -1
+                                var idx = getIndex(index, num)
 
                                 if (turn) {
-                                    if (catch1) {
-                                        catch1 = false
-                                        builder.setPositiveButton("추가질문권", DialogInterface.OnClickListener { dialog, id ->
-                                                used = used.plus(questionId)
-                                            }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
-                                            pass = pass.plus(questionId)
-                                        })
+                                    if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
+                                        player2 -= arr[idx]
+                                        arr[idx] = item
+                                        catch1 = true
+                                        soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                        showCatch()
+                                    }
+                                    else {
+                                        if (idx == 0)
+                                            score1 += item
+                                        else
+                                            arr[idx] += item
+                                        turn = !turn
+                                        yuts = IntArray(6, { 0 } )
                                     }
                                 }
                                 else {
-                                    if (catch2) {
-                                        catch2 = false
-                                        builder.setPositiveButton("추가질문권", DialogInterface.OnClickListener { dialog, id ->
-                                            used = used.plus(questionId)
-                                        }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
-                                            pass = pass.plus(questionId)
-                                        })
+                                    if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
+                                        player1 += arr[idx]
+                                        arr[idx] = item
+                                        catch2 = true
+                                        soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                        showCatch()
+                                    }
+                                    else {
+                                        if (idx == 0)
+                                            score2 -= item
+                                        else
+                                            arr[idx] += item
+                                        turn = !turn
+                                        yuts = IntArray(6, { 0 } )
                                     }
                                 }
-                                builder.setCancelable(false).show()
-                            } else {
-                                Log.e(TAG, "잘못된 카테고리 입니다.")
+                                arr[index] = 0
+                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                start.setOnClickListener(null)
+                                for ((index,item) in arr.withIndex())
+                                    if (item!=0 && index!=0)
+                                        players[index]?.setOnClickListener(null)
+                                yut.isClickable = true
                             }
                         }
+                    }
+                }
 
-                        override fun onFailure(call: Call<ArrayList<Question>>, t: Throwable) {
-                            Log.e(TAG, "서버 오류")
+                start.setOnClickListener {
+                    if (num != -1 && checkBoard(turn, player1, player2) != 0) {
+                        yuts[num] -= 1
+                        if (num == 0)
+                            num = -1
+                        if (turn) {
+                            if (arr[num] < 0) {     // 말을 잡을 경우
+                                player2 -= arr[num]
+                                arr[num] = 1
+                                catch1 = true
+                                soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                showCatch()
+                            }
+                            else {
+                                arr[num] += 1
+                                turn = !turn
+                                yuts = IntArray(6, { 0 } )
+                            }
+                            player1 -= 1
                         }
-                    })
+                        else {
+                            if (arr[num] > 0) {     // 말을 잡을 경우
+                                player1 += arr[num]
+                                arr[num] = -1
+                                catch2 = true
+                                soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                showCatch()
+                            }
+                            else {
+                                arr[num] -= 1
+                                turn = !turn
+                                yuts = IntArray(6, { 0 } )
+                            }
+                            player2 -= 1
+                        }
+                        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                        start.setOnClickListener(null)
+                        for ((index,item) in arr.withIndex())
+                            if (item!=0 && index!=0)
+                                players[index]?.setOnClickListener(null)
+                        yut.isClickable = true
+                    }
+                }
+
+                if (num == -1 && checkGo(arr, turn)) {
+                    yut.isClickable = true
+                    builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", null).show()
+                    yut.setBackgroundResource(R.drawable.pick)
+                }
+                else {
+                    if (num != 4 && num!= 5) {
+                        var builder = AlertDialog.Builder(this)
+                        var ecategory = category
+                        if (num==-1 || num==3) {
+                            ecategory = "COMMON"
+                            Log.i(TAG, "공통 카테고리로 변경")
+                        }
+
+                        (application as MasterApplication).service.getQuestion(
+                            ecategory!!, isAdult!!
+                        ).enqueue(object : Callback<ArrayList<Question>> {
+                            override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
+                                if (response.isSuccessful) {
+                                    val question = response.body()
+                                    val questionId = question?.get(0)!!.id
+
+                                    builder.setTitle("질문").setMessage(question?.get(0)?.question.toString())
+                                        .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                            used = used.plus(questionId)
+                                        }).setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                            builder.setMessage(question?.get(1)?.question.toString())
+                                                .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
+                                                    used = used.plus(questionId)
+                                                    turn = !turn
+                                                    yuts = IntArray(6, { 0 } )
+                                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                                    start.setOnClickListener(null)
+                                                    for ((index,item) in arr.withIndex())
+                                                        if (item!=0 && index!=0)
+                                                            players[index]?.setOnClickListener(null)
+                                                    yut.isClickable = true
+                                                    pass = pass.plus(questionId)
+                                                })
+                                                .setNegativeButton("", null).show()
+                                        })
+
+                                    if (turn) {
+                                        if (catch1) {
+                                            catch1 = false
+                                            builder.setPositiveButton("추가질문권", DialogInterface.OnClickListener { dialog, id ->
+                                                used = used.plus(questionId)
+                                            }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
+                                                pass = pass.plus(questionId)
+                                            })
+                                        }
+                                    }
+                                    else {
+                                        if (catch2) {
+                                            catch2 = false
+                                            builder.setPositiveButton("추가질문권", DialogInterface.OnClickListener { dialog, id ->
+                                                used = used.plus(questionId)
+                                            }).setNegativeButton("패스", DialogInterface.OnClickListener { dialog, id ->
+                                                pass = pass.plus(questionId)
+                                            })
+                                        }
+                                    }
+                                    builder.setCancelable(false).show()
+                                } else {
+                                    Log.e(TAG, "잘못된 카테고리 입니다.")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ArrayList<Question>>, t: Throwable) {
+                                Log.e(TAG, "서버 오류")
+                            }
+                        })
+                    }
                 }
             }
         }
