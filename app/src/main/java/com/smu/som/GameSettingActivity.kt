@@ -82,7 +82,7 @@ class GameSettingActivity : AppCompatActivity() {
         }
 
         home.setOnClickListener {
-            startActivity(Intent(this, IntroActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 

@@ -50,7 +50,7 @@ class GameResultActivity : AppCompatActivity() {
         }
 
         home.setOnClickListener {
-            val intent = Intent(this, IntroActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
