@@ -311,7 +311,9 @@ class GameActivity : AppCompatActivity() {
                 showResult(turn, num)
                 if (num != 0) {
                     if (checkBoard(turn, player1, player2) != 0) {
-                        start.setBackgroundResource(R.drawable.pick)
+                        if (num != 4 && num != 5){
+                            start.setBackgroundResource(R.drawable.pick)
+                        }
                     }
                 }
 
