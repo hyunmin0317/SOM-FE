@@ -126,10 +126,8 @@ class GameActivity : AppCompatActivity() {
 
             if (yuts.sum() == 1 && num != 4 && num != 5) {
                 showResult(turn, num)
-                if (num != 0) {
-                    if (checkBoard(turn, player1, player2) != 0) {
-                        start.setBackgroundResource(R.drawable.pick)
-                    }
+                if (num != 0 && checkBoard(turn, player1, player2) != 0) {
+                    start.setBackgroundResource(R.drawable.pick)
                 }
 
                 for ((index,item) in arr.withIndex()) {
