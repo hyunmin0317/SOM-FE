@@ -114,11 +114,12 @@ class GameActivity : AppCompatActivity() {
                 yut.setBackgroundResource(R.drawable.pick)
             }
 
-            if (num == 0 && checkGo(arr, turn)) {
+            if (num == 0 && checkGo(arr, turn) && yuts.sum() == 0) {
                 yut.isClickable = true
                 start.isClickable = false
                 builder.setTitle("한 번 더 던지세요!").setPositiveButton("확인", null).show()
                 yut.setBackgroundResource(R.drawable.pick)
+                start.setBackgroundResource(R.drawable.nopick)
             } else {
                 yuts[num] += 1
             }
@@ -162,6 +163,7 @@ class GameActivity : AppCompatActivity() {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
                                         yut.setBackgroundResource(R.drawable.pick)
+                                        start.setBackgroundResource(R.drawable.nopick)
                                     }
                                 }
                                 else {
@@ -180,6 +182,7 @@ class GameActivity : AppCompatActivity() {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
                                         yut.setBackgroundResource(R.drawable.pick)
+                                        start.setBackgroundResource(R.drawable.nopick)
                                     }
                                 }
                                 arr[index] = 0
@@ -213,6 +216,7 @@ class GameActivity : AppCompatActivity() {
                                 turn = !turn
                                 yuts = IntArray(6, { 0 } )
                                 yut.setBackgroundResource(R.drawable.pick)
+                                start.setBackgroundResource(R.drawable.nopick)
                             }
                             player1 -= 1
                         }
@@ -229,6 +233,7 @@ class GameActivity : AppCompatActivity() {
                                 turn = !turn
                                 yuts = IntArray(6, { 0 } )
                                 yut.setBackgroundResource(R.drawable.pick)
+                                start.setBackgroundResource(R.drawable.nopick)
                             }
                             player2 -= 1
                         }
@@ -268,6 +273,7 @@ class GameActivity : AppCompatActivity() {
                                                 turn = !turn
                                                 yuts = IntArray(6, { 0 } )
                                                 yut.setBackgroundResource(R.drawable.pick)
+                                                start.setBackgroundResource(R.drawable.nopick)
                                                 drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
                                                 start.setOnClickListener(null)
                                                 for ((index,item) in arr.withIndex())
@@ -313,14 +319,6 @@ class GameActivity : AppCompatActivity() {
             }
             else {
                 showResult(turn, num)
-                if (num != 0) {
-                    if (checkBoard(turn, player1, player2) != 0) {
-                        if (yuts.sum() != 0){
-                            start.setBackgroundResource(R.drawable.pick)
-                        }
-                    }
-                }
-
 
                 start.setOnClickListener {
                     var builder2 = AlertDialog.Builder(this)
@@ -349,6 +347,7 @@ class GameActivity : AppCompatActivity() {
                                     catch1 = true
                                     soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                                     showCatch()
+                                    yut.isClickable = true
                                 }
                                 else {
                                     arr[num] += 1
@@ -356,6 +355,7 @@ class GameActivity : AppCompatActivity() {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 } )
                                         yut.setBackgroundResource(R.drawable.pick)
+                                        start.setBackgroundResource(R.drawable.nopick)
                                         start.setOnClickListener(null)
                                         for ((index,item) in arr.withIndex())
                                             if (item!=0 && index!=0)
@@ -372,6 +372,7 @@ class GameActivity : AppCompatActivity() {
                                     catch2 = true
                                     soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
                                     showCatch()
+                                    yut.isClickable = true
                                 }
                                 else {
                                     arr[num] -= 1
@@ -379,6 +380,7 @@ class GameActivity : AppCompatActivity() {
                                         turn = !turn
                                         yuts = IntArray(6, { 0 })
                                         yut.setBackgroundResource(R.drawable.pick)
+                                        start.setBackgroundResource(R.drawable.nopick)
                                         start.setOnClickListener(null)
                                         for ((index,item) in arr.withIndex())
                                             if (item!=0 && index!=0)
@@ -392,6 +394,12 @@ class GameActivity : AppCompatActivity() {
                         }
 
                     }).setNegativeButton("취소", null).show()
+                }
+
+                start.isClickable = false
+                if (num != 0 && num != 4 && num != 5 && checkBoard(turn, player1, player2) != 0) {
+                    start.setBackgroundResource(R.drawable.pick)
+                    start.isClickable = true
                 }
             }
         }
@@ -461,7 +469,7 @@ class GameActivity : AppCompatActivity() {
 
     fun percentage(): Int {
 //        val per = arrayOf(1, 3, 6, 4, 1, 1)
-        val per = arrayOf(1, 1, 1, 1, 6, 6)
+        val per = arrayOf(3, 2, 2, 2, 3, 4)
         val range = (1..16)
         var num = range.random()
 
@@ -517,7 +525,6 @@ class GameActivity : AppCompatActivity() {
             result1.setBackgroundResource(R.drawable.nopick)
             result2.setBackgroundResource(R.drawable.nopick)
         }
-        start.setBackgroundResource(R.drawable.nopick)
         score1.text = score01.toString()
         score2.text = score02.toString()
         checkWin(score01, score02, category, kcategory, name1, name2, email, used, pass)
@@ -608,6 +615,7 @@ class GameActivity : AppCompatActivity() {
             .create()
         alertDialog.show()
         yut.setBackgroundResource(R.drawable.pick)
+        start.setBackgroundResource(R.drawable.nopick)
     }
 
     fun saveResult(email: String, category: String, used: Array<Int>, pass: Array<Int>) {
