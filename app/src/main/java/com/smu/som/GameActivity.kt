@@ -123,7 +123,6 @@ class GameActivity : AppCompatActivity() {
             } else {
                 yuts[num] += 1
             }
-
             if (yuts.sum() == 1 && num != 4 && num != 5) {
                 showResult(turn, num)
                 if (num != 0 && checkBoard(turn, player1, player2) != 0) {
@@ -320,6 +319,10 @@ class GameActivity : AppCompatActivity() {
                 showResult(turn, num)
 
                 start.setOnClickListener {
+                    if (yuts.sum() == 1) {
+                        Log.d(TAG, "선택지 1개")
+                    }
+
                     var builder2 = AlertDialog.Builder(this)
                     var size = 0
                     var yutArray = arrayOf("", "", "", "", "", "")
@@ -396,7 +399,7 @@ class GameActivity : AppCompatActivity() {
                     }).setNegativeButton("취소", null).show()
                 }
                 start.isClickable = false
-                if (num != 4 && num != 5) {
+                if (yuts.sum() == 2) {
                     start.setBackgroundResource(R.drawable.pick)
                     start.isClickable = true
                 }
