@@ -135,9 +135,7 @@ class GameActivity : AppCompatActivity() {
                             var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
                             pick.setBackgroundResource(R.drawable.pick)
                         }
-                    }
 
-                    if (item!=0 && index!=0) {
                         players[index].setOnClickListener {
                             if (turn == item > 0) {
                                 yuts[num] -= 1
@@ -398,6 +396,7 @@ class GameActivity : AppCompatActivity() {
 
                     }).setNegativeButton("취소", null).show()
                 }
+
                 start.isClickable = false
                 if (yuts.sum() == 2) {
                     start.setBackgroundResource(R.drawable.pick)
