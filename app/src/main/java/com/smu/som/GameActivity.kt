@@ -106,7 +106,7 @@ class GameActivity : AppCompatActivity() {
             yut.isClickable = false
             soundPool.play(gamesound[6], 1.0f, 1.0f, 0, 0, 1.0f)
 
-            var num = playGame(soundPool, gamesound)
+            var num = playGame(soundPool, gamesound, yuts.sum())
 
             if (num == 4 || num== 5) {
                 yut.isClickable = true
@@ -454,9 +454,9 @@ class GameActivity : AppCompatActivity() {
             return idx + num
     }
 
-    fun playGame(soundPool: SoundPool, gamesound: IntArray): Int {
+    fun playGame(soundPool: SoundPool, gamesound: IntArray, sum: Int): Int {
         val yuts = arrayOf("빽도", "도", "개", "걸", "윷", "모")
-        var num = percentage()
+        var num = percentage(sum)
         result.setBackgroundResource(resources.getIdentifier("result_$num", "drawable", packageName))
         Handler(Looper.getMainLooper()).postDelayed({
             soundPool.play(gamesound[num], 1.0f, 1.0f, 0, 0, 1.0f)
@@ -466,9 +466,15 @@ class GameActivity : AppCompatActivity() {
         return num
     }
 
-    fun percentage(): Int {
+    fun percentage(sum: Int): Int {
 //        val per = arrayOf(1, 3, 6, 4, 1, 1)
-        val per = arrayOf(3, 2, 2, 2, 3, 4)
+        var n = 5
+        var per = arrayOf(6, 1, 1, 1, 3, 4)
+        if (sum > 0) {
+            Log.d("per", "확률 조작")
+            per = arrayOf(1, 4, 6, 5)
+            n = 3
+        }
         val range = (1..16)
         var num = range.random()
 
@@ -477,7 +483,7 @@ class GameActivity : AppCompatActivity() {
                 return index
             num -= item
         }
-        return 5
+        return n
     }
 
     fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
