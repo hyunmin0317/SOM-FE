@@ -192,10 +192,9 @@ class GameActivity : AppCompatActivity() {
                     })
                 }
             }
-
+            showResult(turn, yuts)
 
             if (yuts.sum() == 1 && num != 4 && num != 5) {
-                showResult(turn, yuts)
                 if (num != 0 && checkBoard(turn, player1, player2) != 0) {
                     start.setBackgroundResource(R.drawable.pick)
                 }
@@ -315,8 +314,6 @@ class GameActivity : AppCompatActivity() {
                 }
             }
             else {
-                showResult(turn, yuts)
-
                 for ((index,item) in arr.withIndex()) {
                     if (item!=0 && index!=0 && yuts.sum() == 2) {
                         if (turn == item > 0) {
