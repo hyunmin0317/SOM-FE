@@ -98,7 +98,7 @@ class GameActivity : AppCompatActivity() {
 
         game_rule.setOnClickListener { showPopup() }
 
-        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
         yut.setBackgroundResource(R.drawable.pick)
 
         yut.setOnClickListener {
@@ -149,7 +149,7 @@ class GameActivity : AppCompatActivity() {
                                                 yuts = IntArray(6, { 0 } )
                                                 yut.setBackgroundResource(R.drawable.pick)
                                                 start.setBackgroundResource(R.drawable.nopick)
-                                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
                                                 start.setOnClickListener(null)
                                                 for ((index,item) in arr.withIndex())
                                                     if (item!=0 && index!=0)
@@ -195,7 +195,7 @@ class GameActivity : AppCompatActivity() {
 
 
             if (yuts.sum() == 1 && num != 4 && num != 5) {
-                showResult(turn, num)
+                showResult(turn, yuts)
                 if (num != 0 && checkBoard(turn, player1, player2) != 0) {
                     start.setBackgroundResource(R.drawable.pick)
                 }
@@ -253,7 +253,7 @@ class GameActivity : AppCompatActivity() {
                                     }
                                 }
                                 arr[index] = 0
-                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
                                 start.setOnClickListener(null)
                                 for ((index,item) in arr.withIndex())
@@ -304,7 +304,7 @@ class GameActivity : AppCompatActivity() {
                             }
                             player2 -= 1
                         }
-                        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
                         start.setOnClickListener(null)
                         for ((index,item) in arr.withIndex())
@@ -315,7 +315,7 @@ class GameActivity : AppCompatActivity() {
                 }
             }
             else {
-                showResult(turn, num)
+                showResult(turn, yuts)
 
                 for ((index,item) in arr.withIndex()) {
                     if (item!=0 && index!=0 && yuts.sum() == 2) {
@@ -377,7 +377,7 @@ class GameActivity : AppCompatActivity() {
                                         }
                                     }
                                     arr[index] = 0
-                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
 
                                     if ((turn && catch1) || (!turn && catch2)) {
@@ -442,7 +442,7 @@ class GameActivity : AppCompatActivity() {
                                                             }
                                                         }
                                                         arr[index] = 0
-                                                        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                                        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
                                                         start.setOnClickListener(null)
                                                         for ((index,item) in arr.withIndex())
@@ -493,7 +493,7 @@ class GameActivity : AppCompatActivity() {
                                                     }
                                                     player2 -= 1
                                                 }
-                                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
                                                 start.setOnClickListener(null)
                                                 for ((index,item) in arr.withIndex())
@@ -557,7 +557,7 @@ class GameActivity : AppCompatActivity() {
                                 }
                                 player2 -= 1
                             }
-                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
                             if (yuts.sum() == 1 && yuts[0] == 1) {
                                 start.setBackgroundResource(R.drawable.nopick)
                                 start.isClickable = false
@@ -626,7 +626,7 @@ class GameActivity : AppCompatActivity() {
                                                 }
                                             }
                                             arr[index] = 0
-                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
                                             start.setOnClickListener(null)
                                             for ((index,item) in arr.withIndex())
@@ -677,7 +677,7 @@ class GameActivity : AppCompatActivity() {
                                         }
                                         player2 -= 1
                                     }
-                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
                                     start.setOnClickListener(null)
                                     for ((index,item) in arr.withIndex())
@@ -789,7 +789,7 @@ class GameActivity : AppCompatActivity() {
         return 1
     }
 
-    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
+    fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>, result: IntArray) {
         for ((index,item) in array.withIndex()) {
             if (index!=0) {
                 var player: TextView = findViewById(getResources().getIdentifier("board" + index, "id", packageName))
@@ -827,12 +827,7 @@ class GameActivity : AppCompatActivity() {
             else
                 player2.setBackgroundResource(nodrawable2)
         }
-        for (num in 0..5) {
-            var result1: TextView = findViewById(getResources().getIdentifier(true.toString()+num.toString(), "id", packageName))
-            var result2: TextView = findViewById(getResources().getIdentifier(false.toString()+num.toString(), "id", packageName))
-            result1.setBackgroundResource(R.drawable.nopick)
-            result2.setBackgroundResource(R.drawable.nopick)
-        }
+        showResult(turn, result)
         score1.text = score01.toString()
         score2.text = score02.toString()
         checkWin(score01, score02, category, kcategory, name1, name2, email, used, pass)
@@ -892,9 +887,19 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun showResult(turn: Boolean, num: Int) {
-        var result: TextView = findViewById(getResources().getIdentifier(turn.toString()+num.toString(), "id", packageName))
-        result.setBackgroundResource(resources.getIdentifier("result$num", "drawable", packageName))
+    fun showResult(turn: Boolean, array: IntArray) {
+        val t = !turn
+        for ((index, item) in array.withIndex()) {
+            var result1: TextView = findViewById(getResources().getIdentifier(turn.toString()+index.toString(), "id", packageName))
+            var result2: TextView = findViewById(getResources().getIdentifier(t.toString()+index.toString(), "id", packageName))
+            if (item == 0)
+                result1.setBackgroundResource(R.drawable.nopick)
+            else if (item == 1)
+                result1.setBackgroundResource(resources.getIdentifier("result$index", "drawable", packageName))
+            else
+                result1.setBackgroundResource(resources.getIdentifier("result$index", "drawable", packageName))
+            result2.setBackgroundResource(R.drawable.nopick)
+        }
     }
 
     fun showPopup() {
