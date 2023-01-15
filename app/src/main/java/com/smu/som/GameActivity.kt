@@ -400,6 +400,122 @@ class GameActivity : AppCompatActivity() {
                                     }
                                     arr[index] = 0
                                     drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                    num = findOne(yuts)
+
+                                    for ((index,item) in arr.withIndex()) {
+                                        if (item!=0 && index!=0) {
+                                            if (turn == item > 0) {
+                                                var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
+                                                pick.setBackgroundResource(R.drawable.pick)
+                                            }
+
+                                            players[index].setOnClickListener {
+                                                if (turn == item > 0) {
+                                                    yuts[num] -= 1
+                                                    if (num == 0)
+                                                        num = -1
+                                                    var idx = getIndex(index, num)
+
+                                                    if (turn) {
+                                                        if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
+                                                            player2 -= arr[idx]
+                                                            arr[idx] = item
+                                                            catch1 = true
+                                                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                                            showCatch()
+                                                        }
+                                                        else {
+                                                            if (idx == 0)
+                                                                score1 += item
+                                                            else
+                                                                arr[idx] += item
+                                                            turn = !turn
+                                                            yuts = IntArray(6, { 0 } )
+                                                            yut.setBackgroundResource(R.drawable.pick)
+                                                            start.setBackgroundResource(R.drawable.nopick)
+                                                        }
+                                                    }
+                                                    else {
+                                                        if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
+                                                            player1 += arr[idx]
+                                                            arr[idx] = item
+                                                            catch2 = true
+                                                            soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                                            showCatch()
+                                                        }
+                                                        else {
+                                                            if (idx == 0)
+                                                                score2 -= item
+                                                            else
+                                                                arr[idx] += item
+                                                            turn = !turn
+                                                            yuts = IntArray(6, { 0 } )
+                                                            yut.setBackgroundResource(R.drawable.pick)
+                                                            start.setBackgroundResource(R.drawable.nopick)
+                                                        }
+                                                    }
+                                                    arr[index] = 0
+                                                    drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                                    start.setOnClickListener(null)
+                                                    for ((index,item) in arr.withIndex())
+                                                        if (item!=0 && index!=0)
+                                                            players[index]?.setOnClickListener(null)
+                                                    yut.isClickable = true
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    start.setOnClickListener {
+                                        if (num != 0 && checkBoard(turn, player1, player2) != 0) {
+                                            yuts[num] -= 1
+                                            if (num == 0)
+                                                num = -1
+                                            if (turn) {
+                                                if (arr[num] < 0) {     // 말을 잡을 경우
+                                                    player2 -= arr[num]
+                                                    arr[num] = 1
+                                                    catch1 = true
+                                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                                    showCatch()
+                                                }
+                                                else {
+                                                    arr[num] += 1
+                                                    turn = !turn
+                                                    yuts = IntArray(6, { 0 } )
+                                                    yut.setBackgroundResource(R.drawable.pick)
+                                                    start.setBackgroundResource(R.drawable.nopick)
+                                                }
+                                                player1 -= 1
+                                            }
+                                            else {
+                                                if (arr[num] > 0) {     // 말을 잡을 경우
+                                                    player1 += arr[num]
+                                                    arr[num] = -1
+                                                    catch2 = true
+                                                    soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                                    showCatch()
+                                                }
+                                                else {
+                                                    arr[num] -= 1
+                                                    turn = !turn
+                                                    yuts = IntArray(6, { 0 } )
+                                                    yut.setBackgroundResource(R.drawable.pick)
+                                                    start.setBackgroundResource(R.drawable.nopick)
+                                                }
+                                                player2 -= 1
+                                            }
+                                            drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                            start.setOnClickListener(null)
+                                            for ((index,item) in arr.withIndex())
+                                                if (item!=0 && index!=0)
+                                                    players[index]?.setOnClickListener(null)
+                                            yut.isClickable = true
+                                        }
+                                    }
                                 }).setNegativeButton("취소", null).show()
                             }
                         }
@@ -485,6 +601,121 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
 
+                        num = findOne(yuts)
+
+                        for ((index,item) in arr.withIndex()) {
+                            if (item!=0 && index!=0) {
+                                if (turn == item > 0) {
+                                    var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
+                                    pick.setBackgroundResource(R.drawable.pick)
+                                }
+
+                                players[index].setOnClickListener {
+                                    if (turn == item > 0) {
+                                        yuts[num] -= 1
+                                        if (num == 0)
+                                            num = -1
+                                        var idx = getIndex(index, num)
+
+                                        if (turn) {
+                                            if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
+                                                player2 -= arr[idx]
+                                                arr[idx] = item
+                                                catch1 = true
+                                                soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                                showCatch()
+                                            }
+                                            else {
+                                                if (idx == 0)
+                                                    score1 += item
+                                                else
+                                                    arr[idx] += item
+                                                turn = !turn
+                                                yuts = IntArray(6, { 0 } )
+                                                yut.setBackgroundResource(R.drawable.pick)
+                                                start.setBackgroundResource(R.drawable.nopick)
+                                            }
+                                        }
+                                        else {
+                                            if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
+                                                player1 += arr[idx]
+                                                arr[idx] = item
+                                                catch2 = true
+                                                soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                                showCatch()
+                                            }
+                                            else {
+                                                if (idx == 0)
+                                                    score2 -= item
+                                                else
+                                                    arr[idx] += item
+                                                turn = !turn
+                                                yuts = IntArray(6, { 0 } )
+                                                yut.setBackgroundResource(R.drawable.pick)
+                                                start.setBackgroundResource(R.drawable.nopick)
+                                            }
+                                        }
+                                        arr[index] = 0
+                                        drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                        start.setOnClickListener(null)
+                                        for ((index,item) in arr.withIndex())
+                                            if (item!=0 && index!=0)
+                                                players[index]?.setOnClickListener(null)
+                                        yut.isClickable = true
+                                    }
+                                }
+                            }
+                        }
+
+                        start.setOnClickListener {
+                            if (num != 0 && checkBoard(turn, player1, player2) != 0) {
+                                yuts[num] -= 1
+                                if (num == 0)
+                                    num = -1
+                                if (turn) {
+                                    if (arr[num] < 0) {     // 말을 잡을 경우
+                                        player2 -= arr[num]
+                                        arr[num] = 1
+                                        catch1 = true
+                                        soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                        showCatch()
+                                    }
+                                    else {
+                                        arr[num] += 1
+                                        turn = !turn
+                                        yuts = IntArray(6, { 0 } )
+                                        yut.setBackgroundResource(R.drawable.pick)
+                                        start.setBackgroundResource(R.drawable.nopick)
+                                    }
+                                    player1 -= 1
+                                }
+                                else {
+                                    if (arr[num] > 0) {     // 말을 잡을 경우
+                                        player1 += arr[num]
+                                        arr[num] = -1
+                                        catch2 = true
+                                        soundPool.play(gamesound[7], 1.0f, 1.0f, 0, 0, 1.0f)
+                                        showCatch()
+                                    }
+                                    else {
+                                        arr[num] -= 1
+                                        turn = !turn
+                                        yuts = IntArray(6, { 0 } )
+                                        yut.setBackgroundResource(R.drawable.pick)
+                                        start.setBackgroundResource(R.drawable.nopick)
+                                    }
+                                    player2 -= 1
+                                }
+                                drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass)
+
+                                start.setOnClickListener(null)
+                                for ((index,item) in arr.withIndex())
+                                    if (item!=0 && index!=0)
+                                        players[index]?.setOnClickListener(null)
+                                yut.isClickable = true
+                            }
+                        }
                     }).setNegativeButton("취소", null).show()
                 }
 
@@ -577,6 +808,14 @@ class GameActivity : AppCompatActivity() {
             num -= item
         }
         return n
+    }
+
+    fun findOne(array: IntArray): Int {
+        for ((index, item) in array.withIndex()) {
+            if (item == 1)
+                return index
+        }
+        return 1
     }
 
     fun drawGame(array: IntArray, player01: Int, player02: Int, score01: Int, score02: Int, turn: Boolean, rand1: Int, rand2: Int, category: String?, kcategory: String?, name1: String?, name2: String?, email: String?, used: Array<Int>, pass: Array<Int>) {
