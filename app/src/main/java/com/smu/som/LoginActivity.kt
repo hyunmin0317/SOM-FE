@@ -14,6 +14,7 @@ import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 
+// 로그인 Activity
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +28,9 @@ class LoginActivity : AppCompatActivity() {
                     var keyHash = Utility.getKeyHash(this)
                     Log.e(TAG, "카카오계정으로 로그인 실패", error)
                     Log.e(TAG, keyHash, error)
-                } else if (token != null) {
+                } else if (token != null) {     // 카카오톡 로그인 성공 (시작 화면으로)
                     Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, StartActivity::class.java))
                 }
             }
 
@@ -49,9 +50,9 @@ class LoginActivity : AppCompatActivity() {
 
                         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                         UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-                    } else if (token != null) {
+                    } else if (token != null) {     // 카카오톡 로그인 성공 (시작 화면으로)
                         Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                        startActivity(Intent(this, MainActivity::class.java))
+                        startActivity(Intent(this, StartActivity::class.java))
                     }
                 }
             } else {

@@ -24,13 +24,17 @@ class QuestionListActivity : AppCompatActivity() {
         var title = intent.getStringExtra("title")
         Title.text = title
 
+        // 답변한 질문 리스트 데이터 받아오기
         email?.let {
             (application as MasterApplication).service.usedQuestion(
                 it, category!!
             ).enqueue(object : Callback<ArrayList<Question>> {
+                // 성공
                 override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                     if (response.isSuccessful) {
                         val questionList = response.body()
+
+                        // 질문 리스트 adapter를 사용해서 삽입
                         val adapter = QuestionAdapter(
                             questionList!!,
                             LayoutInflater.from(this@QuestionListActivity)
@@ -42,19 +46,24 @@ class QuestionListActivity : AppCompatActivity() {
                     }
                 }
 
+                // 실패
                 override fun onFailure(call: Call<ArrayList<Question>>, t: Throwable) {
                     Log.e(ContentValues.TAG, "서버 오류")
                 }
             })
         }
 
+        // 패스한 질문 리스트 데이터 받아오기
         email?.let {
             (application as MasterApplication).service.passQuestion(
                 it, category!!
             ).enqueue(object : Callback<ArrayList<Question>> {
+                // 성공
                 override fun onResponse(call: Call<ArrayList<Question>>, response: Response<ArrayList<Question>>) {
                     if (response.isSuccessful) {
                         val questionList = response.body()
+
+                        // 질문 리스트 adapter를 사용해서 삽입
                         val adapter = QuestionAdapter(
                             questionList!!,
                             LayoutInflater.from(this@QuestionListActivity)
@@ -66,17 +75,20 @@ class QuestionListActivity : AppCompatActivity() {
                     }
                 }
 
+                // 실패
                 override fun onFailure(call: Call<ArrayList<Question>>, t: Throwable) {
                     Log.e(ContentValues.TAG, "서버 오류")
                 }
             })
         }
 
+        // home 버튼 클릭 리스너 (홈 화면으로)
         home.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
+        // back 버튼 클릭 리스너 (뒤로가기)
         back.setOnClickListener {
             startActivity(Intent(this, GameDataActivity::class.java))
             finish()

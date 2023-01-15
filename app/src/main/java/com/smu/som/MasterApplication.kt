@@ -11,39 +11,45 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+// 마스터 애플리케이션
 class MasterApplication : Application() {
 
     lateinit var service: RetrofitService
 
     override fun onCreate() {
         super.onCreate()
+
+        // retrofit 생성
         Stetho.initializeWithDefaults(this)
         createRetrofit()
 
+        // 카카오톡 로그인 sdk 설정
         KakaoSdk.init(this, getString(R.string.kakao_native_key))
-
-        //chrome://inspect/#devices
     }
 
 
+    // retrofit 생성 함수
     fun createRetrofit() {
+        // header 설정
         val header = Interceptor {
             val original = it.request()
             it.proceed(original)
         }
 
+        // client 설정
         val client = OkHttpClient.Builder()
             .addInterceptor(header)
             .addNetworkInterceptor(StethoInterceptor())
             .build()
 
+        // retrofit 설정
         val retrofit = Retrofit.Builder()
             .baseUrl("http://52.78.92.194:8080")
-//            .baseUrl("http://10.0.2.2:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
 
+        // retrofit 생성 후 주입
         service = retrofit.create(RetrofitService::class.java)
     }
 }
