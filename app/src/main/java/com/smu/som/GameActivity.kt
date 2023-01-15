@@ -31,6 +31,7 @@ class GameActivity : AppCompatActivity() {
         val email = sp.getString("email", null)
         val sound = sp.getBoolean("sound", false)
         val categoryArray = arrayOf("홈으로", "관계 선택으로", "다시하기") // 리스트에 들어갈 Array
+        val yutName = arrayOf("빽도", "도", "개", "걸", "윷", "모")
         val SIZE = 30
         var arr = IntArray(SIZE, { 0 } )
         var yuts = IntArray(6, { 0 } )
@@ -329,8 +330,12 @@ class GameActivity : AppCompatActivity() {
                                 var yutss: ArrayList<Int> = ArrayList()
                                 for ((index,item) in yuts.withIndex()) {
                                     if (item > 0) {
+                                        val name = yutName[index]
                                         yutss.add(index)
-                                        yutArray[size] = "$index * $item"
+                                        if (item == 1)
+                                            yutArray[size] = "$name"
+                                        else
+                                            yutArray[size] = "$name * $item"
                                         size += 1
                                     }
                                 }
@@ -508,18 +513,18 @@ class GameActivity : AppCompatActivity() {
 
 
                 start.setOnClickListener {
-                    if (yuts.sum() == 1) {
-                        Log.d(TAG, "선택지 1개")
-                    }
-
                     var builder2 = AlertDialog.Builder(this)
                     var size = 0
                     var yutArray = arrayOf("", "", "", "", "", "")
                     var yutss: ArrayList<Int> = ArrayList()
                     for ((index,item) in yuts.withIndex()) {
                         if (item > 0 && index != 0) {
+                            val name = yutName[index]
                             yutss.add(index)
-                            yutArray[size] = "$index * $item"
+                            if (item == 1)
+                                yutArray[size] = "$name"
+                            else
+                                yutArray[size] = "$name * $item"
                             size += 1
                         }
                     }
@@ -763,7 +768,6 @@ class GameActivity : AppCompatActivity() {
         var n = 5
         var per = arrayOf(6, 1, 1, 1, 3, 4)
         if (sum > 0) {
-            Log.d("per", "확률 조작")
             per = arrayOf(1, 4, 6, 5)
             n = 3
         }
