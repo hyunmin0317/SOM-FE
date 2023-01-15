@@ -201,123 +201,123 @@ class GameActivity : AppCompatActivity() {
             }
             showResult(turn, yuts)  // 윷 결과 리스트 화면에 보이기
 
-
+            // 윷이나 모가 아니며 윷 결과 리스트의 값이 1개일 경우
             if (yuts.sum() == 1 && num != 4 && num != 5) {
-                if (num != 0 && checkBoard(turn, player1, player2) != 0) {
-                    start.setBackgroundResource(R.drawable.pick)
-                }
-
-                for ((index,item) in arr.withIndex()) {
-                    if (item!=0 && index!=0) {
-                        if (turn == item > 0) {
+                for ((index,item) in arr.withIndex()) {     // 말판의 모든 칸
+                    if (item != 0 && index != 0) {          // 해당 칸에 말이 있으며 0번째 칸이 아닌 경우
+                        if (turn == item > 0) {             // 현재 턴 사용자의 말
                             var pick: LinearLayout = findViewById(getResources().getIdentifier("pick" + index, "id", packageName))
-                            pick.setBackgroundResource(R.drawable.pick)
-                        }
+                            pick.setBackgroundResource(R.drawable.pick)     // 선택 가능 표시
 
-                        players[index].setOnClickListener {
-                            if (turn == item > 0) {
-                                yuts[num] -= 1
-                                if (num == 0)
+                            // 사용자 말에 클릭 리스너 설정
+                            players[index].setOnClickListener {
+                                yuts[num] -= 1                  // 윷 결과 리스트에서 윷 사용
+                                if (num == 0)                   // 빽도인 경우
                                     num = -1
-                                var idx = getIndex(index, num)
+                                var idx = getIndex(index, num)  // 윷판 위치를 설정
 
-                                if (turn) {
-                                    if (arr[idx] < 0 && idx != 0) {     // 말을 잡을 경우
-                                        player2 -= arr[idx]
-                                        arr[idx] = item
+                                if (turn) {                             // 1P 턴
+                                    if (arr[idx] < 0 && idx != 0) {     // 상대방 말을 잡은 경우
+                                        player2 -= arr[idx]             // 2P 말의 수 계산
+                                        arr[idx] = item                 // 1P 말 이동
                                         catch1 = true
-                                        showCatch(soundPool, gamesound)
+                                        showCatch(soundPool, gamesound) // 결과 표시
                                     }
                                     else {
-                                        if (idx == 0)
-                                            score1 += item
+                                        if (idx == 0)                    // 말이 들어간 경우
+                                            score1 += item               // 들어간 말 더하기
                                         else
-                                            arr[idx] += item
-                                        turn = !turn
-                                        yuts = IntArray(6, { 0 } )
-                                        yut.setBackgroundResource(R.drawable.pick)
-                                        start.setBackgroundResource(R.drawable.nopick)
+                                            arr[idx] += item             // 그 자리에 말 더하기
                                     }
                                 }
-                                else {
-                                    if (arr[idx] > 0 && idx != 0) {     // 말을 잡을 경우
-                                        player1 += arr[idx]
-                                        arr[idx] = item
+                                else {                                  // 2P 턴
+                                    if (arr[idx] > 0 && idx != 0) {     // 상대방 말을 잡을 경우
+                                        player1 += arr[idx]             // 1P 말의 수 계산
+                                        arr[idx] = item                 // 2P 말 이동
                                         catch2 = true
-                                        showCatch(soundPool, gamesound)
+                                        showCatch(soundPool, gamesound) // 결과 표시
                                     }
                                     else {
-                                        if (idx == 0)
-                                            score2 -= item
+                                        if (idx == 0)                   // 말이 들어간 경우
+                                            score2 -= item              // 들어간 말 더하기
                                         else
-                                            arr[idx] += item
-                                        turn = !turn
-                                        yuts = IntArray(6, { 0 } )
-                                        yut.setBackgroundResource(R.drawable.pick)
-                                        start.setBackgroundResource(R.drawable.nopick)
+                                            arr[idx] += item            // 그 자리에 말 더하기
                                     }
+                                }
+
+                                // 말을 잡지 못한 경우 (턴 변경과 윷 리스트 초기화)
+                                if (!catch1 && !catch2) {
+                                    turn = !turn
+                                    yuts = IntArray(6, { 0 } )
                                 }
                                 arr[index] = 0
                                 drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
+                                // 윷 추가 및 말 클릭 리스터 초기화
+                                start.setBackgroundResource(R.drawable.nopick)
                                 start.setOnClickListener(null)
                                 for ((index,item) in arr.withIndex())
                                     if (item!=0 && index!=0)
                                         players[index]?.setOnClickListener(null)
+                                yut.setBackgroundResource(R.drawable.pick)
                                 yut.isClickable = true
                             }
                         }
                     }
                 }
 
-                start.setOnClickListener {
-                    if (num != 0 && checkBoard(turn, player1, player2) != 0) {
-                        yuts[num] -= 1
-                        if (num == 0)
+                // 빽도가 아니며 남은 말이 있을 경우 (말 추가 버튼 클릭 가능)
+                if (num != 0 && checkBoard(turn, player1, player2) != 0) {
+                    start.setBackgroundResource(R.drawable.pick)    // 선택 가능 표시
+
+                    // 윷 추가 버튼 클릭 리스너 설정
+                    start.setOnClickListener {
+                        yuts[num] -= 1                          // 윷 결과 리스트에서 윷 사용
+                        if (num == 0)                           // 빽도인 경우
                             num = -1
-                        if (turn) {
-                            if (arr[num] < 0) {     // 말을 잡을 경우
-                                player2 -= arr[num]
-                                arr[num] = 1
+                        if (turn) {                             // 1P 턴
+                            if (arr[num] < 0) {                 // 상대방 말을 잡을 경우
+                                player2 -= arr[num]             // 2P 말의 수 계산
+                                arr[num] = 1                    // 1P 말 이동
                                 catch1 = true
-                                showCatch(soundPool, gamesound)
+                                showCatch(soundPool, gamesound) // 결과 표시
                             }
-                            else {
-                                arr[num] += 1
-                                turn = !turn
-                                yuts = IntArray(6, { 0 } )
-                                yut.setBackgroundResource(R.drawable.pick)
-                                start.setBackgroundResource(R.drawable.nopick)
-                            }
-                            player1 -= 1
+                            else
+                                arr[num] += 1                   // 1P 말 이동
+                            player1 -= 1                        // 1P 말의 수 계산
                         }
-                        else {
-                            if (arr[num] > 0) {     // 말을 잡을 경우
-                                player1 += arr[num]
-                                arr[num] = -1
+                        else {                                  // 2P 턴
+                            if (arr[num] > 0) {                 // 상대방 말을 잡을 경우
+                                player1 += arr[num]             // 1P 말의 수 계산
+                                arr[num] = -1                   // 2P 말 이동
                                 catch2 = true
-                                showCatch(soundPool, gamesound)
+                                showCatch(soundPool, gamesound) // 결과 표시
                             }
-                            else {
-                                arr[num] -= 1
-                                turn = !turn
-                                yuts = IntArray(6, { 0 } )
-                                yut.setBackgroundResource(R.drawable.pick)
-                                start.setBackgroundResource(R.drawable.nopick)
-                            }
-                            player2 -= 1
+                            else
+                                arr[num] -= 1                   // 2P 말 이동
+                            player2 -= 1                        // 2P 말의 수 계산
+                        }
+
+                        // 말을 잡지 못한 경우 (턴 변경과 윷 리스트 초기화)
+                        if (!catch1 && !catch2) {
+                            turn = !turn
+                            yuts = IntArray(6, { 0 } )
                         }
                         drawGame(arr, player1, player2, score1, score2, turn, rand1, rand2, category, kcategory, name_1p, name_2p, email, used, pass, yuts)
 
+                        // 윷 추가 및 말 클릭 리스터 초기화
+                        start.setBackgroundResource(R.drawable.nopick)
                         start.setOnClickListener(null)
                         for ((index,item) in arr.withIndex())
                             if (item!=0 && index!=0)
                                 players[index]?.setOnClickListener(null)
+                        yut.setBackgroundResource(R.drawable.pick)
                         yut.isClickable = true
                     }
                 }
             }
-            else {
+            else {  // 윷이나 모이거나 윷 결과 리스트의 값이 2개 이상일 경우
+                // 사용자 말에 클릭 리스너 설정
                 for ((index,item) in arr.withIndex()) {
                     if (item!=0 && index!=0 && yuts.sum() == 2) {
                         if (turn == item > 0) {
@@ -508,7 +508,7 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
 
-
+                // 윷 추가 버튼 클릭 리스너 설정
                 start.setOnClickListener {
                     if (checkBoard(turn, player1, player2) != 0) {
                         var builder2 = AlertDialog.Builder(this)
@@ -683,7 +683,8 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
 
-                start.isClickable = false
+                start.isClickable = false   // 말 추가 버튼이 클릭 안 되도록 설정
+                // 윷을 모두 던지고 남은 말이 있을 경우 (말 추가 버튼 클릭 가능)
                 if (yuts.sum() == 2 && checkBoard(turn, player1, player2) != 0) {
                     start.setBackgroundResource(R.drawable.pick)
                     start.isClickable = true
@@ -924,8 +925,6 @@ class GameActivity : AppCompatActivity() {
             .setPositiveButton("확인") { dialog, which -> }
             .create()
         alertDialog.show()
-        yut.setBackgroundResource(R.drawable.pick)
-        start.setBackgroundResource(R.drawable.nopick)
     }
 
     // 게임 결과를 저장하는 함수 (API)
