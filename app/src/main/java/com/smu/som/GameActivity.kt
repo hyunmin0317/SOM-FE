@@ -158,7 +158,7 @@ class GameActivity : AppCompatActivity() {
                                     .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
                                         used = used.plus(questionId)            // 답변한 질문 리스트에 추가
                                     })
-                                    .setNegativeButton("질문 변경", DialogInterface.OnClickListener { dialog, id ->
+                                    .setNegativeButton("질문변경", DialogInterface.OnClickListener { dialog, id ->
                                         builder.setMessage(question?.get(1)?.question.toString())
                                             .setPositiveButton("답변", DialogInterface.OnClickListener { dialog, id ->
                                                 pass = pass.plus(questionId)        // 패스한 질문 리스트에 추가
